@@ -21,7 +21,8 @@ export default function HeroSlider() {
       id: 1,
       name: "Digital Infrastructure",
       title: "Building Digital Infrastructure for a Smarter India",
-      image: "/assets/banners/banner-1-digital-infrastructure.jpg",
+      image: "/assets/banners/banner-1-digital-infrastructure-hd.jpg",
+      webp: "/assets/banners/banner-1-digital-infrastructure-hd.webp",
       primaryLink: "#platforms",
       isPrimaryHash: true,
       secondaryLink: "/contact/?type=project",
@@ -32,7 +33,8 @@ export default function HeroSlider() {
       id: 2,
       name: "Our Platforms",
       title: "One Vision. Multiple Digital Platforms.",
-      image: "/assets/banners/banner-2-our-platforms.jpg",
+      image: "/assets/banners/banner-2-our-platforms-hd.jpg",
+      webp: "/assets/banners/banner-2-our-platforms-hd.webp",
       primaryLink: "/platforms/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - One Vision. Multiple Digital Platforms. Tirvona, BharatBN, BizORM"
@@ -41,7 +43,8 @@ export default function HeroSlider() {
       id: 3,
       name: "Our Services",
       title: "Technology Expertise That Delivers Results.",
-      image: "/assets/banners/banner-3-our-services.jpg",
+      image: "/assets/banners/banner-3-our-services-hd.jpg",
+      webp: "/assets/banners/banner-3-our-services-hd.webp",
       primaryLink: "/services/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - Technology Expertise That Delivers Results across 8 core services"
@@ -50,7 +53,8 @@ export default function HeroSlider() {
       id: 4,
       name: "NKTech NEP™",
       title: "NKTech Enterprise Platform™ (NEP)",
-      image: "/assets/banners/banner-4-nktech-nep.jpg",
+      image: "/assets/banners/banner-4-nktech-nep-hd.jpg",
+      webp: "/assets/banners/banner-4-nktech-nep-hd.webp",
       primaryLink: "/technology/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - NKTech Enterprise Platform (NEP) One Technology Foundation"
@@ -59,7 +63,8 @@ export default function HeroSlider() {
       id: 5,
       name: "Mission FTC™",
       title: "Mission FTC™ — One Portfolio. Many Platforms.",
-      image: "/assets/banners/banner-5-mission-ftc.jpg",
+      image: "/assets/banners/banner-5-mission-ftc-hd.jpg",
+      webp: "/assets/banners/banner-5-mission-ftc-hd.webp",
       primaryLink: "/about-us/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - Mission FTC Diversified Portfolio of Digital Platforms"
@@ -128,13 +133,21 @@ export default function HeroSlider() {
               title={`Click to view: ${slide.title}`}
               aria-hidden={!isActive}
             >
-              <img
-                src={slide.image}
-                alt={slide.alt}
-                className="w-full h-full object-cover object-center select-none"
-                loading={idx === 0 ? "eager" : "lazy"}
-                draggable={false}
-              />
+              <picture className="w-full h-full block">
+                <source srcSet={slide.webp} type="image/webp" />
+                <img
+                  src={slide.image}
+                  alt={slide.alt}
+                  className="w-full h-full object-cover object-center select-none banner-hd-render"
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  decoding={idx === 0 ? "sync" : "async"}
+                  style={{
+                    imageRendering: '-webkit-optimize-contrast',
+                    transform: 'translateZ(0)'
+                  }}
+                  draggable={false}
+                />
+              </picture>
 
               {/* Accessible Hotspot Links for Slide 1 Dual Buttons */}
               {slide.hasDualButtons && (

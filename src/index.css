@@ -92,3 +92,11 @@ html.dark .bg-grid-pattern {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* High-DPI banner sharpness */
+.banner-hd-render {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
