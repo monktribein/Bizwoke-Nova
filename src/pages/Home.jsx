@@ -197,14 +197,13 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0 opacity-60" />
 
         {/* =========================================================================
-            SECTION 1: FULL-WIDTH IMMERSIVE ENTERPRISE HERO BANNER SLIDER
+            SECTION 1: HERO SLIDER (AUTO-SCROLLING 3-BANNER ENTERPRISE SHOWCASE)
         ========================================================================= */}
-        <section className="relative z-10 w-full">
+        <section className="relative z-10 pt-2 sm:pt-4">
           <HeroSlider />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
-            {/* Authentic Enterprise Architecture Triple Card */}
-          <div className="mt-14 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Authentic Enterprise Architecture Triple Card */}
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
             <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
               <div className="text-xl font-extrabold text-[#0F294A] text-navy-primary">One Portfolio</div>
               <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Mission FTC™ Strategy</p>
@@ -290,8 +289,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
         {/* =========================================================================
             SECTION 2: INTRODUCTION (EDITORIAL CORPORATE ARCHITECTURE)
