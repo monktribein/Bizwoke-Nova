@@ -197,13 +197,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0 opacity-60" />
 
         {/* =========================================================================
-            SECTION 1: HERO AUTO-SCROLLING SLIDER (ENTERPRISE ENGINES & REAL TELEMETRY)
+            SECTION 1: FULL-WIDTH IMMERSIVE ENTERPRISE HERO BANNER SLIDER
         ========================================================================= */}
-        <section className="relative z-10 pt-4 sm:pt-6 pb-20 lg:pb-28">
-          {/* 3-Slide Auto-Scrolling Banner with Real Enterprise Photography */}
+        <section className="relative z-10 w-full">
           <HeroSlider />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
             {/* Authentic Enterprise Architecture Triple Card */}
           <div className="mt-14 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
