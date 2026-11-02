@@ -46,83 +46,86 @@ export default function ServiceDetail() {
   };
 
   return (
-    <div className="bg-[#F6F8FB] min-h-screen">
+    <div className="bg-[#F8FAFC] dark:bg-[#081528] text-[#0F294A] dark:text-slate-100 min-h-screen transition-colors duration-200">
       <SEOHead
         title={`${service.title} | ${service.seoTarget} — Bizwoke Nova`}
         description={service.shortDescription}
       />
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-slate-200/80 py-3 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-slate-500">
-          <Link to="/" className="hover:text-[#10233F]">Home</Link>
+      <div className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 py-3 text-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-slate-500 dark:text-slate-400">
+          <Link to="/" className="hover:text-[#F27A24] dark:hover:text-[#F27A24] transition-colors">Home</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link to="/services/" className="hover:text-[#10233F]">Our Services</Link>
+          <Link to="/services/" className="hover:text-[#F27A24] dark:hover:text-[#F27A24] transition-colors">Our Services</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-[#10233F] font-bold">{service.title}</span>
+          <span className="text-[#0F294A] dark:text-white font-bold">{service.title}</span>
         </div>
       </div>
 
       {/* 1. HERO SECTION */}
-      <section className="bg-white border-b border-slate-200/80 pt-16 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+        {/* Subtle dot pattern background */}
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#246BCE] bg-blue-50 px-3 py-1 rounded-full border border-blue-200/70">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-3 py-1 rounded-full border border-[#F27A24]/30">
                   {service.category}
                 </span>
-                <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#0F294A] px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700">
                   Primary SEO: {service.seoTarget}
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-[#10233F] tracking-tight leading-tight">
+              <h1 className="text-4xl sm:text-5xl font-black text-[#0F294A] dark:text-white tracking-tight leading-tight">
                 {service.title}
               </h1>
 
-              <p className="text-xl sm:text-2xl font-bold text-[#17A6A1]">
+              <p className="text-xl sm:text-2xl font-bold text-[#F27A24]">
                 "{service.tagline}"
               </p>
 
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                 {service.overview}
               </p>
 
               <div className="pt-2 flex flex-wrap gap-4">
                 <a
                   href="#service-enquiry"
-                  className="px-8 py-3.5 text-sm font-bold text-white bg-[#10233F] hover:bg-[#162f55] rounded-xl shadow-md transition-all inline-flex items-center gap-2"
+                  className="px-8 py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-md transition-all inline-flex items-center gap-2 group"
                 >
                   <span>Request Service Proposal</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </a>
                 <Link
                   to="/contact/?type=consultation"
-                  className="px-6 py-3.5 text-sm font-bold text-[#10233F] bg-slate-100 hover:bg-slate-200 rounded-xl transition-all"
+                  className="px-6 py-3.5 text-sm font-bold text-[#0F294A] dark:text-slate-200 bg-slate-100 dark:bg-[#0F294A] hover:bg-slate-200 dark:hover:bg-[#143761] border border-slate-200 dark:border-slate-700 rounded-xl transition-all"
                 >
                   Schedule Consultation
                 </Link>
               </div>
 
-              <div className="pt-2 text-xs text-slate-400 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#17A6A1]" />
+              <div className="pt-2 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#0D9488]" />
                 <span>Fixed-scope milestones, strict SLA warranties & clean IP code transfer</span>
               </div>
             </div>
 
             {/* Scope Quick Glance Card */}
             <div className="lg:col-span-5">
-              <div className="bg-[#10233F] text-white rounded-2xl p-8 shadow-xl space-y-5">
-                <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+              <div className="bg-[#0F294A] text-white rounded-2xl p-8 shadow-xl space-y-5 border border-slate-700/70">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                   Service Overview
                 </span>
-                <h3 className="text-xl font-bold">Standard Engagement Scope</h3>
+                <h3 className="text-xl font-bold text-white">Standard Engagement Scope</h3>
 
                 <ul className="space-y-3 text-sm text-slate-300">
                   {service.scope.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#17A6A1] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#0D9488] shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -130,7 +133,7 @@ export default function ServiceDetail() {
 
                 <div className="pt-4 border-t border-slate-700/80 flex items-center justify-between text-xs text-slate-400">
                   <span>Target Search Entity</span>
-                  <span className="text-white font-medium">{service.seoTarget}</span>
+                  <span className="text-[#F27A24] font-medium">{service.seoTarget}</span>
                 </div>
               </div>
             </div>
@@ -139,19 +142,19 @@ export default function ServiceDetail() {
       </section>
 
       {/* 2. THE BUYER PROBLEM & CURRENT HURDLES */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200/90 shadow-sm max-w-4xl mx-auto space-y-5">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-600 bg-red-50 px-3 py-1 rounded-full">
+          <div className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 sm:p-12 border border-slate-200/90 dark:border-slate-700/60 shadow-sm max-w-4xl mx-auto space-y-5">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/60 px-3 py-1 rounded-full border border-red-200 dark:border-red-800">
               <span>The Client Challenge</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#10233F]">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0F294A] dark:text-white">
               Why Conventional Approaches Break Down
             </h2>
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
               {service.buyerProblem}
             </p>
-            <div className="p-4 rounded-xl bg-slate-50 border-l-4 border-[#246BCE] text-sm text-slate-600">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0A1C33] border-l-4 border-[#F27A24] text-sm text-slate-600 dark:text-slate-300">
               Bizwoke Nova solves this through pragmatic architecture planning, eliminating technical debt early, and delivering maintainable, modern solutions backed by production support.
             </div>
           </div>
@@ -159,16 +162,16 @@ export default function ServiceDetail() {
       </section>
 
       {/* 3. PROCESS & METHODOLOGY */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      <section className="py-20 bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Engineering Discipline
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Our 4-Stage Delivery Process
             </h2>
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               Every engagement follows a structured, transparent timeline with bi-weekly demonstrations and clear sign-offs.
             </p>
           </div>
@@ -177,15 +180,15 @@ export default function ServiceDetail() {
             {service.process.map((step, idx) => (
               <div
                 key={idx}
-                className="bg-[#F6F8FB] rounded-2xl p-6 border border-slate-200/90 space-y-3 relative"
+                className="bg-[#F8FAFC] dark:bg-[#0F294A] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-700/60 space-y-3 relative"
               >
-                <span className="text-3xl font-extrabold text-[#246BCE]/40 block">
+                <span className="text-3xl font-black text-[#F27A24]/40 block">
                   {step.step}
                 </span>
-                <h3 className="text-lg font-bold text-[#10233F]">
+                <h3 className="text-lg font-bold text-[#0F294A] dark:text-white">
                   {step.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -195,21 +198,21 @@ export default function ServiceDetail() {
       </section>
 
       {/* 4. DELIVERABLES & TECHNOLOGIES */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* Deliverables */}
-            <div className="bg-white rounded-2xl p-8 border border-slate-200/90 shadow-sm space-y-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#17A6A1]">
+            <div className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#0D9488] dark:text-teal-400">
                 Concrete Outcomes
               </span>
-              <h3 className="text-2xl font-bold text-[#10233F]">
+              <h3 className="text-2xl font-black text-[#0F294A] dark:text-white">
                 Verified Project Deliverables
               </h3>
               <ul className="space-y-3 pt-2">
                 {service.deliverables.map((deliv, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-[#17A6A1] shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-[#0D9488] shrink-0 mt-0.5" />
                     <span>{deliv}</span>
                   </li>
                 ))}
@@ -217,21 +220,21 @@ export default function ServiceDetail() {
             </div>
 
             {/* Technologies */}
-            <div className="bg-white rounded-2xl p-8 border border-slate-200/90 shadow-sm space-y-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <div className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
                 Modern Tech Stack
               </span>
-              <h3 className="text-2xl font-bold text-[#10233F]">
+              <h3 className="text-2xl font-black text-[#0F294A] dark:text-white">
                 Engineered with Industry Standards
               </h3>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
                 We select proven frameworks that guarantee maintainability, high speed, and active ecosystem support.
               </p>
               <div className="flex flex-wrap gap-2 pt-2">
                 {service.technologies.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#F6F8FB] text-[#10233F] border border-slate-200"
+                    className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#F8FAFC] dark:bg-[#0A1C33] text-[#0F294A] dark:text-slate-200 border border-slate-200 dark:border-slate-700"
                   >
                     {tech}
                   </span>
@@ -243,25 +246,25 @@ export default function ServiceDetail() {
       </section>
 
       {/* 5. FREQUENTLY ASKED QUESTIONS */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      <section className="py-20 bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Frequently Asked Questions
             </span>
-            <h2 className="text-3xl font-extrabold text-[#10233F]">
+            <h2 className="text-3xl font-black text-[#0F294A] dark:text-white">
               Clear Answers on Scope & Delivery
             </h2>
           </div>
 
           <div className="space-y-4">
             {service.faqs.map((faq, idx) => (
-              <div key={idx} className="p-6 rounded-xl bg-[#F6F8FB] border border-slate-200/90 space-y-2">
-                <h4 className="text-base font-bold text-[#10233F] flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-[#246BCE] shrink-0" />
+              <div key={idx} className="p-6 rounded-xl bg-[#F8FAFC] dark:bg-[#0F294A] border border-slate-200/90 dark:border-slate-700/60 space-y-2">
+                <h4 className="text-base font-bold text-[#0F294A] dark:text-white flex items-center gap-2">
+                  <HelpCircle className="w-4 h-4 text-[#F27A24] shrink-0" />
                   <span>{faq.q}</span>
                 </h4>
-                <p className="text-sm text-slate-600 leading-relaxed pl-6">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed pl-6">
                   {faq.a}
                 </p>
               </div>
@@ -271,14 +274,14 @@ export default function ServiceDetail() {
       </section>
 
       {/* 6. CONVERSION & SERVICE ENQUIRY FORM */}
-      <section id="service-enquiry" className="py-20 bg-[#F6F8FB]">
+      <section id="service-enquiry" className="py-20 bg-[#F8FAFC] dark:bg-[#081528]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#10233F] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8">
+          <div className="bg-[#0F294A] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border border-slate-700/70">
             <div className="text-center space-y-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                 Service Inquiry
               </span>
-              <h2 className="text-3xl font-extrabold tracking-tight">
+              <h2 className="text-3xl font-black tracking-tight text-white">
                 Request a Proposal for {service.title}
               </h2>
               <p className="text-sm text-slate-300 max-w-md mx-auto">
@@ -295,7 +298,7 @@ export default function ServiceDetail() {
                 </p>
                 <button
                   onClick={() => setInquirySent(false)}
-                  className="mt-4 px-6 py-2 text-xs font-bold text-[#10233F] bg-white rounded-lg hover:bg-slate-100"
+                  className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] bg-white rounded-lg hover:bg-slate-100"
                 >
                   Submit Another Inquiry
                 </button>
@@ -313,7 +316,7 @@ export default function ServiceDetail() {
                       placeholder="e.g. Priya Nair"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                   <div>
@@ -326,7 +329,7 @@ export default function ServiceDetail() {
                       placeholder="name@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                 </div>
@@ -340,7 +343,7 @@ export default function ServiceDetail() {
                     placeholder="+91-XXXXXXXXXX"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                   />
                 </div>
 
@@ -353,14 +356,14 @@ export default function ServiceDetail() {
                     placeholder={`Tell us about your objectives for ${service.title}...`}
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 text-sm font-bold text-white bg-[#246BCE] hover:bg-[#1f5cb0] rounded-xl shadow-lg transition-all"
+                    className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
                   >
                     Send Service Inquiry
                   </button>

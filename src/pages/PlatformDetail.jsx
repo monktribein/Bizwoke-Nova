@@ -52,87 +52,90 @@ export default function PlatformDetail({ overrideSlug }) {
   };
 
   return (
-    <div className="bg-[#F6F8FB] min-h-screen">
+    <div className="bg-[#F8FAFC] dark:bg-[#081528] text-[#0F294A] dark:text-slate-100 min-h-screen transition-colors duration-200">
       <SEOHead
         title={`${platform.name} | ${platform.tagline} — Bizwoke Nova`}
         description={platform.description}
       />
 
       {/* Breadcrumb Navigation */}
-      <div className="bg-white border-b border-slate-200/80 py-3 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-slate-500">
-          <Link to="/" className="hover:text-[#10233F]">Home</Link>
+      <div className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 py-3 text-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-slate-500 dark:text-slate-400">
+          <Link to="/" className="hover:text-[#F27A24] dark:hover:text-[#F27A24] transition-colors">Home</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link to="/platforms/" className="hover:text-[#10233F]">Our Platforms</Link>
+          <Link to="/platforms/" className="hover:text-[#F27A24] dark:hover:text-[#F27A24] transition-colors">Our Platforms</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-[#10233F] font-bold">{platform.name}</span>
+          <span className="text-[#0F294A] dark:text-white font-bold">{platform.name}</span>
         </div>
       </div>
 
       {/* 1. HERO SECTION */}
-      <section className="bg-white border-b border-slate-200/80 pt-16 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+        {/* Subtle dot pattern background */}
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#246BCE] bg-blue-50 px-3 py-1 rounded-full border border-blue-200/70">
+                <span className="text-xs font-black uppercase tracking-wider text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/15 px-3 py-1 rounded-full border border-[#F27A24]/30">
                   {platform.categoryLabel}
                 </span>
                 <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full border ${
                   platform.maturityStatus === 'Live'
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
                     : platform.maturityStatus === 'Pilot'
-                    ? 'bg-blue-50 text-blue-700 border-blue-200'
+                    ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800'
                     : platform.maturityStatus === 'Early Access'
-                    ? 'bg-amber-50 text-amber-700 border-amber-200'
-                    : 'bg-slate-100 text-slate-600 border-slate-200'
+                    ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                 }`}>
                   Status: {platform.maturityStatus}
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#10233F] tracking-tight leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0F294A] dark:text-white tracking-tight leading-tight">
                 {platform.name}
               </h1>
 
-              <p className="text-xl sm:text-2xl font-bold text-[#17A6A1]">
+              <p className="text-xl sm:text-2xl font-bold text-[#F27A24]">
                 "{platform.tagline}"
               </p>
 
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                 {platform.heroSubtitle || platform.description}
               </p>
 
               <div className="pt-2 flex flex-wrap gap-4">
                 <a
                   href="#request-demo"
-                  className="px-8 py-3.5 text-sm font-bold text-white bg-[#10233F] hover:bg-[#162f55] rounded-xl shadow-md transition-all inline-flex items-center gap-2"
+                  className="px-8 py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-md transition-all inline-flex items-center gap-2 group"
                 >
                   <span>{platform.primaryCTA}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </a>
                 <Link
                   to="/partners/"
-                  className="px-6 py-3.5 text-sm font-bold text-[#10233F] bg-slate-100 hover:bg-slate-200 rounded-xl transition-all"
+                  className="px-6 py-3.5 text-sm font-bold text-[#0F294A] dark:text-slate-200 bg-slate-100 dark:bg-[#0F294A] hover:bg-slate-200 dark:hover:bg-[#143761] border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition-all"
                 >
                   Become a Partner
                 </Link>
               </div>
 
-              <div className="pt-3 text-xs text-slate-400 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#17A6A1]" />
+              <div className="pt-3 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#0D9488]" />
                 <span>Powered by NKTech Enterprise Platform™ (NEP) Shared Architecture</span>
               </div>
             </div>
 
             {/* Hero Interactive Card / Specs */}
             <div className="lg:col-span-5">
-              <div className="bg-[#10233F] text-white rounded-2xl p-8 shadow-xl space-y-6 relative overflow-hidden">
+              <div className="bg-[#0F294A] text-white rounded-2xl p-8 shadow-xl space-y-6 relative overflow-hidden border border-slate-700/70">
                 <div className="space-y-1">
-                  <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+                  <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                     Enterprise Platform Profile
                   </span>
-                  <h3 className="text-2xl font-bold">{platform.name} Architecture</h3>
+                  <h3 className="text-2xl font-extrabold text-white">{platform.name} Architecture</h3>
                 </div>
 
                 <div className="space-y-3 text-sm text-slate-300">
@@ -142,7 +145,7 @@ export default function PlatformDetail({ overrideSlug }) {
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg border border-white/10">
                     <span className="text-xs text-slate-400 block font-medium">Core Value Outcome:</span>
-                    <span className="text-[#17A6A1] font-semibold">{platform.businessValue}</span>
+                    <span className="text-[#F27A24] font-semibold">{platform.businessValue}</span>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg border border-white/10">
                     <span className="text-xs text-slate-400 block font-medium">Deployment Options:</span>
@@ -161,21 +164,21 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 2 & 3. INDUSTRY PROBLEM & SOLUTION OVERVIEW */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* The Problem */}
-            <div className="bg-white rounded-2xl p-8 sm:p-10 border border-red-100 shadow-sm space-y-6">
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-600 bg-red-50 px-3 py-1 rounded-full">
+            <div className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 sm:p-10 border border-red-100 dark:border-red-900/40 shadow-sm space-y-6">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/60 px-3 py-1 rounded-full border border-red-200 dark:border-red-800">
                 <span>The Industry Friction</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#10233F]">
+              <h2 className="text-2xl sm:text-3xl font-black text-[#0F294A] dark:text-white">
                 Operational Challenges & Inefficiencies
               </h2>
               <div className="space-y-4">
                 {platform.problemStatement.map((prob, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-sm text-slate-700">
-                    <span className="w-6 h-6 rounded-full bg-red-50 text-red-600 font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                  <div key={idx} className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-300">
+                    <span className="w-6 h-6 rounded-full bg-red-50 dark:bg-red-950/80 text-red-600 dark:text-red-400 font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">
                       ✕
                     </span>
                     <p className="leading-relaxed">{prob}</p>
@@ -185,21 +188,21 @@ export default function PlatformDetail({ overrideSlug }) {
             </div>
 
             {/* The Solution */}
-            <div className="bg-white rounded-2xl p-8 sm:p-10 border border-teal-100 shadow-sm space-y-6">
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#17A6A1] bg-teal-50 px-3 py-1 rounded-full">
+            <div className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 sm:p-10 border border-teal-100 dark:border-teal-900/40 shadow-sm space-y-6">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0D9488] dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-3 py-1 rounded-full border border-teal-200 dark:border-teal-800">
                 <span>The Engineered Solution</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#10233F]">
+              <h2 className="text-2xl sm:text-3xl font-black text-[#0F294A] dark:text-white">
                 How {platform.name} Solves This
               </h2>
-              <p className="text-base text-slate-700 leading-relaxed">
+              <p className="text-base text-slate-700 dark:text-slate-300 leading-relaxed">
                 {platform.solutionOverview}
               </p>
-              <div className="p-5 rounded-xl bg-slate-50 border-l-4 border-[#17A6A1] space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <div className="p-5 rounded-xl bg-slate-50 dark:bg-[#0A1C33] border-l-4 border-[#F27A24] space-y-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Business Value Guarantee
                 </span>
-                <p className="text-sm font-semibold text-[#10233F]">
+                <p className="text-sm font-bold text-[#0F294A] dark:text-white">
                   {platform.businessValue}
                 </p>
               </div>
@@ -209,16 +212,16 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 4. CORE MODULES (6 TO 9 MAJOR CAPABILITIES) */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      <section className="py-20 bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Platform Architecture
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Core Modules & Capabilities
             </h2>
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               Each module is built on standardized enterprise microservices ensuring maximum uptime, high throughput, and seamless interoperability.
             </p>
           </div>
@@ -227,18 +230,18 @@ export default function PlatformDetail({ overrideSlug }) {
             {platform.coreModules.map((module, idx) => (
               <div
                 key={idx}
-                className="bg-[#F6F8FB] rounded-xl p-6 border border-slate-200/90 hover:border-[#246BCE]/40 hover:bg-white transition-all space-y-3 group"
+                className="bg-[#F8FAFC] dark:bg-[#0F294A] rounded-xl p-6 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/40 hover:bg-white dark:hover:bg-[#143761] transition-all space-y-3 group"
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#246BCE] flex items-center justify-center text-xs font-bold">
+                  <div className="w-8 h-8 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 text-[#F27A24] flex items-center justify-center text-xs font-bold">
                     0{idx + 1}
                   </div>
-                  <CheckCircle2 className="w-4 h-4 text-[#17A6A1]" />
+                  <CheckCircle2 className="w-4 h-4 text-[#0D9488]" />
                 </div>
-                <h3 className="text-base font-bold text-[#10233F] group-hover:text-[#246BCE] transition-colors">
+                <h3 className="text-base font-bold text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors">
                   {module.name}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {module.desc}
                 </p>
               </div>
@@ -248,16 +251,16 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 5. TARGET USERS & BUYER PERSONAS */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Who It Is For
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Designed for Key Stakeholders & Organizations
             </h2>
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               Tailored interfaces and role-based permissions designed specifically for operational decision-makers and front-line users.
             </p>
           </div>
@@ -266,16 +269,16 @@ export default function PlatformDetail({ overrideSlug }) {
             {platform.targetUsers.map((persona, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-xl p-6 border border-slate-200/90 shadow-sm flex items-start gap-4"
+                className="bg-white dark:bg-[#0F294A] rounded-xl p-6 border border-slate-200/90 dark:border-slate-700/60 shadow-sm flex items-start gap-4"
               >
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-[#17A6A1] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-orange-500/10 dark:bg-orange-500/20 text-[#F27A24] flex items-center justify-center shrink-0">
                   <Users2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-[#10233F]">
+                  <h4 className="text-base font-bold text-[#0F294A] dark:text-white">
                     Stakeholder Group 0{idx + 1}
                   </h4>
-                  <p className="text-sm text-slate-600 mt-1 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
                     {persona}
                   </p>
                 </div>
@@ -286,16 +289,16 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 6. HOW IT WORKS / WORKFLOW */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      <section className="py-20 bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Execution Lifecycle
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               How {platform.name} Operates
             </h2>
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               A streamlined 4-stage operational workflow from initial onboarding to executive reporting.
             </p>
           </div>
@@ -304,15 +307,15 @@ export default function PlatformDetail({ overrideSlug }) {
             {platform.workflow.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-[#F6F8FB] rounded-2xl p-6 border border-slate-200/90 relative space-y-3"
+                className="bg-[#F8FAFC] dark:bg-[#0F294A] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-700/60 relative space-y-3"
               >
-                <span className="text-3xl font-extrabold text-[#246BCE]/40 block">
+                <span className="text-3xl font-black text-[#F27A24]/40 block">
                   {item.step}
                 </span>
-                <h3 className="text-lg font-bold text-[#10233F]">
+                <h3 className="text-lg font-bold text-[#0F294A] dark:text-white">
                   {item.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {item.desc}
                 </p>
               </div>
@@ -322,10 +325,10 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 7. TECHNOLOGY & SECURITY (NEP CAPABILITIES) */}
-      <section className="py-20 bg-[#10233F] text-white">
+      <section className="py-20 bg-[#0A1C33] text-white border-y border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#17A6A1]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Under The Hood
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
@@ -340,9 +343,9 @@ export default function PlatformDetail({ overrideSlug }) {
             {platform.nepIntegration.map((integration, idx) => (
               <div
                 key={idx}
-                className="bg-[#162f55] p-6 rounded-xl border border-slate-700/60 space-y-2"
+                className="bg-[#0F294A] p-6 rounded-xl border border-slate-700/60 space-y-2 hover:border-[#F27A24]/40 transition-colors"
               >
-                <div className="text-xs font-bold text-[#17A6A1] uppercase tracking-wider">
+                <div className="text-xs font-bold text-[#F27A24] uppercase tracking-wider">
                   NEP Capability Layer 0{idx + 1}
                 </div>
                 <p className="text-sm text-slate-200 leading-relaxed">
@@ -355,16 +358,16 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 8 & 9. COMMERCIAL ENGAGEMENT MODELS */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Deployment & Licensing
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Commercial Engagement Models
             </h2>
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               Flexible commercial structures designed to support organizations from rapid pilot trials to enterprise-wide rollouts.
             </p>
           </div>
@@ -373,15 +376,15 @@ export default function PlatformDetail({ overrideSlug }) {
             {platform.engagementModels.map((model, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-7 border border-slate-200/90 shadow-sm space-y-3"
+                className="bg-white dark:bg-[#0F294A] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-3"
               >
-                <div className="text-xs font-bold text-[#17A6A1] uppercase tracking-wider">
+                <div className="text-xs font-bold text-[#F27A24] uppercase tracking-wider">
                   Engagement Option 0{idx + 1}
                 </div>
-                <h3 className="text-xl font-bold text-[#10233F]">
+                <h3 className="text-xl font-bold text-[#0F294A] dark:text-white">
                   {model}
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   Includes SLA-backed support, security audits, maintenance updates, and dedicated technical onboarding.
                 </p>
               </div>
@@ -391,14 +394,14 @@ export default function PlatformDetail({ overrideSlug }) {
       </section>
 
       {/* 10. CONVERSION & DEMO ENQUIRY */}
-      <section id="request-demo" className="py-20 bg-white">
+      <section id="request-demo" className="py-20 bg-white dark:bg-[#0A1C33]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#10233F] text-white rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
+          <div className="bg-[#0F294A] text-white rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8 border border-slate-700/70">
             <div className="text-center space-y-3">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                 Interactive Demonstration
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
                 Request a Dedicated {platform.name} Demo
               </h2>
               <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
@@ -415,7 +418,7 @@ export default function PlatformDetail({ overrideSlug }) {
                 </p>
                 <button
                   onClick={() => setDemoSubmitted(false)}
-                  className="mt-4 px-6 py-2 text-xs font-bold text-[#10233F] bg-white rounded-lg hover:bg-slate-100"
+                  className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] bg-white rounded-lg hover:bg-slate-100"
                 >
                   Submit Another Request
                 </button>
@@ -433,7 +436,7 @@ export default function PlatformDetail({ overrideSlug }) {
                       placeholder="e.g. Rajesh Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                   <div>
@@ -446,7 +449,7 @@ export default function PlatformDetail({ overrideSlug }) {
                       placeholder="name@organization.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                 </div>
@@ -460,7 +463,7 @@ export default function PlatformDetail({ overrideSlug }) {
                     placeholder="e.g. Municipal Corporation, Enterprise Ltd."
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                   />
                 </div>
 
@@ -473,14 +476,14 @@ export default function PlatformDetail({ overrideSlug }) {
                     placeholder={`Tell us about your requirements for ${platform.name}...`}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 text-sm font-bold text-white bg-[#246BCE] hover:bg-[#1f5cb0] rounded-xl shadow-lg transition-all"
+                    className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
                   >
                     Confirm & Schedule Demonstration
                   </button>

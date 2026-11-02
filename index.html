@@ -15,8 +15,25 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      (function() {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var queryTheme = params.get('theme');
+          var saved = localStorage.getItem('bizwoke_theme');
+          var theme = queryTheme || saved || 'light';
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch(e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#F6F8FB] text-[#10233F] antialiased selection:bg-[#246BCE] selection:text-white font-['Plus_Jakarta_Sans',sans-serif]">
+  <body class="antialiased font-['Plus_Jakarta_Sans',sans-serif]">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

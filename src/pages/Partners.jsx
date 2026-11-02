@@ -57,27 +57,30 @@ export default function Partners() {
   };
 
   return (
-    <div className="bg-[#F6F8FB] min-h-screen">
+    <div className="bg-[#F8FAFC] dark:bg-[#081528] text-[#0F294A] dark:text-slate-100 min-h-screen transition-colors duration-200">
       <SEOHead
         title="Strategic Partnerships | Channel & Implementation Programs — Bizwoke Nova"
         description="Partner with Bizwoke Nova across channel distribution, system integration, institutional initiatives, and technology collaborations."
       />
 
       {/* Hero */}
-      <section className="bg-white border-b border-slate-200/80 pt-16 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+        {/* Subtle dot pattern background */}
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-bold text-[#246BCE] uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-[#F27A24]/30 text-xs font-bold text-[#F27A24] uppercase tracking-wider">
               <span>STRATEGIC PARTNERSHIP PROGRAMS</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-[#10233F] tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-black text-[#0F294A] dark:text-white tracking-tight leading-tight">
               Scale Your Reach with <br />
-              <span className="text-[#246BCE]">Bizwoke Nova Ecosystem.</span>
+              <span className="text-[#F27A24]">Bizwoke Nova Ecosystem.</span>
             </h1>
-            <p className="text-xl font-semibold text-slate-700">
+            <p className="text-xl font-bold text-slate-700 dark:text-slate-200">
               Channel, Implementation, Institutional, and Technology Collaborations.
             </p>
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
               We welcome partnerships with enterprise systems integrators, regional software distributors, industry associations, and technology innovators. Together, we deliver high-impact digital infrastructure to businesses and public institutions across India and global markets.
             </p>
           </div>
@@ -85,13 +88,13 @@ export default function Partners() {
       </section>
 
       {/* 4 Partnership Tracks */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Collaboration Pathways
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Four Structured Partnership Tracks
             </h2>
           </div>
@@ -100,30 +103,30 @@ export default function Partners() {
             {partnerTracks.map((track, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-8 border border-slate-200/90 shadow-sm space-y-5 flex flex-col justify-between"
+                className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-5 flex flex-col justify-between hover:border-[#F27A24]/40 transition-colors"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-extrabold text-[#246BCE] bg-blue-50 px-3 py-1 rounded-full">
+                    <span className="text-xs font-bold text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-3 py-1 rounded-full border border-[#F27A24]/30">
                       Track 0{idx + 1}
                     </span>
-                    <Handshake className="w-5 h-5 text-[#17A6A1]" />
+                    <Handshake className="w-5 h-5 text-[#0D9488] dark:text-teal-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-[#10233F]">
+                  <h3 className="text-2xl font-black text-[#0F294A] dark:text-white">
                     {track.title}
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {track.desc}
                   </p>
 
                   <div className="pt-2 space-y-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">
                       Partner Advantages
                     </span>
-                    <ul className="space-y-1.5 text-xs text-slate-700">
+                    <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                       {track.benefits.map((b, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#17A6A1] shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#0D9488] shrink-0 mt-0.5" />
                           <span>{b}</span>
                         </li>
                       ))}
@@ -131,14 +134,14 @@ export default function Partners() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100">
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
                   <a
                     href="#partner-form"
                     onClick={() => setFormData({ ...formData, partnerType: track.title.split(' ')[0] })}
-                    className="text-xs font-bold text-[#246BCE] hover:text-[#10233F] inline-flex items-center gap-1"
+                    className="text-xs font-bold text-[#F27A24] hover:text-[#DE6713] inline-flex items-center gap-1 group"
                   >
                     <span>Apply for {track.title.split('&')[0]} Program</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </a>
                 </div>
               </div>
@@ -148,14 +151,14 @@ export default function Partners() {
       </section>
 
       {/* Partner Application Form */}
-      <section id="partner-form" className="py-20 bg-white">
+      <section id="partner-form" className="py-20 bg-white dark:bg-[#0A1C33]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#10233F] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8">
+          <div className="bg-[#0F294A] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border border-slate-700/70">
             <div className="text-center space-y-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                 Partner Application
               </span>
-              <h2 className="text-3xl font-extrabold tracking-tight">
+              <h2 className="text-3xl font-black tracking-tight text-white">
                 Explore Partnership Opportunities
               </h2>
               <p className="text-sm text-slate-300 max-w-md mx-auto">
@@ -172,7 +175,7 @@ export default function Partners() {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 px-6 py-2 text-xs font-bold text-[#10233F] bg-white rounded-lg hover:bg-slate-100"
+                  className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] bg-white rounded-lg hover:bg-slate-100"
                 >
                   Submit Another Application
                 </button>
@@ -190,7 +193,7 @@ export default function Partners() {
                       placeholder="e.g. Amit Kapoor"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                   <div>
@@ -203,7 +206,7 @@ export default function Partners() {
                       placeholder="name@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                 </div>
@@ -219,7 +222,7 @@ export default function Partners() {
                       placeholder="e.g. Apex Solutions Pvt Ltd"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                   <div>
@@ -229,7 +232,7 @@ export default function Partners() {
                     <select
                       value={formData.partnerType}
                       onChange={(e) => setFormData({ ...formData, partnerType: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-[#162f55] border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-[#0A1C33] border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     >
                       <option value="Channel">Channel & Distribution Partner</option>
                       <option value="Implementation">Implementation & System Integrator</option>
@@ -248,14 +251,14 @@ export default function Partners() {
                     placeholder="Briefly describe your current reach, client base, or integration goals..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 text-sm font-bold text-white bg-[#246BCE] hover:bg-[#1f5cb0] rounded-xl shadow-lg transition-all"
+                    className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
                   >
                     Submit Partnership Application
                   </button>

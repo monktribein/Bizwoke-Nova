@@ -35,7 +35,7 @@ export default function Contact() {
 
   // Synchronize query param
   useEffect(() => {
-    if (['general', 'custom', 'demo', 'government', 'partnership', 'support', 'careers', 'consultation', 'proposal', 'project'].includes(initialType)) {
+    if (['general', 'custom', 'demo', 'government', 'partnership', 'support', 'careers', 'consultation', 'proposal', 'project', 'sector', 'tech'].includes(initialType)) {
       setEnquiryType(initialType);
     }
   }, [initialType]);
@@ -86,27 +86,30 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-[#F6F8FB] min-h-screen">
+    <div className="bg-[#F8FAFC] dark:bg-[#081528] text-[#0F294A] dark:text-slate-100 min-h-screen transition-colors duration-200">
       <SEOHead
         title="Contact & Enquiries | Connect with Bizwoke Nova"
         description="Get in touch with Bizwoke Nova for enterprise software consultations, product demonstrations, government solutions, partnerships, or careers."
       />
 
       {/* Hero */}
-      <section className="bg-white border-b border-slate-200/80 pt-16 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+        {/* Subtle dot pattern background */}
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-bold text-[#246BCE] uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-[#F27A24]/30 text-xs font-bold text-[#F27A24] uppercase tracking-wider">
               <span>CONTACT & ENTERPRISE INQUIRIES</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-[#10233F] tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-black text-[#0F294A] dark:text-white tracking-tight leading-tight">
               Start the Conversation with <br />
-              <span className="text-[#246BCE]">Bizwoke Nova.</span>
+              <span className="text-[#F27A24]">Bizwoke Nova.</span>
             </h1>
-            <p className="text-xl font-semibold text-slate-700">
+            <p className="text-xl font-bold text-slate-700 dark:text-slate-200">
               Direct Access to Enterprise Architects, Product Leads, and Solutions Teams.
             </p>
-            <p className="text-base text-slate-600 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
               Select your specific enquiry path below so your message routes immediately to the relevant engineering or practice leader without delays.
             </p>
           </div>
@@ -120,8 +123,8 @@ export default function Contact() {
             {/* Left Column: Form & Channel Selector */}
             <div className="lg:col-span-7 space-y-8">
               {/* Channel Selector Pills */}
-              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+              <div className="bg-white dark:bg-[#0F294A] p-6 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-3">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
                   Select Enquiry Pathway:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -132,47 +135,47 @@ export default function Contact() {
                       onClick={() => setEnquiryType(ch.id)}
                       className={`text-left p-3 rounded-xl border text-xs transition-all ${
                         enquiryType === ch.id
-                          ? 'border-[#246BCE] bg-blue-50/70 text-[#10233F] font-bold shadow-sm'
-                          : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-medium'
+                          ? 'border-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 text-[#0F294A] dark:text-white font-bold shadow-sm'
+                          : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0A1C33] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#143761] font-medium'
                       }`}
                     >
                       <div className="font-bold">{ch.label}</div>
-                      <div className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">{ch.desc}</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">{ch.desc}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Form Card */}
-              <div className="bg-white p-8 sm:p-10 rounded-2xl border border-slate-200/90 shadow-sm space-y-6">
+              <div className="bg-white dark:bg-[#0F294A] p-8 sm:p-10 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-[#10233F]">
+                  <h3 className="text-2xl font-black text-[#0F294A] dark:text-white">
                     {channels.find(c => c.id === enquiryType)?.label || 'Enterprise Enquiry'}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     Direct communication with dedicated technical leads.
                   </p>
                 </div>
 
                 {errorMessage && (
-                  <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg">
+                  <div className="p-3 bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-xs rounded-lg">
                     {errorMessage}
                   </div>
                 )}
 
                 {isSubmitted ? (
-                  <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-8 text-center space-y-3">
-                    <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-                    <h4 className="text-xl font-bold text-slate-900">Enquiry Dispatched Successfully</h4>
-                    <p className="text-sm text-slate-600 max-w-md mx-auto">
-                      Thank you, <strong className="text-slate-900">{formData.name}</strong>. Your enquiry for <strong className="text-slate-900">{channels.find(c => c.id === enquiryType)?.label}</strong> has been logged. Our team will contact you at <strong className="text-slate-900">{formData.email}</strong> within 1 business day.
+                  <div className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-8 text-center space-y-3">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
+                    <h4 className="text-xl font-bold text-slate-900 dark:text-white">Enquiry Dispatched Successfully</h4>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
+                      Thank you, <strong className="text-slate-900 dark:text-white">{formData.name}</strong>. Your enquiry for <strong className="text-slate-900 dark:text-white">{channels.find(c => c.id === enquiryType)?.label}</strong> has been logged. Our team will contact you at <strong className="text-slate-900 dark:text-white">{formData.email}</strong> within 1 business day.
                     </p>
                     <button
                       onClick={() => {
                         setIsSubmitted(false);
                         setFormData({ name: '', email: '', phone: '', organization: '', message: '', honeypot: '' });
                       }}
-                      className="mt-4 px-6 py-2 text-xs font-bold text-white bg-[#10233F] rounded-lg hover:bg-slate-800"
+                      className="mt-4 px-6 py-2 text-xs font-bold text-white bg-[#0F294A] dark:bg-[#F27A24] hover:bg-[#143761] dark:hover:bg-[#DE6713] rounded-lg transition-colors"
                     >
                       Submit Another Enquiry
                     </button>
@@ -192,7 +195,7 @@ export default function Contact() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">
+                        <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                           Full Name *
                         </label>
                         <input
@@ -201,11 +204,11 @@ export default function Contact() {
                           placeholder="e.g. Vikram Singhania"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-[#F6F8FB] border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                          className="w-full px-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F27A24] transition-all"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">
+                        <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                           Work Email *
                         </label>
                         <input
@@ -214,14 +217,14 @@ export default function Contact() {
                           placeholder="vikram@enterprise.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-[#F6F8FB] border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                          className="w-full px-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F27A24] transition-all"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">
+                        <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                           Contact Phone / WhatsApp
                         </label>
                         <input
@@ -229,11 +232,11 @@ export default function Contact() {
                           placeholder="+91-XXXXXXXXXX"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-[#F6F8FB] border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                          className="w-full px-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F27A24] transition-all"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">
+                        <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                           Organization / Company Name
                         </label>
                         <input
@@ -241,13 +244,13 @@ export default function Contact() {
                           placeholder="e.g. Acme Corp, Smart City SPV"
                           value={formData.organization}
                           onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                          className="w-full px-4 py-2.5 bg-[#F6F8FB] border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                          className="w-full px-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F27A24] transition-all"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                         Detailed Project Requirements or Question *
                       </label>
                       <textarea
@@ -256,7 +259,7 @@ export default function Contact() {
                         placeholder="Please provide details regarding your requirements, timelines, or questions..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full px-4 py-2.5 bg-[#F6F8FB] border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                        className="w-full px-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F27A24] transition-all"
                       />
                     </div>
 
@@ -264,18 +267,18 @@ export default function Contact() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full py-3.5 text-sm font-bold text-white bg-[#10233F] hover:bg-[#162f55] rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                        className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-md transition-all flex items-center justify-center gap-2 group"
                       >
                         {isSubmitting ? (
                           <span>Processing Enquiry...</span>
                         ) : (
                           <>
                             <span>Send Secure Enquiry</span>
-                            <ArrowRight className="w-4 h-4" />
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                           </>
                         )}
                       </button>
-                      <p className="text-[11px] text-slate-400 text-center mt-2.5">
+                      <p className="text-[11px] text-slate-400 dark:text-slate-500 text-center mt-2.5">
                         By submitting, you agree to secure data processing under our privacy guidelines. No spam.
                       </p>
                     </div>
@@ -287,49 +290,49 @@ export default function Contact() {
             {/* Right Column: Verified Office & Contact Directory */}
             <div className="lg:col-span-5 space-y-6">
               {/* Corporate Office Card */}
-              <div className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-sm space-y-6">
+              <div className="bg-white dark:bg-[#0F294A] p-8 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-6">
                 <div>
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#246BCE]">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                     Corporate Headquarters
                   </span>
-                  <h3 className="text-xl font-bold text-[#10233F] mt-1">
+                  <h3 className="text-xl font-black text-[#0F294A] dark:text-white mt-1">
                     Bizwoke Nova™ Headquarters
                   </h3>
                 </div>
 
-                <div className="space-y-4 text-sm text-slate-600">
+                <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300">
                   <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-[#246BCE] shrink-0 mt-0.5" />
+                    <MapPin className="w-5 h-5 text-[#F27A24] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-800 block">Office Address:</strong>
+                      <strong className="text-slate-800 dark:text-white block">Office Address:</strong>
                       <span>Sector 62, Noida, Uttar Pradesh 201309, Delhi NCR, India</span>
-                      <span className="text-[10px] text-slate-400 block mt-0.5 italic">[Official corporate address placeholder]</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 block mt-0.5 italic">[Official corporate address placeholder]</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Mail className="w-5 h-5 text-[#246BCE] shrink-0 mt-0.5" />
+                    <Mail className="w-5 h-5 text-[#F27A24] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-800 block">General Communications:</strong>
-                      <a href="mailto:contact@bizwoke.com" className="text-[#246BCE] hover:underline">
+                      <strong className="text-slate-800 dark:text-white block">General Communications:</strong>
+                      <a href="mailto:contact@bizwoke.com" className="text-[#F27A24] hover:underline">
                         contact@bizwoke.com
                       </a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Phone className="w-5 h-5 text-[#246BCE] shrink-0 mt-0.5" />
+                    <Phone className="w-5 h-5 text-[#F27A24] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-800 block">Telephone:</strong>
+                      <strong className="text-slate-800 dark:text-white block">Telephone:</strong>
                       <span>+91 (0) 120-BIZWOKE</span>
-                      <span className="text-[10px] text-slate-400 block mt-0.5 italic">[PBX Line]</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 block mt-0.5 italic">[PBX Line]</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-[#246BCE] shrink-0 mt-0.5" />
+                    <Clock className="w-5 h-5 text-[#F27A24] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-800 block">Operating Hours:</strong>
+                      <strong className="text-slate-800 dark:text-white block">Operating Hours:</strong>
                       <span>Monday – Friday: 9:30 AM – 6:30 PM IST</span>
                     </div>
                   </div>
@@ -337,34 +340,34 @@ export default function Contact() {
               </div>
 
               {/* Segregated Department Inboxes */}
-              <div className="bg-[#10233F] text-white p-7 rounded-2xl shadow-lg space-y-4">
-                <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+              <div className="bg-[#0F294A] dark:bg-[#0A1C33] text-white p-7 rounded-2xl shadow-lg space-y-4 border border-slate-700/80">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                   Direct Inboxes
                 </span>
-                <h4 className="text-base font-bold">Department Email Directory</h4>
+                <h4 className="text-base font-bold text-white">Department Email Directory</h4>
 
                 <div className="space-y-3 text-xs text-slate-300">
                   <div className="flex justify-between pb-2 border-b border-slate-700">
                     <span className="text-slate-400">Enterprise Solutions:</span>
-                    <a href="mailto:enterprise@bizwoke.com" className="font-semibold text-white hover:text-[#17A6A1]">
+                    <a href="mailto:enterprise@bizwoke.com" className="font-semibold text-white hover:text-[#F27A24]">
                       enterprise@bizwoke.com
                     </a>
                   </div>
                   <div className="flex justify-between pb-2 border-b border-slate-700">
                     <span className="text-slate-400">Strategic Partnerships:</span>
-                    <a href="mailto:partners@bizwoke.com" className="font-semibold text-white hover:text-[#17A6A1]">
+                    <a href="mailto:partners@bizwoke.com" className="font-semibold text-white hover:text-[#F27A24]">
                       partners@bizwoke.com
                     </a>
                   </div>
                   <div className="flex justify-between pb-2 border-b border-slate-700">
                     <span className="text-slate-400">Government Initiatives:</span>
-                    <a href="mailto:gov@bizwoke.com" className="font-semibold text-white hover:text-[#17A6A1]">
+                    <a href="mailto:gov@bizwoke.com" className="font-semibold text-white hover:text-[#F27A24]">
                       gov@bizwoke.com
                     </a>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Careers & Recruiting:</span>
-                    <a href="mailto:careers@bizwoke.com" className="font-semibold text-white hover:text-[#17A6A1]">
+                    <a href="mailto:careers@bizwoke.com" className="font-semibold text-white hover:text-[#F27A24]">
                       careers@bizwoke.com
                     </a>
                   </div>

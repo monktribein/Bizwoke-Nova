@@ -91,27 +91,30 @@ export default function Careers() {
   };
 
   return (
-    <div className="bg-[#F6F8FB] min-h-screen">
+    <div className="bg-[#F8FAFC] dark:bg-[#081528] text-[#0F294A] dark:text-slate-100 min-h-screen transition-colors duration-200">
       <SEOHead
         title="Careers & Culture | Join Bizwoke Nova — Enterprise Technology"
         description="Explore open engineering, AI, product, and enterprise roles at Bizwoke Nova. Build mission-critical digital infrastructure for a smarter India."
       />
 
       {/* Hero */}
-      <section className="bg-white border-b border-slate-200/80 pt-16 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+        {/* Subtle dot pattern background */}
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-bold text-[#246BCE] uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-[#F27A24]/30 text-xs font-bold text-[#F27A24] uppercase tracking-wider">
               <span>CAREERS AT BIZWOKE NOVA</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-[#10233F] tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-black text-[#0F294A] dark:text-white tracking-tight leading-tight">
               Build Technology That Impacts <br />
-              <span className="text-[#246BCE]">Real Economic Sectors.</span>
+              <span className="text-[#F27A24]">Real Economic Sectors.</span>
             </h1>
-            <p className="text-xl font-semibold text-slate-700">
+            <p className="text-xl font-bold text-slate-700 dark:text-slate-200">
               Work on Mission-Critical Systems, Not Discardable Social Widgets.
             </p>
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
               At Bizwoke Nova, we build enduring digital infrastructure: from pilgrim management ecosystems and urban municipal governance to AI industrial automation and commercial driver networks. If you are driven by high agency, technical depth, and real-world impact, we would love to build with you.
             </p>
           </div>
@@ -119,36 +122,36 @@ export default function Careers() {
       </section>
 
       {/* Culture Pillars */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Engineering Culture
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               What It Means to Build at Bizwoke Nova
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
-              <Cpu className="w-8 h-8 text-[#246BCE]" />
-              <h3 className="text-xl font-bold text-[#10233F]">High Autonomy & Ownership</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
+            <div className="bg-white dark:bg-[#0F294A] p-8 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-3 hover:border-[#F27A24]/40 transition-colors">
+              <Cpu className="w-8 h-8 text-[#F27A24]" />
+              <h3 className="text-xl font-bold text-[#0F294A] dark:text-white">High Autonomy & Ownership</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 Engineers own entire platforms from schema design to production deployment without bureaucratic hand-offs.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
-              <Sparkles className="w-8 h-8 text-[#17A6A1]" />
-              <h3 className="text-xl font-bold text-[#10233F]">Pragmatic Innovation</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
+            <div className="bg-white dark:bg-[#0F294A] p-8 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-3 hover:border-[#0D9488]/40 transition-colors">
+              <Sparkles className="w-8 h-8 text-[#0D9488] dark:text-teal-400" />
+              <h3 className="text-xl font-bold text-[#0F294A] dark:text-white">Pragmatic Innovation</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 We adopt generative AI and cutting-edge tools because they deliver genuine commercial leverage, not for hype.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
-              <ShieldCheck className="w-8 h-8 text-indigo-600" />
-              <h3 className="text-xl font-bold text-[#10233F]">Meritocratic Growth</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
+            <div className="bg-white dark:bg-[#0F294A] p-8 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-3 hover:border-blue-400 transition-colors">
+              <ShieldCheck className="w-8 h-8 text-blue-500" />
+              <h3 className="text-xl font-bold text-[#0F294A] dark:text-white">Meritocratic Growth</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 Clear technical progression tracks. Recognition is awarded strictly based on tangible deliverables and team leadership.
               </p>
             </div>
@@ -157,16 +160,16 @@ export default function Careers() {
       </section>
 
       {/* Open Roles */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      <section className="py-20 bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Current Openings
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Open Positions Across Teams
             </h2>
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               We are actively hiring experienced engineers, product architects, and growth leaders to expand our portfolio.
             </p>
           </div>
@@ -175,24 +178,24 @@ export default function Careers() {
             {openRoles.map((role, idx) => (
               <div
                 key={idx}
-                className="bg-[#F6F8FB] rounded-2xl p-6 sm:p-8 border border-slate-200/90 hover:border-[#246BCE]/40 hover:bg-white shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group"
+                className="bg-[#F8FAFC] dark:bg-[#0F294A] rounded-2xl p-6 sm:p-8 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/40 hover:bg-white dark:hover:bg-[#143761] shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group"
               >
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-bold text-[#246BCE] bg-blue-50 px-2.5 py-0.5 rounded-full">
+                    <span className="text-xs font-bold text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-[#F27A24]/30">
                       {role.team}
                     </span>
-                    <span className="text-xs text-slate-500 flex items-center gap-1">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" /> {role.location}
                     </span>
-                    <span className="text-xs text-slate-500 flex items-center gap-1">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" /> {role.type}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-[#10233F] group-hover:text-[#246BCE] transition-colors">
+                  <h3 className="text-xl font-bold text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors">
                     {role.title}
                   </h3>
-                  <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
                     {role.desc}
                   </p>
                 </div>
@@ -200,7 +203,7 @@ export default function Careers() {
                 <a
                   href="#apply-form"
                   onClick={() => setFormData({ ...formData, role: role.title })}
-                  className="px-6 py-2.5 text-xs font-bold text-white bg-[#10233F] group-hover:bg-[#246BCE] rounded-xl shrink-0 transition-colors inline-flex items-center gap-1.5"
+                  className="px-6 py-2.5 text-xs font-bold text-white bg-[#0F294A] group-hover:bg-[#F27A24] dark:bg-[#0A1C33] dark:group-hover:bg-[#F27A24] rounded-xl shrink-0 transition-colors inline-flex items-center gap-1.5 shadow-sm"
                 >
                   <span>Apply for Role</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -212,26 +215,26 @@ export default function Careers() {
       </section>
 
       {/* Student & Internship Programs */}
-      <section className="py-20 bg-[#F6F8FB] border-b border-slate-200/80">
+      <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#17A6A1]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#0D9488] dark:text-teal-400">
               Next-Gen Talent
             </span>
-            <h2 className="text-3xl font-extrabold text-[#10233F]">
+            <h2 className="text-3xl font-black text-[#0F294A] dark:text-white">
               Student & Internship Programs
             </h2>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               For ambitious computer science and design students looking to build production software, not fetch coffee.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {studentPrograms.map((prog, idx) => (
-              <div key={idx} className="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
-                <GraduationCap className="w-8 h-8 text-[#17A6A1]" />
-                <h3 className="text-xl font-bold text-[#10233F]">{prog.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{prog.desc}</p>
+              <div key={idx} className="bg-white dark:bg-[#0F294A] p-7 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-3 hover:border-[#F27A24]/40 transition-colors">
+                <GraduationCap className="w-8 h-8 text-[#0D9488] dark:text-teal-400" />
+                <h3 className="text-xl font-bold text-[#0F294A] dark:text-white">{prog.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{prog.desc}</p>
               </div>
             ))}
           </div>
@@ -239,23 +242,23 @@ export default function Careers() {
       </section>
 
       {/* Hiring Process */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      <section className="py-20 bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#246BCE]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Transparent Recruitment
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#10233F] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0F294A] dark:text-white tracking-tight">
               Our 4-Step Hiring Process
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {hiringSteps.map((s, idx) => (
-              <div key={idx} className="bg-[#F6F8FB] p-6 rounded-2xl border border-slate-200/90 space-y-3">
-                <span className="text-3xl font-extrabold text-[#246BCE]/40 block">{s.step}</span>
-                <h3 className="text-base font-bold text-[#10233F]">{s.title}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{s.desc}</p>
+              <div key={idx} className="bg-[#F8FAFC] dark:bg-[#0F294A] p-6 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 space-y-3">
+                <span className="text-3xl font-black text-[#F27A24]/40 block">{s.step}</span>
+                <h3 className="text-base font-bold text-[#0F294A] dark:text-white">{s.title}</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -263,14 +266,14 @@ export default function Careers() {
       </section>
 
       {/* Application Form */}
-      <section id="apply-form" className="py-20 bg-[#F6F8FB]">
+      <section id="apply-form" className="py-20 bg-[#F8FAFC] dark:bg-[#081528]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#10233F] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8">
+          <div className="bg-[#0F294A] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border border-slate-700/70">
             <div className="text-center space-y-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#17A6A1]">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                 Quick Application
               </span>
-              <h2 className="text-3xl font-extrabold tracking-tight">
+              <h2 className="text-3xl font-black tracking-tight text-white">
                 Submit Your Application
               </h2>
               <p className="text-sm text-slate-300 max-w-md mx-auto">
@@ -287,7 +290,7 @@ export default function Careers() {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 px-6 py-2 text-xs font-bold text-[#10233F] bg-white rounded-lg hover:bg-slate-100"
+                  className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] bg-white rounded-lg hover:bg-slate-100"
                 >
                   Submit Another Profile
                 </button>
@@ -305,7 +308,7 @@ export default function Careers() {
                       placeholder="e.g. Rahul Verma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                   <div>
@@ -318,7 +321,7 @@ export default function Careers() {
                       placeholder="rahul@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                 </div>
@@ -331,7 +334,7 @@ export default function Careers() {
                     <select
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-[#162f55] border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-[#0A1C33] border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     >
                       {openRoles.map((r, i) => (
                         <option key={i} value={r.title}>{r.title}</option>
@@ -349,7 +352,7 @@ export default function Careers() {
                       placeholder="https://github.com/yourhandle"
                       value={formData.portfolio}
                       onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                     />
                   </div>
                 </div>
@@ -363,14 +366,14 @@ export default function Careers() {
                     placeholder="Briefly highlight what you enjoy building and what technologies you master..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#246BCE]"
+                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 text-sm font-bold text-white bg-[#246BCE] hover:bg-[#1f5cb0] rounded-xl shadow-lg transition-all"
+                    className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
                   >
                     Submit Job Application
                   </button>
