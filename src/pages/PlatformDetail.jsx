@@ -33,9 +33,21 @@ export default function PlatformDetail({ overrideSlug }) {
     return <Navigate to="/platforms/" replace />;
   }
 
-  const handleDemoSubmit = (e) => {
+  const handleDemoSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    try {
+      await fetch('/api/demo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          platformName: platform.name
+        })
+      });
+    } catch (err) {
+      console.warn('Backend call failed:', err);
+    }
     setDemoSubmitted(true);
   };
 

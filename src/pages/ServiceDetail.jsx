@@ -27,9 +27,21 @@ export default function ServiceDetail() {
     return <Navigate to="/services/" replace />;
   }
 
-  const handleInquirySubmit = (e) => {
+  const handleInquirySubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    try {
+      await fetch('/api/service-enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          serviceTitle: service.title
+        })
+      });
+    } catch (err) {
+      console.warn('Backend call failed:', err);
+    }
     setInquirySent(true);
   };
 

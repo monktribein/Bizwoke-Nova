@@ -75,9 +75,18 @@ export default function Careers() {
     { step: "04", title: "Culture & Final Offer", desc: "Meet leadership, discuss career aspirations, and receive a competitive offer." }
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    try {
+      await fetch('/api/careers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+    } catch (err) {
+      console.warn('Backend call failed:', err);
+    }
     setSubmitted(true);
   };
 

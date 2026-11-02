@@ -1,0 +1,14 @@
+[
+  {
+    "id": "lead_1793594109727",
+    "type": "government",
+    "name": "Test Enterprise Lead",
+    "email": "lead@enterprise.com",
+    "phone": "+91 9876543210",
+    "organization": "Ministry of Urban Development",
+    "message": "Requesting demonstration of ULB ERP Enterprise for municipal property tax automation.",
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.9711",
+    "createdAt": "2026-11-02T04:35:09.727Z"
+  }
+]
