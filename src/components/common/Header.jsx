@@ -21,8 +21,8 @@ import {
   Truck,
   ChevronDown,
   Info,
-  Sun,
-  Moon
+  Handshake,
+  Briefcase
 } from 'lucide-react';
 
 /**
@@ -32,14 +32,14 @@ import {
  * flanked by mathematical cubic-Bézier concave fillet wings on both sides for a seamless,
  * organic transition into the capsule body.
  */
-function ActiveTabNotch({ icon: Icon, label, isDark }) {
-  // Capsule body color to blend wings seamlessly
-  const barBg = isDark ? '#0B1326' : '#FFFFFF';
+function ActiveTabNotch({ icon: Icon, label }) {
+  // Cinematic dark palette base
+  const barBg = '#0E1116';
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-w-[72px] h-[58px]">
+    <div className="relative flex flex-col items-center justify-center min-w-[64px] xl:min-w-[70px] h-[56px]">
       {/* Elevated Circular Bulb popping up above the navbar rim */}
-      <div className="absolute -top-5 flex items-center justify-center z-10">
+      <div className="absolute -top-4 flex items-center justify-center z-10">
         {/* Left Concave Fillet Wing (Smooth Bézier Shoulder) */}
         <svg
           width="16"
@@ -56,16 +56,10 @@ function ActiveTabNotch({ icon: Icon, label, isDark }) {
         </svg>
 
         {/* Central Circular Bulb */}
-        <div
-          className={`w-11 h-11 rounded-full flex items-center justify-center border transition-all ${
-            isDark
-              ? 'bg-[#0B1326] border-slate-700/80 shadow-[0_8px_24px_rgba(0,0,0,0.6)]'
-              : 'bg-white border-slate-200/90 shadow-[0_8px_20px_rgba(15,41,74,0.18)]'
-          }`}
-        >
+        <div className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-[#0E1116] shadow-[0_8px_20px_rgba(0,0,0,0.7)]">
           {/* Inner Sunrise Orange Core Badge */}
-          <div className="w-8 h-8 rounded-full bg-[#F27A24] text-white flex items-center justify-center shadow-md">
-            <Icon className="w-4 h-4 text-white" />
+          <div className="w-7 h-7 rounded-full bg-[#F27A24] text-white flex items-center justify-center shadow-md">
+            <Icon className="w-3.5 h-3.5 text-white" />
           </div>
         </div>
 
@@ -86,11 +80,7 @@ function ActiveTabNotch({ icon: Icon, label, isDark }) {
       </div>
 
       {/* Active Tab Label sitting inside the capsule bar */}
-      <span
-        className={`text-[11px] font-extrabold tracking-wide mt-5 select-none transition-colors ${
-          isDark ? 'text-white' : 'text-[#0F294A]'
-        }`}
-      >
+      <span className="text-[10px] font-extrabold tracking-wide mt-5 select-none text-white">
         {label}
       </span>
     </div>
@@ -100,12 +90,8 @@ function ActiveTabNotch({ icon: Icon, label, isDark }) {
 export default function Header() {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  // Default to Dark Obsidian theme matching the signature black navbar from the Dribbble shot
-  const [navTheme, setNavTheme] = useState('dark');
   const dropdownRef = useRef(null);
   const location = useLocation();
-
-  const isDark = navTheme === 'dark';
 
   // Close menus on route change
   useEffect(() => {
@@ -163,6 +149,13 @@ export default function Header() {
       isActive: location.pathname === '/'
     },
     {
+      id: 'about',
+      name: 'About',
+      path: '/about-us/',
+      icon: Info,
+      isActive: location.pathname === '/about-us/'
+    },
+    {
       id: 'platforms',
       name: 'Platforms',
       path: '/platforms/',
@@ -188,17 +181,24 @@ export default function Header() {
     },
     {
       id: 'technology',
-      name: 'NEP Tech',
+      name: 'Technology',
       path: '/technology/',
       icon: Cpu,
       isActive: location.pathname === '/technology/'
     },
     {
-      id: 'about',
-      name: 'About',
-      path: '/about-us/',
-      icon: Info,
-      isActive: location.pathname === '/about-us/'
+      id: 'partners',
+      name: 'Partners',
+      path: '/partners/',
+      icon: Handshake,
+      isActive: location.pathname === '/partners/'
+    },
+    {
+      id: 'careers',
+      name: 'Careers',
+      path: '/careers/',
+      icon: Briefcase,
+      isActive: location.pathname === '/careers/'
     }
   ];
 
@@ -206,26 +206,22 @@ export default function Header() {
     <>
       {/* ================= DESKTOP FLOATING CAPSULE HEADER ================= */}
       <header
-        className="sticky top-4 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8"
+        className="sticky top-4 z-50 transition-all duration-300 px-3 sm:px-6 lg:px-8"
         ref={dropdownRef}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Main Floating Capsule Bar */}
           <div
-            className={`relative rounded-full px-5 py-2 sm:px-6 transition-all duration-300 flex items-center justify-between border ${
-              isDark
-                ? 'bg-[#0B1326]/95 text-white backdrop-blur-xl border-slate-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.45)]'
-                : 'bg-white/95 text-[#0F294A] backdrop-blur-xl border-slate-200/90 shadow-[0_16px_40px_rgba(15,41,74,0.12)]'
-            }`}
-            style={{ minHeight: '62px' }}
+            className="relative rounded-full px-4 sm:px-5 transition-all duration-300 flex items-center justify-between border border-white/10 bg-[#0E1116]/95 text-white backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
+            style={{ minHeight: '60px' }}
           >
             {/* Left: Brand Logo */}
-            <div className="flex items-center shrink-0 pr-2">
-              <BrandLogo variant={isDark ? 'light' : 'default'} size="sm" showTagline={false} />
+            <div className="flex items-center shrink-0 pr-3">
+              <BrandLogo variant="light" size="sm" showTagline={false} />
             </div>
 
             {/* Center: Floating Capsule Navigation Dock with Dribbble-Style Elevated Notch */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
               {navTabs.map((tab) => {
                 const Icon = tab.icon;
                 const active = tab.isActive;
@@ -243,24 +239,16 @@ export default function Header() {
                           className="flex items-center justify-center focus:outline-none"
                         >
                           {active ? (
-                            <ActiveTabNotch icon={Icon} label={tab.name} isDark={isDark} />
+                            <ActiveTabNotch icon={Icon} label={tab.name} />
                           ) : (
-                            <div className="flex flex-col items-center justify-center min-w-[68px] h-[58px] py-1 px-2.5 rounded-full transition-all duration-200 group hover:opacity-100">
-                              <Icon
-                                className={`w-4 h-4 transition-colors ${
-                                  isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-500 group-hover:text-[#0F294A]'
-                                }`}
-                              />
+                            <div className="flex flex-col items-center justify-center min-w-[62px] xl:min-w-[68px] h-[54px] py-1 px-2 rounded-full transition-all duration-200 group hover:opacity-100">
+                              <Icon className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
                               <div className="flex items-center gap-0.5 mt-1">
-                                <span
-                                  className={`text-[10px] font-semibold tracking-wide transition-colors ${
-                                    isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-600 group-hover:text-[#0F294A]'
-                                  }`}
-                                >
+                                <span className="text-[10px] font-semibold tracking-wide text-slate-400 group-hover:text-white transition-colors">
                                   {tab.name}
                                 </span>
                                 <ChevronDown
-                                  className={`w-3 h-3 transition-transform duration-200 ${
+                                  className={`w-2.5 h-2.5 transition-transform duration-200 ${
                                     activeDropdown === tab.id ? 'rotate-180 text-[#F27A24]' : 'opacity-40 group-hover:opacity-80'
                                   }`}
                                 />
@@ -275,19 +263,11 @@ export default function Header() {
                         className="flex items-center justify-center focus:outline-none"
                       >
                         {active ? (
-                          <ActiveTabNotch icon={Icon} label={tab.name} isDark={isDark} />
+                          <ActiveTabNotch icon={Icon} label={tab.name} />
                         ) : (
-                          <div className="flex flex-col items-center justify-center min-w-[68px] h-[58px] py-1 px-2.5 rounded-full transition-all duration-200 group hover:opacity-100">
-                            <Icon
-                              className={`w-4 h-4 transition-colors ${
-                                isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-500 group-hover:text-[#0F294A]'
-                              }`}
-                            />
-                            <span
-                              className={`text-[10px] font-semibold tracking-wide mt-1 transition-colors ${
-                                isDark ? 'text-slate-400 group-hover:text-white' : 'text-slate-600 group-hover:text-[#0F294A]'
-                              }`}
-                            >
+                          <div className="flex flex-col items-center justify-center min-w-[62px] xl:min-w-[68px] h-[54px] py-1 px-2 rounded-full transition-all duration-200 group hover:opacity-100">
+                            <Icon className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                            <span className="text-[10px] font-semibold tracking-wide mt-1 text-slate-400 group-hover:text-white transition-colors">
                               {tab.name}
                             </span>
                           </div>
@@ -295,37 +275,23 @@ export default function Header() {
                       </Link>
                     )}
 
-                    {/* Dropdown: Platforms */}
+                    {/* Dropdown: Platforms Mega Menu */}
                     {tab.id === 'platforms' && activeDropdown === 'platforms' && (
                       <div
                         onMouseLeave={() => setActiveDropdown(null)}
-                        className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[460px] animate-fadeIn z-50"
+                        className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[480px] animate-fadeIn z-50"
                       >
-                        <div
-                          className={`rounded-2xl shadow-2xl border p-4 overflow-hidden backdrop-blur-2xl ${
-                            isDark
-                              ? 'bg-[#0B1326]/98 text-white border-slate-700/80 shadow-[0_24px_60px_rgba(0,0,0,0.6)]'
-                              : 'bg-white text-[#0F294A] border-slate-200/90 shadow-[0_20px_50px_rgba(15,41,74,0.15)]'
-                          }`}
-                        >
-                          <div
-                            className={`flex items-center justify-between pb-3 mb-2 border-b ${
-                              isDark ? 'border-slate-800' : 'border-slate-100'
-                            }`}
-                          >
+                        <div className="rounded-2xl shadow-2xl border border-white/10 bg-[#111318]/98 text-white p-4 overflow-hidden backdrop-blur-2xl">
+                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
                             <div>
                               <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                                 12 Digital Platforms
                               </span>
-                              <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                                Specialized Enterprise Products
-                              </p>
+                              <p className="text-[11px] text-slate-400">Specialized Enterprise Software & Platforms</p>
                             </div>
                             <Link
                               to="/platforms/"
-                              className={`text-xs font-bold flex items-center gap-1 transition-colors ${
-                                isDark ? 'text-white hover:text-[#F27A24]' : 'text-[#0F294A] hover:text-[#F27A24]'
-                              }`}
+                              className="text-xs font-bold text-white hover:text-[#F27A24] flex items-center gap-1 transition-colors"
                             >
                               Explore All 12 <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
@@ -338,45 +304,25 @@ export default function Header() {
                                 <Link
                                   key={item.name}
                                   to={item.path}
-                                  className={`flex items-start gap-2.5 p-2 rounded-xl transition-colors group ${
-                                    isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'
-                                  }`}
+                                  className="flex items-start gap-2.5 p-2 rounded-xl transition-colors hover:bg-white/5 group border border-transparent hover:border-white/5"
                                 >
                                   <div className={`p-1.5 rounded-lg ${item.color} mt-0.5 shrink-0`}>
                                     <PIcon className="w-4 h-4" />
                                   </div>
                                   <div>
-                                    <div
-                                      className={`text-xs font-bold transition-colors ${
-                                        isDark
-                                          ? 'text-white group-hover:text-[#F27A24]'
-                                          : 'text-slate-900 group-hover:text-[#F27A24]'
-                                      }`}
-                                    >
+                                    <div className="text-xs font-bold text-white group-hover:text-[#F27A24] transition-colors">
                                       {item.name}
                                     </div>
-                                    <div
-                                      className={`text-[10px] line-clamp-1 ${
-                                        isDark ? 'text-slate-400' : 'text-slate-500'
-                                      }`}
-                                    >
-                                      {item.category}
-                                    </div>
+                                    <div className="text-[10px] text-slate-400 line-clamp-1">{item.category}</div>
                                   </div>
                                 </Link>
                               );
                             })}
                           </div>
 
-                          <div
-                            className={`mt-3 pt-3 border-t -mx-4 -mb-4 p-3 px-4 flex items-center justify-between text-xs ${
-                              isDark
-                                ? 'border-slate-800 bg-[#070D1B]'
-                                : 'border-slate-100 bg-[#F8FAFC]'
-                            }`}
-                          >
-                            <span className={isDark ? 'text-slate-400 font-medium text-[11px]' : 'text-slate-600 font-medium text-[11px]'}>
-                              Powered by NKTech Enterprise Platform™
+                          <div className="mt-3 pt-3 border-t border-white/10 -mx-4 -mb-4 p-3 px-4 flex items-center justify-between text-xs bg-[#08090B]">
+                            <span className="text-slate-400 font-medium text-[11px]">
+                              Shared Foundation: NKTech Enterprise Platform™
                             </span>
                             <Link to="/technology/" className="font-bold text-[#F27A24] hover:underline flex items-center gap-1 text-[11px]">
                               NEP Architecture <ArrowRight className="w-3 h-3" />
@@ -392,26 +338,14 @@ export default function Header() {
                         onMouseLeave={() => setActiveDropdown(null)}
                         className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[440px] animate-fadeIn z-50"
                       >
-                        <div
-                          className={`rounded-2xl shadow-2xl border p-4 backdrop-blur-2xl ${
-                            isDark
-                              ? 'bg-[#0B1326]/98 text-white border-slate-700/80 shadow-[0_24px_60px_rgba(0,0,0,0.6)]'
-                              : 'bg-white text-[#0F294A] border-slate-200/90 shadow-[0_20px_50px_rgba(15,41,74,0.15)]'
-                          }`}
-                        >
-                          <div
-                            className={`flex items-center justify-between pb-3 mb-2 border-b ${
-                              isDark ? 'border-slate-800' : 'border-slate-100'
-                            }`}
-                          >
+                        <div className="rounded-2xl shadow-2xl border border-white/10 bg-[#111318]/98 text-white p-4 backdrop-blur-2xl">
+                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
                             <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                               8 Industry Solutions
                             </span>
                             <Link
                               to="/solutions/"
-                              className={`text-xs font-bold flex items-center gap-1 transition-colors ${
-                                isDark ? 'text-white hover:text-[#F27A24]' : 'text-[#0F294A] hover:text-[#F27A24]'
-                              }`}
+                              className="text-xs font-bold text-white hover:text-[#F27A24] flex items-center gap-1 transition-colors"
                             >
                               All Sectors <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
@@ -423,11 +357,7 @@ export default function Header() {
                                 <Link
                                   key={item.title}
                                   to={item.path}
-                                  className={`flex items-center gap-2 p-2 rounded-lg text-xs font-medium transition-colors ${
-                                    isDark
-                                      ? 'text-slate-300 hover:text-[#F27A24] hover:bg-white/5'
-                                      : 'text-slate-700 hover:text-[#F27A24] hover:bg-slate-50'
-                                  }`}
+                                  className="flex items-center gap-2 p-2 rounded-lg text-xs font-medium text-slate-300 hover:text-[#F27A24] hover:bg-white/5 transition-colors"
                                 >
                                   <SIcon className="w-3.5 h-3.5 opacity-60 shrink-0" />
                                   <span className="line-clamp-1 text-[11px] font-semibold">{item.title}</span>
@@ -439,32 +369,20 @@ export default function Header() {
                       </div>
                     )}
 
-                    {/* Dropdown: Services */}
+                    {/* Dropdown: Services Mega Menu */}
                     {tab.id === 'services' && activeDropdown === 'services' && (
                       <div
                         onMouseLeave={() => setActiveDropdown(null)}
                         className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[440px] animate-fadeIn z-50"
                       >
-                        <div
-                          className={`rounded-2xl shadow-2xl border p-4 backdrop-blur-2xl ${
-                            isDark
-                              ? 'bg-[#0B1326]/98 text-white border-slate-700/80 shadow-[0_24px_60px_rgba(0,0,0,0.6)]'
-                              : 'bg-white text-[#0F294A] border-slate-200/90 shadow-[0_20px_50px_rgba(15,41,74,0.15)]'
-                          }`}
-                        >
-                          <div
-                            className={`flex items-center justify-between pb-3 mb-2 border-b ${
-                              isDark ? 'border-slate-800' : 'border-slate-100'
-                            }`}
-                          >
+                        <div className="rounded-2xl shadow-2xl border border-white/10 bg-[#111318]/98 text-white p-4 backdrop-blur-2xl">
+                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
                             <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                               14 Professional Services
                             </span>
                             <Link
                               to="/services/"
-                              className={`text-xs font-bold flex items-center gap-1 transition-colors ${
-                                isDark ? 'text-white hover:text-[#F27A24]' : 'text-[#0F294A] hover:text-[#F27A24]'
-                              }`}
+                              className="text-xs font-bold text-white hover:text-[#F27A24] flex items-center gap-1 transition-colors"
                             >
                               All Services <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
@@ -474,24 +392,12 @@ export default function Header() {
                               <Link
                                 key={item.title}
                                 to={item.path}
-                                className={`block p-2 rounded-lg transition-colors group ${
-                                  isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'
-                                }`}
+                                className="block p-2 rounded-lg hover:bg-white/5 transition-colors group"
                               >
-                                <div
-                                  className={`text-xs font-bold group-hover:text-[#F27A24] transition-colors ${
-                                    isDark ? 'text-white' : 'text-slate-800'
-                                  }`}
-                                >
+                                <div className="text-xs font-bold text-white group-hover:text-[#F27A24] transition-colors">
                                   {item.title}
                                 </div>
-                                <div
-                                  className={`text-[11px] line-clamp-1 ${
-                                    isDark ? 'text-slate-400' : 'text-slate-500'
-                                  }`}
-                                >
-                                  {item.desc}
-                                </div>
+                                <div className="text-[11px] text-slate-400 line-clamp-1">{item.desc}</div>
                               </Link>
                             ))}
                           </div>
@@ -503,38 +409,20 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Right Action Group: Theme Toggle + Contact + Discuss Project Button */}
-            <div className="hidden lg:flex items-center gap-2.5">
-              {/* Theme Toggle Pill (Switch between Dark & Light Dribbble UI Kit Styles) */}
-              <button
-                type="button"
-                onClick={() => setNavTheme(isDark ? 'light' : 'dark')}
-                title={isDark ? 'Switch to Light Floating Dock' : 'Switch to Dark Floating Dock'}
-                className={`p-2 rounded-full border transition-all ${
-                  isDark
-                    ? 'border-slate-700/80 bg-white/5 text-amber-400 hover:bg-white/10'
-                    : 'border-slate-200 bg-slate-100/80 text-slate-700 hover:bg-slate-200'
-                }`}
-                aria-label="Toggle navbar aesthetic"
-              >
-                {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-              </button>
-
+            {/* Right Action: Contact CTA + Discuss Project Button */}
+            <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
               <Link
                 to="/contact/"
-                className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors ${
-                  isDark ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-[#0F294A]'
-                }`}
+                className="text-xs font-bold px-2.5 py-1.5 text-slate-300 hover:text-white transition-colors"
               >
                 Contact
               </Link>
-
               <Link
                 to="/contact/?type=consultation"
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] rounded-full shadow-md hover:shadow-lg transition-all group shrink-0"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] rounded-full shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 transition-all group shrink-0"
               >
                 <span>Discuss Project</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
 
@@ -549,7 +437,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-                className={`p-2 rounded-full ${isDark ? 'text-white' : 'text-slate-700'}`}
+                className="p-2 rounded-full text-white hover:bg-white/10"
                 aria-label="Toggle navigation"
               >
                 {mobileDrawerOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -560,44 +448,38 @@ export default function Header() {
 
         {/* Mobile Full Navigation Slide-out Drawer */}
         {mobileDrawerOpen && (
-          <div className="lg:hidden fixed inset-x-4 top-[74px] bg-[#0B1326] text-white rounded-3xl shadow-2xl border border-slate-700/80 p-6 z-50 max-h-[80vh] overflow-y-auto">
+          <div className="lg:hidden fixed inset-x-4 top-[74px] bg-[#0E1116] text-white rounded-3xl shadow-2xl border border-white/10 p-6 z-50 max-h-[80vh] overflow-y-auto">
             <div className="space-y-3">
               <div className="font-extrabold text-xs uppercase tracking-wider text-[#F27A24] mb-2 flex items-center justify-between">
-                <span>Enterprise Menu</span>
-                <button
-                  onClick={() => setNavTheme(isDark ? 'light' : 'dark')}
-                  className="text-[10px] text-slate-300 bg-white/10 px-2 py-0.5 rounded-full flex items-center gap-1"
-                >
-                  {isDark ? <Sun className="w-3 h-3 text-amber-400" /> : <Moon className="w-3 h-3" />}
-                  <span>{isDark ? 'Light Dock' : 'Dark Dock'}</span>
-                </button>
+                <span>Enterprise Navigation</span>
+                <span className="text-[10px] text-slate-400">Bizwoke Nova™</span>
               </div>
-              <Link to="/" className="block py-2 text-sm font-bold border-b border-slate-800">
+              <Link to="/" className="block py-2 text-sm font-bold border-b border-white/10">
                 Home
               </Link>
-              <Link to="/about-us/" className="block py-2 text-sm font-bold border-b border-slate-800">
-                About Bizwoke Nova
+              <Link to="/about-us/" className="block py-2 text-sm font-bold border-b border-white/10">
+                About Us
               </Link>
-              <Link to="/platforms/" className="block py-2 text-sm font-bold border-b border-slate-800 flex items-center justify-between">
-                <span>12 Digital Platforms</span>
+              <Link to="/platforms/" className="block py-2 text-sm font-bold border-b border-white/10 flex items-center justify-between">
+                <span>Platforms (12 Products)</span>
                 <span className="text-[10px] font-bold bg-[#F27A24]/20 text-[#F27A24] px-2 py-0.5 rounded-full">All 12</span>
               </Link>
-              <Link to="/solutions/" className="block py-2 text-sm font-bold border-b border-slate-800">
-                8 Industry Solutions
+              <Link to="/solutions/" className="block py-2 text-sm font-bold border-b border-white/10">
+                Solutions (8 Industries)
               </Link>
-              <Link to="/services/" className="block py-2 text-sm font-bold border-b border-slate-800">
-                14 Professional Services
+              <Link to="/services/" className="block py-2 text-sm font-bold border-b border-white/10">
+                Services (14 Offerings)
               </Link>
-              <Link to="/technology/" className="block py-2 text-sm font-bold border-b border-slate-800">
+              <Link to="/technology/" className="block py-2 text-sm font-bold border-b border-white/10">
                 NKTech Enterprise Platform (NEP)
               </Link>
-              <Link to="/partners/" className="block py-2 text-sm font-bold border-b border-slate-800">
+              <Link to="/partners/" className="block py-2 text-sm font-bold border-b border-white/10">
                 Strategic Partnerships
               </Link>
-              <Link to="/careers/" className="block py-2 text-sm font-bold border-b border-slate-800">
+              <Link to="/careers/" className="block py-2 text-sm font-bold border-b border-white/10">
                 Careers & Culture
               </Link>
-              <Link to="/contact/" className="block py-2 text-sm font-bold">
+              <Link to="/contact/" className="block py-2 text-sm font-bold text-[#F27A24]">
                 Contact & Enquiries
               </Link>
             </div>
@@ -606,97 +488,67 @@ export default function Header() {
       </header>
 
       {/* ================= MOBILE FLOATING BOTTOM CAPSULE DOCK ================= */}
-      {/* Inspired directly by the Dribbble Modern Floating Navbar UI Kit */}
       <div className="lg:hidden fixed bottom-4 inset-x-4 z-50 max-w-sm mx-auto">
         <div
-          className={`relative rounded-full px-2 py-1 shadow-[0_16px_40px_rgba(0,0,0,0.5)] border flex items-center justify-around backdrop-blur-xl ${
-            isDark
-              ? 'bg-[#0B1326]/95 text-white border-slate-700/80'
-              : 'bg-white/95 text-[#0F294A] border-slate-200/90 shadow-[0_12px_36px_rgba(15,41,74,0.18)]'
-          }`}
-          style={{ minHeight: '60px' }}
+          className="relative rounded-full px-2 py-1 shadow-[0_16px_40px_rgba(0,0,0,0.7)] border border-white/10 bg-[#0E1116]/95 text-white flex items-center justify-around backdrop-blur-2xl"
+          style={{ minHeight: '58px' }}
         >
           {/* Mobile Tab 1: Home */}
-          <Link
-            to="/"
-            className="flex-1 flex items-center justify-center focus:outline-none"
-          >
+          <Link to="/" className="flex-1 flex items-center justify-center focus:outline-none">
             {location.pathname === '/' ? (
-              <ActiveTabNotch icon={Home} label="Home" isDark={isDark} />
+              <ActiveTabNotch icon={Home} label="Home" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Home className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                <span className={`text-[9px] font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Home
-                </span>
+                <Home className="w-4 h-4 text-slate-400" />
+                <span className="text-[9px] font-medium mt-1 text-slate-400">Home</span>
               </div>
             )}
           </Link>
 
           {/* Mobile Tab 2: Platforms */}
-          <Link
-            to="/platforms/"
-            className="flex-1 flex items-center justify-center focus:outline-none"
-          >
+          <Link to="/platforms/" className="flex-1 flex items-center justify-center focus:outline-none">
             {location.pathname.startsWith('/platforms') ? (
-              <ActiveTabNotch icon={Layers} label="Platforms" isDark={isDark} />
+              <ActiveTabNotch icon={Layers} label="Platforms" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Layers className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                <span className={`text-[9px] font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Platforms
-                </span>
+                <Layers className="w-4 h-4 text-slate-400" />
+                <span className="text-[9px] font-medium mt-1 text-slate-400">Platforms</span>
               </div>
             )}
           </Link>
 
           {/* Mobile Tab 3: Solutions */}
-          <Link
-            to="/solutions/"
-            className="flex-1 flex items-center justify-center focus:outline-none"
-          >
+          <Link to="/solutions/" className="flex-1 flex items-center justify-center focus:outline-none">
             {location.pathname.startsWith('/solutions') ? (
-              <ActiveTabNotch icon={Landmark} label="Solutions" isDark={isDark} />
+              <ActiveTabNotch icon={Landmark} label="Solutions" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Landmark className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                <span className={`text-[9px] font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Solutions
-                </span>
+                <Landmark className="w-4 h-4 text-slate-400" />
+                <span className="text-[9px] font-medium mt-1 text-slate-400">Solutions</span>
               </div>
             )}
           </Link>
 
           {/* Mobile Tab 4: Services */}
-          <Link
-            to="/services/"
-            className="flex-1 flex items-center justify-center focus:outline-none"
-          >
+          <Link to="/services/" className="flex-1 flex items-center justify-center focus:outline-none">
             {location.pathname.startsWith('/services') ? (
-              <ActiveTabNotch icon={Sparkles} label="Services" isDark={isDark} />
+              <ActiveTabNotch icon={Sparkles} label="Services" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Sparkles className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                <span className={`text-[9px] font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Services
-                </span>
+                <Sparkles className="w-4 h-4 text-slate-400" />
+                <span className="text-[9px] font-medium mt-1 text-slate-400">Services</span>
               </div>
             )}
           </Link>
 
           {/* Mobile Tab 5: Contact */}
-          <Link
-            to="/contact/"
-            className="flex-1 flex items-center justify-center focus:outline-none"
-          >
+          <Link to="/contact/" className="flex-1 flex items-center justify-center focus:outline-none">
             {location.pathname === '/contact/' ? (
-              <ActiveTabNotch icon={PhoneCall} label="Contact" isDark={isDark} />
+              <ActiveTabNotch icon={PhoneCall} label="Contact" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <PhoneCall className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
-                <span className={`text-[9px] font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Contact
-                </span>
+                <PhoneCall className="w-4 h-4 text-slate-400" />
+                <span className="text-[9px] font-medium mt-1 text-slate-400">Contact</span>
               </div>
             )}
           </Link>

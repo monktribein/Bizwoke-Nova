@@ -1,38 +1,69 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy-950: #0a1c33;
-  --color-navy-900: #0f294a;
-  --color-navy-800: #143761;
-  --color-navy-700: #1a467a;
-  --color-royal-600: #1e5086;
-  --color-royal-500: #2563eb;
-  --color-royal-400: #3b82f6;
-  --color-sunrise-500: #f27a24;
-  --color-sunrise-600: #de6713;
-  --color-sunrise-400: #fb923c;
-  --color-sunrise-100: #ffedd5;
-  --color-sunrise-50: #fff7ed;
-  --color-teal-600: #0d9488;
-  --color-teal-500: #14b8a6;
-  --color-neutral-surface: #f8fafc;
-  --color-neutral-card: #ffffff;
+  --color-bg-primary: #08090B;
+  --color-bg-secondary: #111318;
+  --color-bg-card: #171A20;
+  --color-bg-card-hover: #20242D;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A7ADB8;
+  --color-text-muted: #64748B;
+  --color-brand-blue: #246BCE;
+  --color-accent-teal: #17A6A1;
+  --color-sunrise-500: #F27A24;
+  --color-sunrise-600: #DE6713;
+  --color-sunrise-400: #FB923C;
+  --color-sunrise-100: #FFEDD5;
+  --color-amber-glow: #F59E0B;
 }
 
-/* Base custom styles */
+/* Base custom styles for Cinematic Dark Experience */
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #0f294a;
-  background-color: #f8fafc;
+  color: #FFFFFF;
+  background-color: #08090B;
+  overflow-x: hidden;
 }
 
 /* Subtle transitions & focus indicators */
 *:focus-visible {
-  outline: 2px solid #f27a24;
+  outline: 2px solid #F27A24;
   outline-offset: 2px;
+}
+
+/* Ambient glow utility classes */
+.ambient-glow-top {
+  background: radial-gradient(circle 800px at 50% -100px, rgba(242, 122, 36, 0.12), transparent 70%);
+}
+
+.ambient-glow-blue {
+  background: radial-gradient(circle 600px at 80% 20%, rgba(36, 107, 206, 0.1), transparent 60%);
+}
+
+.ambient-glow-teal {
+  background: radial-gradient(circle 500px at 20% 50%, rgba(23, 166, 161, 0.08), transparent 60%);
+}
+
+.glass-card {
+  background-color: rgba(23, 26, 32, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Hide scrollbar for clean carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
