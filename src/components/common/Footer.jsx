@@ -18,10 +18,10 @@ export default function Footer() {
     <footer className="bg-[#10233F] text-slate-300 pt-16 pb-12 border-t border-[#1d3e70]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Highlight Banner */}
-        <div className="bg-[#162f55] rounded-2xl p-8 mb-16 border border-[#246BCE]/30 flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="bg-[#143761] rounded-2xl p-8 mb-16 border border-[#F27A24]/30 flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center lg:text-left">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#17A6A1]">
-              Mission FTC™ • Portfolio Strategy
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
+              Awakening Your Success • Mission FTC™
             </span>
             <h3 className="text-xl sm:text-2xl font-bold text-white">
               Building Digital Infrastructure for a Smarter India.
@@ -33,13 +33,13 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/platforms/"
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-[#246BCE] hover:bg-[#1f5cb0] rounded-lg transition-colors inline-flex items-center gap-1.5"
+              className="px-5 py-2.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl transition-all shadow-md inline-flex items-center gap-1.5"
             >
               Explore Platforms <ArrowUpRight className="w-4 h-4" />
             </Link>
             <Link
               to="/contact/"
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/60 rounded-lg transition-colors"
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/60 rounded-xl transition-colors"
             >
               Contact Our Team
             </Link>

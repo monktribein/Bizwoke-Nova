@@ -143,15 +143,15 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-bold tracking-widest text-[#246BCE] uppercase">
-              <span className="w-2 h-2 rounded-full bg-[#17A6A1] animate-pulse" />
-              <span>Enterprise Technology • AI Solutions • Digital Transformation</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50/80 border border-orange-200/80 text-xs font-bold tracking-widest text-[#F27A24] uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#F27A24] animate-pulse" />
+              <span>Awakening Your Success • Enterprise Technology • AI Solutions</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#10233F] tracking-tight leading-[1.08]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0F294A] tracking-tight leading-[1.08]">
               Building Digital Infrastructure <br className="hidden sm:inline" />
-              <span className="text-[#246BCE]">for a Smarter India.</span>
+              <span className="text-[#F27A24]">for a Smarter India.</span>
             </h1>
 
             {/* Subheadline */}
@@ -168,14 +168,14 @@ export default function Home() {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/platforms/"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-semibold text-white bg-[#10233F] hover:bg-[#162f55] rounded-xl shadow-md hover:shadow-lg transition-all group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-bold text-white bg-[#0F294A] hover:bg-[#F27A24] rounded-xl shadow-md hover:shadow-lg transition-all group"
               >
                 <span>Explore Our Platforms</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/contact/?type=project"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-semibold text-[#10233F] bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-sm transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-bold text-[#0F294A] bg-white hover:bg-orange-50/60 border border-slate-300 hover:border-orange-200 rounded-xl shadow-sm transition-all"
               >
                 Discuss Your Project
               </Link>
@@ -184,12 +184,12 @@ export default function Home() {
             {/* Three Foundation Metrics Pill */}
             <div className="pt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
               <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm text-center">
-                <div className="text-2xl font-extrabold text-[#10233F]">One Portfolio</div>
+                <div className="text-2xl font-extrabold text-[#0F294A]">One Portfolio</div>
                 <div className="text-xs text-slate-500 font-medium mt-0.5">Mission FTC™ Strategy</div>
               </div>
-              <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm text-center">
-                <div className="text-2xl font-extrabold text-[#246BCE]">12 Platforms</div>
-                <div className="text-xs text-slate-500 font-medium mt-0.5">Specialized Digital Solutions</div>
+              <div className="bg-white p-4 rounded-xl border border-orange-200 bg-gradient-to-b from-white to-orange-50/30 shadow-sm text-center">
+                <div className="text-2xl font-extrabold text-[#F27A24]">12 Platforms</div>
+                <div className="text-xs text-slate-600 font-semibold mt-0.5">Specialized Digital Solutions</div>
               </div>
               <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm text-center">
                 <div className="text-2xl font-extrabold text-[#17A6A1]">One Foundation</div>

@@ -331,13 +331,13 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/contact/"
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#10233F] hover:text-[#246BCE] transition-colors"
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F294A] hover:text-[#F27A24] transition-colors"
             >
               Contact
             </Link>
             <Link
               to="/contact/?type=consultation"
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#10233F] hover:bg-[#162f55] active:bg-[#0a1728] rounded-lg shadow-sm hover:shadow transition-all group"
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-[#0F294A] hover:bg-[#F27A24] active:bg-[#DE6713] rounded-xl shadow-sm hover:shadow-md transition-all group"
             >
               <span>Discuss Project</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

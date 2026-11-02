@@ -1,6 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#10233F"/>
-  <path d="M16 46V18L32 30L48 18V46" stroke="#246BCE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="32" cy="30" r="4" fill="#17A6A1"/>
-  <path d="M24 38L32 44L40 38" stroke="#17A6A1" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="64" height="64" rx="14" fill="#0F294A"/>
+  <!-- Rising Sun Motif -->
+  <path d="M22 34C22 28.4772 26.4772 24 32 24C37.5228 24 42 28.4772 42 34H22Z" fill="#F27A24"/>
+  <!-- Sunrise Rays -->
+  <line x1="32" y1="16" x2="32" y2="21" stroke="#F27A24" stroke-width="3" stroke-linecap="round"/>
+  <line x1="22" y1="20" x2="25.5" y2="23.5" stroke="#F27A24" stroke-width="3" stroke-linecap="round"/>
+  <line x1="42" y1="20" x2="38.5" y2="23.5" stroke="#F27A24" stroke-width="3" stroke-linecap="round"/>
+  <!-- Base Horizon Horizon Anchor -->
+  <line x1="16" y1="36" x2="48" y2="36" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <!-- Letter Chevron -->
+  <path d="M18 48L32 40L46 48" stroke="#F27A24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

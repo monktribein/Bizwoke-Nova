@@ -1,5 +1,6 @@
 export const COMPANY_DATA = {
   brandName: "Bizwoke Nova™",
+  brandMotto: "Awakening Your Success",
   legalNamePlaceholder: "Bizwoke Nova Technologies Pvt. Ltd. (Verification Pending)",
   tagline: "Enterprise Software, AI Solutions & Digital Transformation",
   corePromise: "Building Digital Infrastructure for a Smarter India.",
@@ -23,6 +24,7 @@ export const COMPANY_DATA = {
   brandHierarchy: {
     corporate: {
       name: "Bizwoke Nova™",
+      tagline: "Awakening Your Success",
       role: "Primary Corporate Brand",
       description: "Enterprise Technology, AI Solutions & Digital Transformation Company."
     },
