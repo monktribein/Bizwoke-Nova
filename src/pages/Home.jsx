@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/common/SEOHead';
+import HeroSlider from '../components/home/HeroSlider';
 import { PLATFORMS_DATA } from '../data/platformsData';
 import {
   ArrowRight,
@@ -196,49 +197,14 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0 opacity-60" />
 
         {/* =========================================================================
-            SECTION 1: HERO SECTION
+            SECTION 1: HERO AUTO-SCROLLING SLIDER (ENTERPRISE ENGINES & REAL TELEMETRY)
         ========================================================================= */}
-        <section className="relative z-10 pt-16 sm:pt-24 pb-20 lg:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto space-y-6">
-            {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-200 dark:border-orange-500/30 bg-orange-50/80 dark:bg-orange-500/10 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-[#F27A24]" />
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                AWAKENING YOUR SUCCESS • ENTERPRISE TECHNOLOGY • AI SOLUTIONS
-              </span>
-            </div>
+        <section className="relative z-10 pt-4 sm:pt-6 pb-20 lg:pb-28">
+          {/* 3-Slide Auto-Scrolling Banner with Real Enterprise Photography */}
+          <HeroSlider />
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight leading-[1.08] transition-colors">
-              Building Digital Infrastructure <br />
-              <span className="text-[#F27A24]">for a Smarter India.</span>
-            </h1>
-
-            {/* Supporting Text */}
-            <p className="text-lg sm:text-xl text-[#475569] text-slate-body max-w-3xl mx-auto leading-relaxed font-normal transition-colors">
-              Technology that connects businesses, empowers institutions, and accelerates growth.
-              From specialized digital platforms to custom enterprise software, we help organizations modernize operations, improve efficiency, and unlock new growth opportunities.
-            </p>
-
-            {/* Dual CTAs */}
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-              <a
-                href="#platforms"
-                className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#0F294A] dark:bg-[#F27A24] hover:bg-[#1E3A5F] dark:hover:bg-[#DE6713] active:bg-[#0A1C33] shadow-lg shadow-navy-900/10 dark:shadow-orange-500/20 hover:shadow-xl transition-all inline-flex items-center gap-2 group"
-              >
-                <span>Explore Our Platforms</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link
-                to="/contact/?type=project"
-                className="px-8 py-4 rounded-full font-bold text-sm text-[#0F294A] text-navy-primary bg-white dark:bg-white/10 hover:bg-slate-50 dark:hover:bg-white/15 border border-slate-300 dark:border-slate-700 shadow-xs hover:shadow-md transition-all inline-flex items-center gap-2"
-              >
-                <span>Discuss Your Project</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Authentic Enterprise Architecture Triple Card */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Authentic Enterprise Architecture Triple Card */}
           <div className="mt-14 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
               <div className="text-xl font-extrabold text-[#0F294A] text-navy-primary">One Portfolio</div>
@@ -325,7 +291,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* =========================================================================
             SECTION 2: INTRODUCTION (EDITORIAL CORPORATE ARCHITECTURE)
