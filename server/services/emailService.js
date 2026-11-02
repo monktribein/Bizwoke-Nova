@@ -64,3 +64,4 @@ export async function sendNotificationEmail({ subject, leadData }) {
     return { success: true, delivered: false, note: 'SMTP_CREDENTIALS_PENDING' };
   }
 }
+
