@@ -1,0 +1,20 @@
+# 301 Redirects for Legacy SEO Equity Preservation
+/about              /about-us/          301
+/about-us           /about-us/          301
+/contact-us         /contact/           301
+/contact-us/        /contact/           301
+/contact            /contact/           301
+/service            /services/          301
+/services           /services/          301
+/platform           /platforms/         301
+/platforms          /platforms/         301
+/solution           /solutions/         301
+/solutions          /solutions/         301
+/careers            /careers/           301
+/partner            /partners/          301
+/partners           /partners/          301
+/tech               /technology/        301
+/technology         /technology/        301
+
+# Single Page Application (SPA) Fallback Route
+/*                  /index.html         200
