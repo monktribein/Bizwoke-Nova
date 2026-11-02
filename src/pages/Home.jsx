@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/common/SEOHead';
 import { PLATFORMS_DATA } from '../data/platformsData';
-import { SOLUTIONS_DATA } from '../data/solutionsData';
 import {
   ArrowRight,
   ShieldCheck,
@@ -43,9 +42,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All');
   const carouselRef = useRef(null);
 
-  // 12 Platforms data
   const platforms = PLATFORMS_DATA;
-
   const categories = ['All', 'Governance', 'Tourism', 'Commerce', 'Industry', 'Healthcare', 'Transport', 'Business'];
 
   const filteredPlatforms = activeCategory === 'All'
@@ -66,7 +63,7 @@ export default function Home() {
       path: "/services/enterprise-software-development/",
       desc: "Custom enterprise architectures, ERP systems, core backend infrastructure, and scalable mission-critical business platforms.",
       icon: Layers,
-      accent: "from-blue-500/20 to-transparent",
+      color: "text-blue-600 bg-blue-50 border-blue-200/60",
       badge: "Core Engineering"
     },
     {
@@ -74,7 +71,7 @@ export default function Home() {
       path: "/services/ai-automation-services/",
       desc: "Autonomous workflow agents, specialized LLM integration, conversational intelligence, and intelligent process automation.",
       icon: Sparkles,
-      accent: "from-teal-500/20 to-transparent",
+      color: "text-teal-600 bg-teal-50 border-teal-200/60",
       badge: "Intelligent Systems"
     },
     {
@@ -82,7 +79,7 @@ export default function Home() {
       path: "/services/mobile-app-development/",
       desc: "High-performance iOS, Android, and cross-platform mobile apps engineered for field workforce and large-scale consumer networks.",
       icon: Globe2,
-      accent: "from-indigo-500/20 to-transparent",
+      color: "text-indigo-600 bg-indigo-50 border-indigo-200/60",
       badge: "Mobile & Edge"
     },
     {
@@ -90,7 +87,7 @@ export default function Home() {
       path: "/services/enterprise-software-development/",
       desc: "End-to-end organizational resource planning, multi-department telemetry, CRM pipelines, and unified executive dashboards.",
       icon: LayoutGrid,
-      accent: "from-amber-500/20 to-transparent",
+      color: "text-amber-600 bg-amber-50 border-amber-200/60",
       badge: "Operations"
     },
     {
@@ -98,7 +95,7 @@ export default function Home() {
       path: "/services/mobile-app-development/",
       desc: "High-speed corporate websites, dynamic stakeholder portals, headless CMS architectures, and enterprise web applications.",
       icon: Code2,
-      accent: "from-purple-500/20 to-transparent",
+      color: "text-purple-600 bg-purple-50 border-purple-200/60",
       badge: "Digital Portals"
     },
     {
@@ -106,7 +103,7 @@ export default function Home() {
       path: "/services/technology-consulting/",
       desc: "Strategic modernization of legacy workflows, institutional digital roadmaps, paperless transitions, and data digitization.",
       icon: Cpu,
-      accent: "from-emerald-500/20 to-transparent",
+      color: "text-emerald-600 bg-emerald-50 border-emerald-200/60",
       badge: "Transformation"
     },
     {
@@ -114,7 +111,7 @@ export default function Home() {
       path: "/services/ai-seo-services/",
       desc: "Next-generation generative search optimization (AEO/GEO), technical SEO infrastructure, and high-intent organic discovery.",
       icon: Search,
-      accent: "from-orange-500/20 to-transparent",
+      color: "text-orange-600 bg-orange-50 border-orange-200/60",
       badge: "Growth Engineering"
     },
     {
@@ -122,7 +119,7 @@ export default function Home() {
       path: "/services/technology-consulting/",
       desc: "Enterprise architecture reviews, sovereign cloud roadmaps, security compliance audits, and strategic tech stewardship.",
       icon: ShieldCheck,
-      accent: "from-cyan-500/20 to-transparent",
+      color: "text-cyan-600 bg-cyan-50 border-cyan-200/60",
       badge: "Advisory"
     }
   ];
@@ -193,227 +190,207 @@ export default function Home() {
         canonical="/"
       />
 
-      <div className="relative overflow-hidden bg-[#08090B] text-white">
+      <div className="relative bg-[#F8FAFC] text-[#0F294A]">
 
-        {/* Ambient Warm Gradient Background Lighting */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[650px] bg-radial from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-[800px] right-0 w-[500px] h-[500px] bg-radial from-blue-600/10 to-transparent blur-3xl pointer-events-none z-0" />
+        {/* Subtle Architectural Grid Pattern */}
+        <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0 opacity-60" />
 
         {/* =========================================================================
-            SECTION 1: CINEMATIC HERO
+            SECTION 1: HERO SECTION
         ========================================================================= */}
-        <section className="relative z-10 pt-16 sm:pt-24 pb-20 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <section className="relative z-10 pt-16 sm:pt-24 pb-20 lg:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto space-y-6">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#F27A24] animate-pulse" />
+            {/* Eyebrow Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-200 bg-orange-50/80 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#F27A24]" />
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                ENTERPRISE TECHNOLOGY • AI SOLUTIONS • DIGITAL TRANSFORMATION
+                AWAKENING YOUR SUCCESS • ENTERPRISE TECHNOLOGY • AI SOLUTIONS
               </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0F294A] tracking-tight leading-[1.08]">
               Building Digital Infrastructure <br />
-              <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                for a
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#F27A24] via-orange-400 to-amber-300 bg-clip-text text-transparent">
-                Smarter India.
-              </span>
+              <span className="text-[#F27A24]">for a Smarter India.</span>
             </h1>
 
             {/* Supporting Text */}
-            <p className="text-lg sm:text-xl text-[#A7ADB8] max-w-3xl mx-auto leading-relaxed font-normal">
+            <p className="text-lg sm:text-xl text-[#475569] max-w-3xl mx-auto leading-relaxed font-normal">
               Technology that connects businesses, empowers institutions, and accelerates growth.
-              From specialized digital platforms to custom AI architectures, we build scalable software for real-world impact.
+              From specialized digital platforms to custom enterprise software, we help organizations modernize operations, improve efficiency, and unlock new growth opportunities.
             </p>
 
-            {/* Hero CTAs */}
+            {/* Dual CTAs */}
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#platforms"
-                className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-xl shadow-orange-500/25 hover:shadow-orange-500/35 transition-all inline-flex items-center gap-2 group"
+                className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#0F294A] hover:bg-[#1E3A5F] active:bg-[#0A1C33] shadow-lg shadow-navy-900/10 hover:shadow-xl transition-all inline-flex items-center gap-2 group"
               >
                 <span>Explore Our Platforms</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <Link
                 to="/contact/?type=project"
-                className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#171A20] hover:bg-[#20242D] border border-white/10 hover:border-white/20 transition-all inline-flex items-center gap-2"
+                className="px-8 py-4 rounded-full font-bold text-sm text-[#0F294A] bg-white hover:bg-slate-50 border border-slate-300 shadow-xs hover:shadow-md transition-all inline-flex items-center gap-2"
               >
                 <span>Discuss Your Project</span>
               </Link>
             </div>
           </div>
 
-          {/* Cinematic Hero Interface Composition (Floating Infrastructure Cards) */}
-          <div className="mt-16 sm:mt-20 relative">
-            {/* Ambient Backlight Rim */}
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#F27A24]/10 to-transparent blur-2xl rounded-3xl -z-10" />
+          {/* Authentic Enterprise Architecture Triple Card */}
+          <div className="mt-14 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center">
+              <div className="text-xl font-extrabold text-[#0F294A]">One Portfolio</div>
+              <p className="text-xs font-semibold text-slate-500 mt-1">Mission FTC™ Strategy</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border-2 border-orange-200/80 shadow-sm text-center relative">
+              <div className="text-xl font-extrabold text-[#F27A24]">12 Platforms</div>
+              <p className="text-xs font-semibold text-slate-500 mt-1">Specialized Digital Solutions</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center">
+              <div className="text-xl font-extrabold text-[#0D9488]">One Foundation</div>
+              <p className="text-xs font-semibold text-slate-500 mt-1">NKTech Enterprise Platform™</p>
+            </div>
+          </div>
 
-            {/* Central Master Container */}
-            <div className="rounded-[32px] sm:rounded-[40px] border border-white/10 bg-[#111318]/90 p-6 sm:p-10 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.8)] relative overflow-hidden">
-              {/* Header Telemetry Bar */}
-              <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    NKTech Enterprise Platform™ • Live Ecosystem Telemetry
-                  </span>
-                </div>
-                <div className="hidden sm:flex items-center gap-4 text-xs text-slate-400">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#17A6A1]" /> 12 Active Platforms
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#246BCE]" /> 8 Economic Verticals
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" /> 99.98% Architecture Uptime
-                  </span>
-                </div>
+          {/* 3 Real Product Telemetry Pods */}
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Pod 1: Tirvona */}
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all group">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                  Tourism & Pilgrimage
+                </span>
+                <Compass className="w-5 h-5 text-amber-600" />
               </div>
+              <h3 className="text-xl font-extrabold text-[#0F294A] group-hover:text-[#F27A24] transition-colors">
+                Tirvona™
+              </h3>
+              <p className="text-xs text-[#64748B] mt-2 line-clamp-2 leading-relaxed">
+                Unified destination management system with virtual darshan queues, multi-language guide apps, and visitor telemetry.
+              </p>
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">NEP Pilgrim Core</span>
+                <Link to="/platforms/tirvona/" className="text-[#F27A24] font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                  View Platform →
+                </Link>
+              </div>
+            </div>
 
-              {/* 3 Interactive Highlight Pods */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Pod 1: Tirvona & Destinations */}
-                <div className="rounded-2xl border border-white/10 bg-[#171A20] p-6 hover:border-orange-500/30 transition-all group">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                      Destination Platform
-                    </span>
-                    <Compass className="w-5 h-5 text-amber-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-[#F27A24] transition-colors">
-                    Tirvona™
-                  </h3>
-                  <p className="text-xs text-[#A7ADB8] mt-2 line-clamp-2">
-                    Unified religious & cultural destination management system with queue telemetry and digital offerings.
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                    <span className="text-slate-400 font-medium">NEP Pilgrim Core</span>
-                    <Link to="/platforms/tirvona/" className="text-[#F27A24] font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                      View Platform →
-                    </Link>
-                  </div>
-                </div>
+            {/* Pod 2: BharatBN */}
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all group">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                  Business Discovery
+                </span>
+                <Globe2 className="w-5 h-5 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-extrabold text-[#0F294A] group-hover:text-blue-600 transition-colors">
+                BharatBN™
+              </h3>
+              <p className="text-xs text-[#64748B] mt-2 line-clamp-2 leading-relaxed">
+                India’s business discovery network connecting verified MSMEs, distributors, and buyers across regional trade corridors.
+              </p>
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">B2B Trade Network</span>
+                <Link to="/platforms/bharatbn/" className="text-blue-600 font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                  View Platform →
+                </Link>
+              </div>
+            </div>
 
-                {/* Pod 2: BharatBN MSME Network */}
-                <div className="rounded-2xl border border-white/10 bg-[#171A20] p-6 hover:border-blue-500/30 transition-all group">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                      Business Discovery
-                    </span>
-                    <Globe2 className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                    BharatBN™
-                  </h3>
-                  <p className="text-xs text-[#A7ADB8] mt-2 line-clamp-2">
-                    India’s business discovery network connecting MSMEs, distributors, and buyers across tier 2/3 clusters.
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                    <span className="text-slate-400 font-medium">B2B Directory</span>
-                    <Link to="/platforms/bharatbn/" className="text-blue-400 font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                      View Platform →
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Pod 3: BizORM CX Engine */}
-                <div className="rounded-2xl border border-white/10 bg-[#171A20] p-6 hover:border-teal-500/30 transition-all group">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">
-                      ORM & CX Intelligence
-                    </span>
-                    <ShieldCheck className="w-5 h-5 text-teal-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-teal-400 transition-colors">
-                    BizORM™
-                  </h3>
-                  <p className="text-xs text-[#A7ADB8] mt-2 line-clamp-2">
-                    Enterprise reputation management, QR review capture, multi-location analytics, and customer feedback.
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                    <span className="text-slate-400 font-medium">Live In Production</span>
-                    <Link to="/platforms/bizorm/" className="text-teal-400 font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                      View Platform →
-                    </Link>
-                  </div>
-                </div>
+            {/* Pod 3: BizORM */}
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all group">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-50 text-teal-700 border border-teal-200">
+                  ORM & Reviews
+                </span>
+                <ShieldCheck className="w-5 h-5 text-teal-600" />
+              </div>
+              <div className="flex items-center gap-3">
+                <img src="/assets/bizorm-logo.jpg" alt="BizORM Logo" className="h-8 w-auto object-contain rounded" />
+                <h3 className="text-xl font-extrabold text-[#0F294A] group-hover:text-teal-600 transition-colors">
+                  BizORM™
+                </h3>
+              </div>
+              <p className="text-xs text-[#64748B] mt-2 line-clamp-2 leading-relaxed">
+                Customer experience & online reputation management system with QR review capture and multi-location analytics.
+              </p>
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">Commercial Product</span>
+                <Link to="/platforms/bizorm/" className="text-teal-600 font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                  View Platform →
+                </Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
-            SECTION 2: INTRODUCTION (EDITORIAL LAYOUT)
+            SECTION 2: INTRODUCTION (EDITORIAL CORPORATE ARCHITECTURE)
         ========================================================================= */}
         <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[32px] sm:rounded-[40px] border border-white/10 bg-[#111318] p-8 sm:p-14 lg:p-20 relative overflow-hidden">
-            {/* Ambient warm gradient circle */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-radial from-orange-500/10 to-transparent blur-3xl pointer-events-none" />
-
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-14 lg:p-18 shadow-sm">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <div className="lg:col-span-7 space-y-6">
                 <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
                   CORPORATE PHILOSOPHY & CAPABILITY
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight leading-tight">
                   Technology Expertise. <br />
                   Business Understanding. <br />
-                  <span className="text-slate-400">Long-Term Vision.</span>
+                  <span className="text-[#1E5086]">Long-Term Vision.</span>
                 </h2>
-                <div className="space-y-4 text-base sm:text-lg text-[#A7ADB8] leading-relaxed">
+                <div className="space-y-4 text-base sm:text-lg text-[#475569] leading-relaxed">
                   <p>
-                    At Bizwoke Nova™, we design, develop, and operate scalable enterprise software, AI-powered automation platforms, mobile applications, and digital transformation solutions.
+                    At Bizwoke Nova™, we design, develop, and deliver scalable enterprise software, AI-powered automation platforms, mobile applications, and digital transformation solutions.
                   </p>
                   <p>
-                    We understand that technology must solve tangible problems on the ground. Whether digitizing municipal governance workflows, managing high-volume pilgrim hubs, or automating multi-factory workforce operations, we unite software craftsmanship with commercial pragmatism.
+                    From custom technology solutions to specialized digital platforms, we help organizations modernize operations, improve efficiency, and unlock new growth opportunities.
                   </p>
                 </div>
 
-                <div className="pt-4 flex flex-wrap gap-4 text-xs font-semibold text-slate-300">
-                  <div className="flex items-center gap-2 bg-[#171A20] px-4 py-2 rounded-full border border-white/10">
+                <div className="pt-2 flex flex-wrap gap-3 text-xs font-bold text-[#0F294A]">
+                  <div className="flex items-center gap-2 bg-slate-50 px-4 py-2.5 rounded-full border border-slate-200">
                     <CheckCircle2 className="w-4 h-4 text-[#F27A24]" /> Custom Enterprise Software
                   </div>
-                  <div className="flex items-center gap-2 bg-[#171A20] px-4 py-2 rounded-full border border-white/10">
-                    <CheckCircle2 className="w-4 h-4 text-[#17A6A1]" /> Autonomous AI & Agents
+                  <div className="flex items-center gap-2 bg-slate-50 px-4 py-2.5 rounded-full border border-slate-200">
+                    <CheckCircle2 className="w-4 h-4 text-[#0D9488]" /> Autonomous AI & Agents
                   </div>
-                  <div className="flex items-center gap-2 bg-[#171A20] px-4 py-2 rounded-full border border-white/10">
-                    <CheckCircle2 className="w-4 h-4 text-[#246BCE]" /> 12 Scalable Digital Platforms
+                  <div className="flex items-center gap-2 bg-slate-50 px-4 py-2.5 rounded-full border border-slate-200">
+                    <CheckCircle2 className="w-4 h-4 text-[#1E5086]" /> 12 Scalable Digital Platforms
                   </div>
                 </div>
               </div>
 
-              {/* Graphic Composition: Option A Corporate Hierarchy */}
+              {/* Option A Brand Architecture Box */}
               <div className="lg:col-span-5">
-                <div className="rounded-3xl border border-white/10 bg-[#171A20] p-8 space-y-6 shadow-2xl relative">
-                  <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Corporate Architecture</span>
-                    <span className="text-[10px] font-bold text-[#F27A24] bg-orange-500/10 px-2.5 py-0.5 rounded-full border border-orange-500/20">
+                <div className="bg-[#F8FAFC] rounded-2xl border border-slate-200 p-7 space-y-5">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                    <span className="text-xs font-extrabold text-[#0F294A] uppercase tracking-wider">Corporate Architecture</span>
+                    <span className="text-[10px] font-bold text-[#F27A24] bg-orange-100 px-2.5 py-0.5 rounded-full">
                       Option A Approved
                     </span>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="p-4 rounded-2xl bg-[#111318] border border-white/10">
-                      <div className="text-xs text-[#F27A24] font-bold">Primary Corporate Brand</div>
-                      <div className="text-lg font-extrabold text-white mt-1">Bizwoke Nova™</div>
-                      <p className="text-xs text-slate-400 mt-1">Enterprise Technology, AI Solutions & Digital Transformation</p>
+                  <div className="space-y-3.5">
+                    <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-xs">
+                      <div className="text-xs text-[#F27A24] font-extrabold uppercase tracking-wider">Primary Corporate Brand</div>
+                      <div className="text-lg font-extrabold text-[#0F294A] mt-0.5">Bizwoke Nova™</div>
+                      <p className="text-xs text-slate-500 mt-1">Enterprise Technology, AI Solutions & Digital Transformation</p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-[#111318] border border-white/10">
-                      <div className="text-xs text-[#17A6A1] font-bold">Portfolio Growth Strategy</div>
-                      <div className="text-lg font-extrabold text-white mt-1">Mission FTC™</div>
-                      <p className="text-xs text-slate-400 mt-1">One Portfolio. Many Platforms. One Technology Foundation.</p>
+                    <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-xs">
+                      <div className="text-xs text-[#0D9488] font-extrabold uppercase tracking-wider">Portfolio Growth Strategy</div>
+                      <div className="text-lg font-extrabold text-[#0F294A] mt-0.5">Mission FTC™</div>
+                      <p className="text-xs text-slate-500 mt-1">One Portfolio. Many Platforms. One Technology Foundation.</p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-[#111318] border border-white/10">
-                      <div className="text-xs text-[#246BCE] font-bold">Shared Technology Foundation</div>
-                      <div className="text-lg font-extrabold text-white mt-1">NKTech Enterprise Platform™ (NEP)</div>
-                      <p className="text-xs text-slate-400 mt-1">Shared core capabilities, identity, multi-tenancy, and security</p>
+                    <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-xs">
+                      <div className="text-xs text-[#1E5086] font-extrabold uppercase tracking-wider">Shared Technology Foundation</div>
+                      <div className="text-lg font-extrabold text-[#0F294A] mt-0.5">NKTech Enterprise Platform™ (NEP)</div>
+                      <p className="text-xs text-slate-500 mt-1">Shared core capabilities, identity, multi-tenancy, and security</p>
                     </div>
                   </div>
                 </div>
@@ -423,18 +400,18 @@ export default function Home() {
         </section>
 
         {/* =========================================================================
-            SECTION 3: OUR DIGITAL PLATFORMS (HORIZONTAL SLIDER / CAROUSEL)
+            SECTION 3: OUR DIGITAL PLATFORMS (12 PRODUCTS CAROUSEL)
         ========================================================================= */}
         <section id="platforms" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
                 12 PROPRIETARY DIGITAL PLATFORMS
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-2">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight mt-2">
                 One Vision. Multiple Digital Platforms.
               </h2>
-              <p className="text-base sm:text-lg text-[#A7ADB8] mt-3 max-w-2xl">
+              <p className="text-base sm:text-lg text-[#475569] mt-2 max-w-2xl">
                 Specialized enterprise software products and digital networks, each architected to solve distinct institutional and market needs.
               </p>
             </div>
@@ -443,14 +420,14 @@ export default function Home() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => scrollCarousel('left')}
-                className="w-12 h-12 rounded-full border border-white/10 bg-[#171A20] hover:bg-white/10 text-white flex items-center justify-center transition-all"
+                className="w-11 h-11 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-[#0F294A] flex items-center justify-center transition-all shadow-xs"
                 aria-label="Previous platform"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => scrollCarousel('right')}
-                className="w-12 h-12 rounded-full border border-white/10 bg-[#171A20] hover:bg-white/10 text-white flex items-center justify-center transition-all"
+                className="w-11 h-11 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-[#0F294A] flex items-center justify-center transition-all shadow-xs"
                 aria-label="Next platform"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -459,15 +436,15 @@ export default function Home() {
           </div>
 
           {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-6 no-scrollbar">
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap border ${
                   activeCategory === cat
-                    ? 'bg-[#F27A24] text-white border-[#F27A24] shadow-lg shadow-orange-500/20'
-                    : 'bg-[#171A20] text-slate-400 hover:text-white border-white/10 hover:border-white/20'
+                    ? 'bg-[#0F294A] text-white border-[#0F294A] shadow-xs'
+                    : 'bg-white text-slate-600 hover:text-[#0F294A] border-slate-200 hover:border-slate-300'
                 }`}
               >
                 {cat}
@@ -478,41 +455,41 @@ export default function Home() {
           {/* Horizontal Scrolling Cards Container */}
           <div
             ref={carouselRef}
-            className="flex items-stretch gap-6 overflow-x-auto pb-8 pt-2 no-scrollbar scroll-smooth"
+            className="flex items-stretch gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar scroll-smooth"
           >
             {filteredPlatforms.map((p, idx) => (
               <div
                 key={p.id}
-                className="min-w-[320px] sm:min-w-[360px] max-w-[380px] rounded-3xl border border-white/10 bg-[#171A20] p-7 flex flex-col justify-between hover:border-white/20 hover:bg-[#1C2028] transition-all duration-300 group shrink-0 shadow-xl"
+                className="min-w-[320px] sm:min-w-[360px] max-w-[380px] rounded-3xl border border-slate-200/90 bg-white p-7 flex flex-col justify-between hover:border-slate-300 hover:shadow-xl transition-all duration-300 group shrink-0 shadow-sm"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
                     <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
                       Platform {String(idx + 1).padStart(2, '0')}
                     </span>
                     <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                      p.maturityStatus === 'Live' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                      p.maturityStatus === 'Pilot' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                      'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                      p.maturityStatus === 'Live' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                      p.maturityStatus === 'Pilot' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                      'bg-amber-50 text-amber-700 border-amber-200'
                     }`}>
                       {p.maturityStatus}
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-extrabold text-white group-hover:text-[#F27A24] transition-colors">
+                  <h3 className="text-2xl font-extrabold text-[#0F294A] group-hover:text-[#F27A24] transition-colors">
                     {p.name}
                   </h3>
-                  <div className="text-xs font-semibold text-[#17A6A1] mt-1">{p.category}</div>
-                  <p className="text-sm text-[#A7ADB8] mt-3 line-clamp-3 leading-relaxed">
+                  <div className="text-xs font-bold text-[#0D9488] mt-1">{p.category}</div>
+                  <p className="text-sm text-[#475569] mt-3 line-clamp-3 leading-relaxed">
                     {p.shortDesc}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-500 font-medium">NEP Foundation</span>
+                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-[11px] text-slate-500 font-medium">NEP Platform Core</span>
                   <Link
                     to={p.path}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-[#F27A24] transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F294A] group-hover:text-[#F27A24] transition-colors"
                   >
                     <span>Explore Platform</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -525,7 +502,7 @@ export default function Home() {
           <div className="mt-8 text-center">
             <Link
               to="/platforms/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-[#171A20] hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-[#0F294A] bg-white hover:bg-slate-50 border border-slate-200 shadow-xs hover:shadow-md transition-all"
             >
               <span>Explore Complete Platforms Directory (All 12)</span>
               <ArrowRight className="w-4 h-4" />
@@ -541,45 +518,42 @@ export default function Home() {
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
               FULL-STACK PROFESSIONAL SERVICES
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight">
               Technology Built Around Real Business Challenges.
             </h2>
-            <p className="text-base sm:text-lg text-[#A7ADB8]">
+            <p className="text-base sm:text-lg text-[#475569]">
               We design and deliver scalable software architectures, autonomous workflows, and digital capabilities for modern enterprises.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreServices.map((srv, idx) => {
+            {coreServices.map((srv) => {
               const Icon = srv.icon;
               return (
                 <Link
                   key={srv.title}
                   to={srv.path}
-                  className="rounded-3xl border border-white/10 bg-[#171A20] p-7 flex flex-col justify-between hover:border-white/20 hover:bg-[#1C2028] transition-all duration-300 group relative overflow-hidden shadow-lg"
+                  className="bg-white rounded-3xl border border-slate-200/90 p-7 flex flex-col justify-between hover:border-slate-300 hover:shadow-xl transition-all duration-300 group shadow-sm"
                 >
-                  {/* Subtle top ambient glow */}
-                  <div className={`absolute top-0 inset-x-0 h-24 bg-gradient-to-b ${srv.accent} pointer-events-none`} />
-
-                  <div className="relative z-10">
+                  <div>
                     <div className="flex items-center justify-between mb-5">
-                      <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-105 group-hover:bg-[#F27A24] transition-all">
-                        <Icon className="w-6 h-6 text-white" />
+                      <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${srv.color} group-hover:scale-105 transition-all`}>
+                        <Icon className="w-6 h-6" />
                       </div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         {srv.badge}
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-white group-hover:text-[#F27A24] transition-colors leading-snug">
+                    <h3 className="text-lg font-extrabold text-[#0F294A] group-hover:text-[#F27A24] transition-colors leading-snug">
                       {srv.title}
                     </h3>
-                    <p className="text-xs text-[#A7ADB8] mt-3 leading-relaxed">
+                    <p className="text-xs text-[#475569] mt-3 leading-relaxed">
                       {srv.desc}
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-slate-400 group-hover:text-white transition-colors relative z-10">
+                  <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-500 group-hover:text-[#F27A24] transition-colors">
                     <span>Explore Service</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -591,7 +565,7 @@ export default function Home() {
           <div className="mt-12 text-center">
             <Link
               to="/services/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-[#171A20] hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-[#0F294A] bg-white hover:bg-slate-50 border border-slate-200 shadow-xs hover:shadow-md transition-all"
             >
               <span>View All 14 Professional Services</span>
               <ArrowRight className="w-4 h-4" />
@@ -600,35 +574,32 @@ export default function Home() {
         </section>
 
         {/* =========================================================================
-            SECTION 5: FULL-WIDTH CINEMATIC SECTION
+            SECTION 5: FULL-WIDTH EDITORIAL SECTION (HIGH CONTRAST)
         ========================================================================= */}
-        <section className="py-24 lg:py-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
-          <div className="rounded-[40px] sm:rounded-[48px] border border-white/10 bg-gradient-to-b from-[#111318] via-[#141820] to-[#0E1117] p-8 sm:p-16 lg:p-24 relative overflow-hidden text-center shadow-2xl">
-            {/* Ambient Radial Lights */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-radial from-orange-500/15 via-blue-600/10 to-transparent blur-3xl pointer-events-none" />
-
+        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="rounded-[40px] bg-[#0F294A] text-white p-8 sm:p-16 lg:p-20 text-center relative overflow-hidden shadow-2xl">
             <div className="relative z-10 max-w-3xl mx-auto space-y-6">
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
                 EMPOWERING INDIA'S DIGITAL FUTURE
               </span>
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
                 Empowering Businesses Through Intelligent Technology.
               </h2>
-              <p className="text-lg sm:text-xl text-[#A7ADB8] leading-relaxed">
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
                 We believe true digital infrastructure connects technology, people, processes, and economic opportunities into a coherent, resilient ecosystem.
               </p>
 
-              <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
+              <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   to="/contact/?type=consultation"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] shadow-xl shadow-orange-500/25 transition-all inline-flex items-center gap-2 group"
+                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-lg shadow-orange-500/25 transition-all inline-flex items-center gap-2 group"
                 >
                   <span>Schedule an Executive Briefing</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/about-us/"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-white/10 hover:bg-white/15 border border-white/20 transition-colors"
                 >
                   Our Leadership & Story
                 </Link>
@@ -641,34 +612,44 @@ export default function Home() {
             SECTION 6: OUR TECHNOLOGY FOUNDATION (NKTech Platform™ - NEP)
         ========================================================================= */}
         <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[32px] sm:rounded-[40px] border border-white/10 bg-[#111318] p-8 sm:p-14 lg:p-20 relative overflow-hidden">
-            <div className="max-w-3xl mb-16 space-y-3">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#246BCE]">
-                SHARED TECHNOLOGY FOUNDATION
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                One Platform. One Technology Foundation.
-              </h2>
-              <p className="text-base sm:text-lg text-[#A7ADB8] leading-relaxed">
-                The NKTech Enterprise Platform™ (NEP) powers all 12 Bizwoke Nova digital platforms, delivering shared security, unified identity, high-throughput APIs, and AI workflow automation.
-              </p>
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-14 lg:p-18 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-14">
+              <div className="max-w-3xl space-y-3">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#1E5086]">
+                  SHARED TECHNOLOGY FOUNDATION
+                </span>
+                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight">
+                  One Platform. One Technology Foundation.
+                </h2>
+                <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
+                  The NKTech Enterprise Platform™ (NEP) powers all 12 Bizwoke Nova digital platforms, delivering shared security, unified identity, high-throughput APIs, and AI workflow automation.
+                </p>
+              </div>
+
+              <div className="shrink-0 p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                <img src="/assets/nktech-logo.jpg" alt="NKTech Logo" className="h-10 w-auto object-contain rounded" />
+                <div>
+                  <div className="text-xs font-bold text-[#0F294A]">NEP Stack Core</div>
+                  <div className="text-[11px] text-slate-500">Shared Infrastructure</div>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {nepFoundation.map((cap, idx) => {
+              {nepFoundation.map((cap) => {
                 const CIcon = cap.icon;
                 return (
                   <div
                     key={cap.title}
-                    className="rounded-2xl border border-white/10 bg-[#171A20] p-6 hover:border-blue-500/30 transition-all group"
+                    className="rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-6 hover:border-slate-300 hover:bg-white hover:shadow-md transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[#246BCE] flex items-center justify-center mb-4 group-hover:bg-[#246BCE] group-hover:text-white transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/80 text-[#1E5086] flex items-center justify-center mb-4 group-hover:bg-[#0F294A] group-hover:text-white transition-all">
                       <CIcon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-base font-bold text-white group-hover:text-[#246BCE] transition-colors">
+                    <h3 className="text-base font-extrabold text-[#0F294A] group-hover:text-[#1E5086] transition-colors">
                       {cap.title}
                     </h3>
-                    <p className="text-xs text-[#A7ADB8] mt-2 leading-relaxed">
+                    <p className="text-xs text-[#64748B] mt-2 leading-relaxed">
                       {cap.desc}
                     </p>
                   </div>
@@ -676,19 +657,19 @@ export default function Home() {
               })}
             </div>
 
-            <div className="mt-12 p-6 rounded-2xl border border-white/10 bg-[#171A20] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-12 p-6 rounded-2xl border border-slate-200 bg-[#F8FAFC] flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white shrink-0">
-                  <Cpu className="w-6 h-6 text-[#246BCE]" />
+                <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#0F294A] shrink-0">
+                  <Cpu className="w-6 h-6 text-[#1E5086]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white">Explore Deep Architecture Specifications</h4>
-                  <p className="text-xs text-slate-400">Multi-tenant data isolation, zero-trust encryption, and API adapters</p>
+                  <h4 className="text-sm font-bold text-[#0F294A]">Explore Deep Architecture Specifications</h4>
+                  <p className="text-xs text-slate-500">Multi-tenant data isolation, zero-trust encryption, and API adapters</p>
                 </div>
               </div>
               <Link
                 to="/technology/"
-                className="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[#246BCE] hover:bg-blue-600 transition-colors shrink-0"
+                className="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[#0F294A] hover:bg-[#1E3A5F] transition-colors shrink-0"
               >
                 View NEP Technology Overview →
               </Link>
@@ -701,13 +682,13 @@ export default function Home() {
         ========================================================================= */}
         <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#17A6A1]">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#0D9488]">
               ECONOMIC SECTORS & DOMAINS
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight">
               Industries We Serve.
             </h2>
-            <p className="text-base sm:text-lg text-[#A7ADB8]">
+            <p className="text-base sm:text-lg text-[#475569]">
               Purpose-built digital architectures engineered for high-stake sectors across the Indian economic landscape.
             </p>
           </div>
@@ -719,20 +700,20 @@ export default function Home() {
                 <Link
                   key={ind.title}
                   to={ind.path}
-                  className="rounded-3xl border border-white/10 bg-[#171A20] p-6 flex flex-col justify-between hover:border-teal-500/30 hover:bg-[#1C2028] transition-all group"
+                  className="bg-white rounded-3xl border border-slate-200/90 p-6 flex flex-col justify-between hover:border-slate-300 hover:shadow-xl transition-all group shadow-sm"
                 >
                   <div>
-                    <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 text-[#17A6A1] flex items-center justify-center mb-4 group-hover:bg-[#17A6A1] group-hover:text-white transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200/80 text-[#0D9488] flex items-center justify-center mb-4 group-hover:bg-[#0D9488] group-hover:text-white transition-all">
                       <IIcon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-base font-bold text-white group-hover:text-[#17A6A1] transition-colors leading-snug">
+                    <h3 className="text-base font-extrabold text-[#0F294A] group-hover:text-[#0D9488] transition-colors leading-snug">
                       {ind.title}
                     </h3>
-                    <p className="text-xs text-[#A7ADB8] mt-2.5 leading-relaxed">
+                    <p className="text-xs text-[#64748B] mt-2.5 leading-relaxed">
                       {ind.desc}
                     </p>
                   </div>
-                  <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-slate-400 group-hover:text-white transition-colors">
+                  <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-500 group-hover:text-[#0D9488] transition-colors">
                     <span>View Solutions</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -746,15 +727,15 @@ export default function Home() {
             SECTION 8: WHY BIZWOKE NOVA (6 DIFFERENTIATORS)
         ========================================================================= */}
         <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[32px] sm:rounded-[40px] border border-white/10 bg-[#111318] p-8 sm:p-14 lg:p-20 relative overflow-hidden">
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-14 lg:p-18 shadow-sm">
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
                 ENGINEERING RIGOR & STEWARDSHIP
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight">
                 Technology That Moves Business Forward.
               </h2>
-              <p className="text-base sm:text-lg text-[#A7ADB8]">
+              <p className="text-base sm:text-lg text-[#475569]">
                 Why forward-thinking enterprises, civic bodies, and institutions partner with Bizwoke Nova.
               </p>
             </div>
@@ -763,15 +744,15 @@ export default function Home() {
               {differentiators.map((diff) => (
                 <div
                   key={diff.title}
-                  className="rounded-2xl border border-white/10 bg-[#171A20] p-7 hover:border-white/20 transition-all group"
+                  className="rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-7 hover:border-slate-300 hover:bg-white hover:shadow-md transition-all group"
                 >
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 border border-white/10">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white text-[#0F294A] border border-slate-200 shadow-xs">
                     {diff.badge}
                   </span>
-                  <h3 className="text-lg font-bold text-white group-hover:text-[#F27A24] transition-colors mt-3">
+                  <h3 className="text-lg font-extrabold text-[#0F294A] group-hover:text-[#F27A24] transition-colors mt-3">
                     {diff.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#A7ADB8] mt-2.5 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#475569] mt-2.5 leading-relaxed">
                     {diff.desc}
                   </p>
                 </div>
@@ -784,24 +765,24 @@ export default function Home() {
             SECTION 9: MISSION FTC™ (STRATEGIC INITIATIVE)
         ========================================================================= */}
         <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[32px] sm:rounded-[40px] border border-orange-500/20 bg-gradient-to-r from-[#171A20] via-[#111318] to-[#171A20] p-8 sm:p-14 lg:p-20 relative overflow-hidden">
+          <div className="rounded-3xl border-2 border-orange-200 bg-orange-50/50 p-8 sm:p-14 lg:p-18 relative overflow-hidden shadow-sm">
             <div className="max-w-3xl space-y-4">
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
                 LONG-TERM CORPORATE PORTFOLIO STRATEGY
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight">
                 Mission FTC™
               </h2>
-              <p className="text-lg font-semibold text-slate-300">
+              <p className="text-lg font-bold text-[#1E5086]">
                 One Portfolio. Many Platforms. One Technology Foundation.
               </p>
-              <p className="text-base text-[#A7ADB8] leading-relaxed">
+              <p className="text-base text-[#475569] leading-relaxed">
                 Mission FTC is Bizwoke Nova’s long-term portfolio initiative dedicated to engineering, nurturing, and scaling specialized digital platforms across India’s core economic infrastructure.
               </p>
               <div className="pt-4">
                 <Link
                   to="/about-us/#vision"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] transition-colors shadow-lg shadow-orange-500/20"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-[#0F294A] hover:bg-[#1E3A5F] transition-colors shadow-sm"
                 >
                   <span>Read Corporate Vision & Roadmap</span>
                   <ArrowRight className="w-4 h-4" />
@@ -819,46 +800,46 @@ export default function Home() {
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
               STAKEHOLDER IMPACT & COLLABORATION
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] tracking-tight">
               Enterprise Value & Operational Impact.
             </h2>
-            <p className="text-base sm:text-lg text-[#A7ADB8]">
+            <p className="text-base sm:text-lg text-[#475569]">
               Verified engineering feedback and performance principles across our deployed systems.
             </p>
           </div>
 
           {/* Floating Impact Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-3xl border border-white/10 bg-[#171A20] p-8 space-y-4 relative overflow-hidden">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Operational Reliability</div>
-              <p className="text-sm text-slate-300 italic leading-relaxed">
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-8 space-y-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Operational Reliability</div>
+              <p className="text-sm text-[#475569] italic leading-relaxed">
                 "Architecting high-availability infrastructure requires strict separation of tenant data and resilient failovers. The NEP foundation ensures mission-critical platforms remain uninterrupted."
               </p>
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                <span className="font-bold text-white">Enterprise Architecture Team</span>
-                <span className="text-[#17A6A1]">NEP Core Infrastructure</span>
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="font-extrabold text-[#0F294A]">Enterprise Architecture Team</span>
+                <span className="text-[#0D9488] font-semibold">NEP Core Infrastructure</span>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-[#171A20] p-8 space-y-4 relative overflow-hidden">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Reputation & Feedback</div>
-              <p className="text-sm text-slate-300 italic leading-relaxed">
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-8 space-y-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Reputation & Feedback</div>
+              <p className="text-sm text-[#475569] italic leading-relaxed">
                 "BizORM gave multi-location retail and healthcare institutions automated review collection and instant sentiment alerts, transforming raw ratings into measurable operational improvements."
               </p>
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                <span className="font-bold text-white">Customer Experience Lead</span>
-                <span className="text-[#F27A24]">BizORM™ Operations</span>
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="font-extrabold text-[#0F294A]">Customer Experience Lead</span>
+                <span className="text-[#F27A24] font-semibold">BizORM™ Operations</span>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-[#171A20] p-8 space-y-4 relative overflow-hidden">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Scalable Delivery</div>
-              <p className="text-sm text-slate-300 italic leading-relaxed">
+            <div className="bg-white rounded-3xl border border-slate-200/90 p-8 space-y-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Scalable Delivery</div>
+              <p className="text-sm text-[#475569] italic leading-relaxed">
                 "Moving from disconnected legacy workflows to unified cloud portals empowered our field teams with real-time dispatch, transparent audit trails, and zero paperwork bottlenecks."
               </p>
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                <span className="font-bold text-white">Solutions Delivery Lead</span>
-                <span className="text-[#246BCE]">Civic & Enterprise Systems</span>
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="font-extrabold text-[#0F294A]">Solutions Delivery Lead</span>
+                <span className="text-[#1E5086] font-semibold">Civic & Enterprise Systems</span>
               </div>
             </div>
           </div>
@@ -867,33 +848,30 @@ export default function Home() {
         {/* =========================================================================
             SECTION 11: FINAL HIGH-IMPACT CTA
         ========================================================================= */}
-        <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[40px] border border-orange-500/30 bg-gradient-to-b from-[#171A20] via-[#111318] to-[#08090B] p-8 sm:p-16 lg:p-20 text-center relative overflow-hidden shadow-2xl">
-            {/* Ambient orange glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-radial from-orange-500/20 to-transparent blur-3xl pointer-events-none" />
-
+        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="rounded-[40px] border border-orange-200 bg-white p-8 sm:p-16 lg:p-20 text-center relative overflow-hidden shadow-lg">
             <div className="relative z-10 max-w-2xl mx-auto space-y-6">
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
                 AWAKENING YOUR SUCCESS
               </span>
-              <h2 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+              <h2 className="text-4xl sm:text-6xl font-extrabold text-[#0F294A] tracking-tight">
                 Let's Build What's Next.
               </h2>
-              <p className="text-base sm:text-lg text-[#A7ADB8] leading-relaxed">
+              <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
                 Have a business challenge, technology idea or digital transformation requirement? Let's explore how we can build it together.
               </p>
 
               <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   to="/contact/?type=consultation"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-xl shadow-orange-500/25 transition-all inline-flex items-center gap-2 group"
+                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-lg shadow-orange-500/25 transition-all inline-flex items-center gap-2 group"
                 >
                   <span>Schedule a Consultation</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/contact/"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                  className="px-8 py-4 rounded-full font-bold text-sm text-[#0F294A] bg-slate-50 hover:bg-slate-100 border border-slate-300 transition-colors"
                 >
                   Contact Our Team
                 </Link>

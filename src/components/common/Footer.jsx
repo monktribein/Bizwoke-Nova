@@ -15,14 +15,10 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#08090B] text-slate-400 pt-16 pb-12 border-t border-white/10 relative overflow-hidden">
-      {/* Subtle Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-64 bg-radial from-orange-500/5 to-transparent blur-3xl pointer-events-none" />
-
+    <footer className="bg-[#0F294A] text-slate-300 pt-16 pb-12 border-t border-slate-700/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top Highlight Banner */}
-        <div className="bg-[#111318] rounded-3xl p-8 sm:p-10 mb-16 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-radial from-blue-500/10 to-transparent blur-2xl pointer-events-none" />
+        <div className="bg-[#143761] rounded-3xl p-8 sm:p-10 mb-16 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-xl">
           <div className="space-y-2 text-center lg:text-left relative z-10">
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
               Awakening Your Success • Mission FTC™
@@ -30,21 +26,21 @@ export default function Footer() {
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Building Digital Infrastructure for a Smarter India.
             </h3>
-            <p className="text-sm text-[#A7ADB8] max-w-2xl">
+            <p className="text-sm text-slate-300 max-w-2xl">
               One Portfolio. Many Platforms. One Technology Foundation. Explore enterprise software, AI systems, and specialized digital platforms.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3 relative z-10">
             <Link
               to="/platforms/"
-              className="px-6 py-3 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-all shadow-lg shadow-orange-500/20 inline-flex items-center gap-2 group"
+              className="px-6 py-3 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-all shadow-md inline-flex items-center gap-2 group"
             >
               <span>Explore Platforms</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
             <Link
               to="/contact/"
-              className="px-6 py-3 text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors"
+              className="px-6 py-3 text-sm font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/10 rounded-full transition-colors"
             >
               Contact Our Team
             </Link>
@@ -52,22 +48,22 @@ export default function Footer() {
         </div>
 
         {/* Multi-Column Sitemap & Corporate Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-700/60">
           {/* Col 1: Corporate Brand Identity */}
           <div className="lg:col-span-2 space-y-4">
             <BrandLogo variant="light" size="lg" />
-            <p className="text-sm text-[#A7ADB8] leading-relaxed max-w-sm">
+            <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
               Bizwoke Nova™ is an enterprise technology, AI solutions, and digital transformation company. We engineer scalable software, mission-critical platforms, and connected digital ecosystems for enterprises, institutions, and government bodies.
             </p>
 
             <div className="pt-2 space-y-2 text-xs text-slate-400">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-slate-300">Portfolio Strategy:</span>
+                <span className="font-semibold text-slate-200">Portfolio Strategy:</span>
                 <span className="text-[#17A6A1]">Mission FTC™</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-slate-300">Shared Tech Foundation:</span>
-                <span className="text-[#246BCE]">NKTech Enterprise Platform™ (NEP)</span>
+                <span className="font-semibold text-slate-200">Shared Tech Foundation:</span>
+                <span className="text-[#3b82f6]">NKTech Enterprise Platform™ (NEP)</span>
               </div>
             </div>
 
@@ -76,7 +72,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#246BCE] border border-white/10 flex items-center justify-center text-white transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#246BCE] border border-white/10 flex items-center justify-center text-white transition-colors"
                 aria-label="LinkedIn Profile"
               >
                 in
@@ -85,7 +81,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#246BCE] border border-white/10 flex items-center justify-center text-white transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#246BCE] border border-white/10 flex items-center justify-center text-white transition-colors"
                 aria-label="X Twitter Profile"
               >
                 x
@@ -94,7 +90,7 @@ export default function Footer() {
                 href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#246BCE] border border-white/10 flex items-center justify-center text-white transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#246BCE] border border-white/10 flex items-center justify-center text-white transition-colors"
                 aria-label="GitHub Profile"
               >
                 git
@@ -107,12 +103,12 @@ export default function Footer() {
             <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
               Digital Platforms
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs text-slate-300">
               <li>
-                <Link to="/platforms/tirvona/" className="hover:text-white transition-colors">Tirvona™ (Tourism)</Link>
+                <Link to="/platforms/tirvona/" className="hover:text-white transition-colors">Tirvona™ (Tourism & Destinations)</Link>
               </li>
               <li>
-                <Link to="/platforms/bharatbn/" className="hover:text-white transition-colors">BharatBN™ (MSME Network)</Link>
+                <Link to="/platforms/bharatbn/" className="hover:text-white transition-colors">BharatBN™ (Business Network)</Link>
               </li>
               <li>
                 <Link to="/platforms/bizorm/" className="hover:text-white transition-colors">BizORM™ (CX & Reviews)</Link>
@@ -139,7 +135,7 @@ export default function Footer() {
             <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
               Core Capabilities
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs text-slate-300">
               <li>
                 <Link to="/services/enterprise-software-development/" className="hover:text-white transition-colors">Enterprise Software & ERP</Link>
               </li>
@@ -171,7 +167,7 @@ export default function Footer() {
             <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
               Company & Legal
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs text-slate-300">
               <li>
                 <Link to="/about-us/" className="hover:text-white transition-colors">About Bizwoke Nova</Link>
               </li>
@@ -198,14 +194,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright, Verification & Compliance */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
           <p>© {new Date().getFullYear()} Bizwoke Nova™. All rights reserved. Awakening Your Success.</p>
           <div className="flex items-center gap-4 text-[11px]">
             <span>Option A Brand Architecture</span>
             <span>•</span>
             <span className="text-[#17A6A1]">Mission FTC™ Initiative</span>
             <span>•</span>
-            <span className="text-[#246BCE]">NEP Enterprise Stack</span>
+            <span className="text-[#3b82f6]">NEP Enterprise Stack</span>
           </div>
         </div>
       </div>

@@ -27,20 +27,19 @@ import {
 
 /**
  * ActiveTabNotch
- * Precision recreation of the Dribbble "Modern Floating Navbar UI Kit" active tab bulb.
- * Features an elevated circular badge protruding upwards above the navbar rim,
- * flanked by mathematical cubic-Bézier concave fillet wings on both sides for a seamless,
- * organic transition into the capsule body.
+ * Modern Floating Navbar Active Tab Notch.
+ * Elevated circular bulb protruding upwards above the navbar rim,
+ * with smooth cubic Bézier concave fillet wings blending seamlessly into the white capsule.
  */
 function ActiveTabNotch({ icon: Icon, label }) {
-  // Cinematic dark palette base
-  const barBg = '#0E1116';
+  // Capsule body color
+  const barBg = '#FFFFFF';
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-w-[64px] xl:min-w-[70px] h-[56px]">
-      {/* Elevated Circular Bulb popping up above the navbar rim */}
+    <div className="relative flex flex-col items-center justify-center min-w-[62px] xl:min-w-[68px] h-[54px]">
+      {/* Elevated Circular Bulb */}
       <div className="absolute -top-4 flex items-center justify-center z-10">
-        {/* Left Concave Fillet Wing (Smooth Bézier Shoulder) */}
+        {/* Left Concave Fillet Wing */}
         <svg
           width="16"
           height="16"
@@ -56,14 +55,14 @@ function ActiveTabNotch({ icon: Icon, label }) {
         </svg>
 
         {/* Central Circular Bulb */}
-        <div className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-[#0E1116] shadow-[0_8px_20px_rgba(0,0,0,0.7)]">
+        <div className="w-9 h-9 rounded-full flex items-center justify-center border border-slate-200/90 bg-white shadow-md">
           {/* Inner Sunrise Orange Core Badge */}
-          <div className="w-7 h-7 rounded-full bg-[#F27A24] text-white flex items-center justify-center shadow-md">
+          <div className="w-7 h-7 rounded-full bg-[#F27A24] text-white flex items-center justify-center shadow-sm">
             <Icon className="w-3.5 h-3.5 text-white" />
           </div>
         </div>
 
-        {/* Right Concave Fillet Wing (Smooth Bézier Shoulder) */}
+        {/* Right Concave Fillet Wing */}
         <svg
           width="16"
           height="16"
@@ -79,8 +78,8 @@ function ActiveTabNotch({ icon: Icon, label }) {
         </svg>
       </div>
 
-      {/* Active Tab Label sitting inside the capsule bar */}
-      <span className="text-[10px] font-extrabold tracking-wide mt-5 select-none text-white">
+      {/* Active Tab Label */}
+      <span className="text-[10px] font-extrabold tracking-wide mt-5 select-none text-[#0F294A]">
         {label}
       </span>
     </div>
@@ -115,12 +114,12 @@ export default function Header() {
   };
 
   const platformsPreview = [
-    { name: 'Tirvona™', category: 'Tourism & Religious Hubs', path: '/platforms/tirvona/', icon: Compass, color: 'text-amber-500 bg-amber-500/10' },
-    { name: 'BharatBN™', category: 'Business Discovery & Growth', path: '/platforms/bharatbn/', icon: Globe2, color: 'text-blue-500 bg-blue-500/10' },
-    { name: 'BizORM™', category: 'Customer Experience & ORM', path: '/platforms/bizorm/', icon: ShieldCheck, color: 'text-teal-500 bg-teal-500/10' },
-    { name: 'Pravixo™', category: 'Creator Commerce & Influencer', path: '/platforms/pravixo/', icon: Sparkles, color: 'text-purple-500 bg-purple-500/10' },
-    { name: 'Political ERP™', category: 'Political Intelligence', path: '/platforms/political-management-erp/', icon: Users, color: 'text-indigo-500 bg-indigo-500/10' },
-    { name: 'ULB ERP Enterprise™', category: 'Urban Governance', path: '/platforms/ulb-erp/', icon: Landmark, color: 'text-emerald-500 bg-emerald-500/10' },
+    { name: 'Tirvona™', category: 'Tourism & Religious Hubs', path: '/platforms/tirvona/', icon: Compass, color: 'text-amber-600 bg-amber-50' },
+    { name: 'BharatBN™', category: 'Business Discovery & Growth', path: '/platforms/bharatbn/', icon: Globe2, color: 'text-blue-600 bg-blue-50' },
+    { name: 'BizORM™', category: 'Customer Experience & ORM', path: '/platforms/bizorm/', icon: ShieldCheck, color: 'text-teal-600 bg-teal-50' },
+    { name: 'Pravixo™', category: 'Creator Commerce & Influencer', path: '/platforms/pravixo/', icon: Sparkles, color: 'text-purple-600 bg-purple-50' },
+    { name: 'Political ERP™', category: 'Political Intelligence', path: '/platforms/political-management-erp/', icon: Users, color: 'text-indigo-600 bg-indigo-50' },
+    { name: 'ULB ERP Enterprise™', category: 'Urban Governance', path: '/platforms/ulb-erp/', icon: Landmark, color: 'text-emerald-600 bg-emerald-50' },
   ];
 
   const solutionsPreview = [
@@ -181,7 +180,7 @@ export default function Header() {
     },
     {
       id: 'technology',
-      name: 'Technology',
+      name: 'NEP Tech',
       path: '/technology/',
       icon: Cpu,
       isActive: location.pathname === '/technology/'
@@ -206,21 +205,21 @@ export default function Header() {
     <>
       {/* ================= DESKTOP FLOATING CAPSULE HEADER ================= */}
       <header
-        className="sticky top-4 z-50 transition-all duration-300 px-3 sm:px-6 lg:px-8"
+        className="sticky top-3.5 z-50 transition-all duration-300 px-3 sm:px-6 lg:px-8"
         ref={dropdownRef}
       >
         <div className="max-w-7xl mx-auto">
-          {/* Main Floating Capsule Bar */}
+          {/* Main Floating Capsule Bar in Authentic Crisp Enterprise White */}
           <div
-            className="relative rounded-full px-4 sm:px-5 transition-all duration-300 flex items-center justify-between border border-white/10 bg-[#0E1116]/95 text-white backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
+            className="relative rounded-full px-4 sm:px-5 transition-all duration-300 flex items-center justify-between border border-slate-200/90 bg-white/95 text-[#0F294A] backdrop-blur-xl shadow-[0_12px_36px_-10px_rgba(15,41,74,0.12)]"
             style={{ minHeight: '60px' }}
           >
-            {/* Left: Brand Logo */}
+            {/* Left: Authentic Brand Logo */}
             <div className="flex items-center shrink-0 pr-3">
-              <BrandLogo variant="light" size="sm" showTagline={false} />
+              <BrandLogo variant="default" size="sm" showTagline={false} />
             </div>
 
-            {/* Center: Floating Capsule Navigation Dock with Dribbble-Style Elevated Notch */}
+            {/* Center: Floating Navigation Dock with Dribbble-Style Elevated Notch */}
             <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
               {navTabs.map((tab) => {
                 const Icon = tab.icon;
@@ -241,10 +240,10 @@ export default function Header() {
                           {active ? (
                             <ActiveTabNotch icon={Icon} label={tab.name} />
                           ) : (
-                            <div className="flex flex-col items-center justify-center min-w-[62px] xl:min-w-[68px] h-[54px] py-1 px-2 rounded-full transition-all duration-200 group hover:opacity-100">
-                              <Icon className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                            <div className="flex flex-col items-center justify-center min-w-[60px] xl:min-w-[66px] h-[52px] py-1 px-2 rounded-full transition-all duration-200 group hover:opacity-100">
+                              <Icon className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0F294A] transition-colors" />
                               <div className="flex items-center gap-0.5 mt-1">
-                                <span className="text-[10px] font-semibold tracking-wide text-slate-400 group-hover:text-white transition-colors">
+                                <span className="text-[10px] font-semibold tracking-wide text-slate-600 group-hover:text-[#0F294A] transition-colors">
                                   {tab.name}
                                 </span>
                                 <ChevronDown
@@ -265,9 +264,9 @@ export default function Header() {
                         {active ? (
                           <ActiveTabNotch icon={Icon} label={tab.name} />
                         ) : (
-                          <div className="flex flex-col items-center justify-center min-w-[62px] xl:min-w-[68px] h-[54px] py-1 px-2 rounded-full transition-all duration-200 group hover:opacity-100">
-                            <Icon className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
-                            <span className="text-[10px] font-semibold tracking-wide mt-1 text-slate-400 group-hover:text-white transition-colors">
+                          <div className="flex flex-col items-center justify-center min-w-[60px] xl:min-w-[66px] h-[52px] py-1 px-2 rounded-full transition-all duration-200 group hover:opacity-100">
+                            <Icon className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0F294A] transition-colors" />
+                            <span className="text-[10px] font-semibold tracking-wide mt-1 text-slate-600 group-hover:text-[#0F294A] transition-colors">
                               {tab.name}
                             </span>
                           </div>
@@ -279,19 +278,19 @@ export default function Header() {
                     {tab.id === 'platforms' && activeDropdown === 'platforms' && (
                       <div
                         onMouseLeave={() => setActiveDropdown(null)}
-                        className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[480px] animate-fadeIn z-50"
+                        className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[470px] animate-fadeIn z-50"
                       >
-                        <div className="rounded-2xl shadow-2xl border border-white/10 bg-[#111318]/98 text-white p-4 overflow-hidden backdrop-blur-2xl">
-                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
+                        <div className="rounded-2xl shadow-2xl border border-slate-200/90 bg-white text-[#0F294A] p-4 overflow-hidden">
+                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100">
                             <div>
                               <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                                 12 Digital Platforms
                               </span>
-                              <p className="text-[11px] text-slate-400">Specialized Enterprise Software & Platforms</p>
+                              <p className="text-[11px] text-slate-500">Specialized Enterprise Products</p>
                             </div>
                             <Link
                               to="/platforms/"
-                              className="text-xs font-bold text-white hover:text-[#F27A24] flex items-center gap-1 transition-colors"
+                              className="text-xs font-bold text-[#0F294A] hover:text-[#F27A24] flex items-center gap-1 transition-colors"
                             >
                               Explore All 12 <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
@@ -304,24 +303,24 @@ export default function Header() {
                                 <Link
                                   key={item.name}
                                   to={item.path}
-                                  className="flex items-start gap-2.5 p-2 rounded-xl transition-colors hover:bg-white/5 group border border-transparent hover:border-white/5"
+                                  className="flex items-start gap-2.5 p-2 rounded-xl transition-colors hover:bg-slate-50 group border border-transparent hover:border-slate-100"
                                 >
                                   <div className={`p-1.5 rounded-lg ${item.color} mt-0.5 shrink-0`}>
                                     <PIcon className="w-4 h-4" />
                                   </div>
                                   <div>
-                                    <div className="text-xs font-bold text-white group-hover:text-[#F27A24] transition-colors">
+                                    <div className="text-xs font-bold text-slate-900 group-hover:text-[#F27A24] transition-colors">
                                       {item.name}
                                     </div>
-                                    <div className="text-[10px] text-slate-400 line-clamp-1">{item.category}</div>
+                                    <div className="text-[10px] text-slate-500 line-clamp-1">{item.category}</div>
                                   </div>
                                 </Link>
                               );
                             })}
                           </div>
 
-                          <div className="mt-3 pt-3 border-t border-white/10 -mx-4 -mb-4 p-3 px-4 flex items-center justify-between text-xs bg-[#08090B]">
-                            <span className="text-slate-400 font-medium text-[11px]">
+                          <div className="mt-3 pt-3 border-t border-slate-100 -mx-4 -mb-4 p-3 px-4 flex items-center justify-between text-xs bg-[#F8FAFC]">
+                            <span className="text-slate-600 font-medium text-[11px]">
                               Shared Foundation: NKTech Enterprise Platform™
                             </span>
                             <Link to="/technology/" className="font-bold text-[#F27A24] hover:underline flex items-center gap-1 text-[11px]">
@@ -336,16 +335,16 @@ export default function Header() {
                     {tab.id === 'solutions' && activeDropdown === 'solutions' && (
                       <div
                         onMouseLeave={() => setActiveDropdown(null)}
-                        className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[440px] animate-fadeIn z-50"
+                        className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[440px] animate-fadeIn z-50"
                       >
-                        <div className="rounded-2xl shadow-2xl border border-white/10 bg-[#111318]/98 text-white p-4 backdrop-blur-2xl">
-                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
+                        <div className="rounded-2xl shadow-2xl border border-slate-200/90 bg-white text-[#0F294A] p-4">
+                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100">
                             <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                               8 Industry Solutions
                             </span>
                             <Link
                               to="/solutions/"
-                              className="text-xs font-bold text-white hover:text-[#F27A24] flex items-center gap-1 transition-colors"
+                              className="text-xs font-bold text-[#0F294A] hover:text-[#F27A24] flex items-center gap-1 transition-colors"
                             >
                               All Sectors <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
@@ -357,9 +356,9 @@ export default function Header() {
                                 <Link
                                   key={item.title}
                                   to={item.path}
-                                  className="flex items-center gap-2 p-2 rounded-lg text-xs font-medium text-slate-300 hover:text-[#F27A24] hover:bg-white/5 transition-colors"
+                                  className="flex items-center gap-2 p-2 rounded-lg text-xs font-medium text-slate-700 hover:text-[#F27A24] hover:bg-slate-50 transition-colors"
                                 >
-                                  <SIcon className="w-3.5 h-3.5 opacity-60 shrink-0" />
+                                  <SIcon className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                                   <span className="line-clamp-1 text-[11px] font-semibold">{item.title}</span>
                                 </Link>
                               );
@@ -373,16 +372,16 @@ export default function Header() {
                     {tab.id === 'services' && activeDropdown === 'services' && (
                       <div
                         onMouseLeave={() => setActiveDropdown(null)}
-                        className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[440px] animate-fadeIn z-50"
+                        className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[440px] animate-fadeIn z-50"
                       >
-                        <div className="rounded-2xl shadow-2xl border border-white/10 bg-[#111318]/98 text-white p-4 backdrop-blur-2xl">
-                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
+                        <div className="rounded-2xl shadow-2xl border border-slate-200/90 bg-white text-[#0F294A] p-4">
+                          <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100">
                             <span className="text-xs font-extrabold uppercase tracking-wider text-[#F27A24]">
                               14 Professional Services
                             </span>
                             <Link
                               to="/services/"
-                              className="text-xs font-bold text-white hover:text-[#F27A24] flex items-center gap-1 transition-colors"
+                              className="text-xs font-bold text-[#0F294A] hover:text-[#F27A24] flex items-center gap-1 transition-colors"
                             >
                               All Services <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
@@ -392,12 +391,12 @@ export default function Header() {
                               <Link
                                 key={item.title}
                                 to={item.path}
-                                className="block p-2 rounded-lg hover:bg-white/5 transition-colors group"
+                                className="block p-2 rounded-lg hover:bg-slate-50 transition-colors group"
                               >
-                                <div className="text-xs font-bold text-white group-hover:text-[#F27A24] transition-colors">
+                                <div className="text-xs font-bold text-slate-800 group-hover:text-[#F27A24] transition-colors">
                                   {item.title}
                                 </div>
-                                <div className="text-[11px] text-slate-400 line-clamp-1">{item.desc}</div>
+                                <div className="text-[11px] text-slate-500 line-clamp-1">{item.desc}</div>
                               </Link>
                             ))}
                           </div>
@@ -413,13 +412,13 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
               <Link
                 to="/contact/"
-                className="text-xs font-bold px-2.5 py-1.5 text-slate-300 hover:text-white transition-colors"
+                className="text-xs font-bold px-2.5 py-1.5 text-slate-600 hover:text-[#0F294A] transition-colors"
               >
                 Contact
               </Link>
               <Link
                 to="/contact/?type=consultation"
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] rounded-full shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 transition-all group shrink-0"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] rounded-full shadow-md hover:shadow-lg transition-all group shrink-0"
               >
                 <span>Discuss Project</span>
                 <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
@@ -437,7 +436,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-                className="p-2 rounded-full text-white hover:bg-white/10"
+                className="p-2 rounded-full text-slate-700 hover:bg-slate-100"
                 aria-label="Toggle navigation"
               >
                 {mobileDrawerOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -448,35 +447,35 @@ export default function Header() {
 
         {/* Mobile Full Navigation Slide-out Drawer */}
         {mobileDrawerOpen && (
-          <div className="lg:hidden fixed inset-x-4 top-[74px] bg-[#0E1116] text-white rounded-3xl shadow-2xl border border-white/10 p-6 z-50 max-h-[80vh] overflow-y-auto">
+          <div className="lg:hidden fixed inset-x-4 top-[72px] bg-white text-[#0F294A] rounded-3xl shadow-2xl border border-slate-200 p-6 z-50 max-h-[80vh] overflow-y-auto">
             <div className="space-y-3">
               <div className="font-extrabold text-xs uppercase tracking-wider text-[#F27A24] mb-2 flex items-center justify-between">
                 <span>Enterprise Navigation</span>
-                <span className="text-[10px] text-slate-400">Bizwoke Nova™</span>
+                <span className="text-[10px] text-slate-500">Bizwoke Nova™</span>
               </div>
-              <Link to="/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 Home
               </Link>
-              <Link to="/about-us/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/about-us/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 About Us
               </Link>
-              <Link to="/platforms/" className="block py-2 text-sm font-bold border-b border-white/10 flex items-center justify-between">
+              <Link to="/platforms/" className="block py-2 text-sm font-bold border-b border-slate-100 flex items-center justify-between">
                 <span>Platforms (12 Products)</span>
-                <span className="text-[10px] font-bold bg-[#F27A24]/20 text-[#F27A24] px-2 py-0.5 rounded-full">All 12</span>
+                <span className="text-[10px] font-bold bg-orange-100 text-[#F27A24] px-2 py-0.5 rounded-full">All 12</span>
               </Link>
-              <Link to="/solutions/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/solutions/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 Solutions (8 Industries)
               </Link>
-              <Link to="/services/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/services/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 Services (14 Offerings)
               </Link>
-              <Link to="/technology/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/technology/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 NKTech Enterprise Platform (NEP)
               </Link>
-              <Link to="/partners/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/partners/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 Strategic Partnerships
               </Link>
-              <Link to="/careers/" className="block py-2 text-sm font-bold border-b border-white/10">
+              <Link to="/careers/" className="block py-2 text-sm font-bold border-b border-slate-100">
                 Careers & Culture
               </Link>
               <Link to="/contact/" className="block py-2 text-sm font-bold text-[#F27A24]">
@@ -490,7 +489,7 @@ export default function Header() {
       {/* ================= MOBILE FLOATING BOTTOM CAPSULE DOCK ================= */}
       <div className="lg:hidden fixed bottom-4 inset-x-4 z-50 max-w-sm mx-auto">
         <div
-          className="relative rounded-full px-2 py-1 shadow-[0_16px_40px_rgba(0,0,0,0.7)] border border-white/10 bg-[#0E1116]/95 text-white flex items-center justify-around backdrop-blur-2xl"
+          className="relative rounded-full px-2 py-1 shadow-[0_12px_36px_rgba(15,41,74,0.18)] border border-slate-200/90 bg-white/95 text-[#0F294A] flex items-center justify-around backdrop-blur-xl"
           style={{ minHeight: '58px' }}
         >
           {/* Mobile Tab 1: Home */}
@@ -499,8 +498,8 @@ export default function Header() {
               <ActiveTabNotch icon={Home} label="Home" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Home className="w-4 h-4 text-slate-400" />
-                <span className="text-[9px] font-medium mt-1 text-slate-400">Home</span>
+                <Home className="w-4 h-4 text-slate-500" />
+                <span className="text-[9px] font-medium mt-1 text-slate-600">Home</span>
               </div>
             )}
           </Link>
@@ -511,8 +510,8 @@ export default function Header() {
               <ActiveTabNotch icon={Layers} label="Platforms" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Layers className="w-4 h-4 text-slate-400" />
-                <span className="text-[9px] font-medium mt-1 text-slate-400">Platforms</span>
+                <Layers className="w-4 h-4 text-slate-500" />
+                <span className="text-[9px] font-medium mt-1 text-slate-600">Platforms</span>
               </div>
             )}
           </Link>
@@ -523,8 +522,8 @@ export default function Header() {
               <ActiveTabNotch icon={Landmark} label="Solutions" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Landmark className="w-4 h-4 text-slate-400" />
-                <span className="text-[9px] font-medium mt-1 text-slate-400">Solutions</span>
+                <Landmark className="w-4 h-4 text-slate-500" />
+                <span className="text-[9px] font-medium mt-1 text-slate-600">Solutions</span>
               </div>
             )}
           </Link>
@@ -535,8 +534,8 @@ export default function Header() {
               <ActiveTabNotch icon={Sparkles} label="Services" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <Sparkles className="w-4 h-4 text-slate-400" />
-                <span className="text-[9px] font-medium mt-1 text-slate-400">Services</span>
+                <Sparkles className="w-4 h-4 text-slate-500" />
+                <span className="text-[9px] font-medium mt-1 text-slate-600">Services</span>
               </div>
             )}
           </Link>
@@ -547,8 +546,8 @@ export default function Header() {
               <ActiveTabNotch icon={PhoneCall} label="Contact" />
             ) : (
               <div className="flex flex-col items-center justify-center py-1">
-                <PhoneCall className="w-4 h-4 text-slate-400" />
-                <span className="text-[9px] font-medium mt-1 text-slate-400">Contact</span>
+                <PhoneCall className="w-4 h-4 text-slate-500" />
+                <span className="text-[9px] font-medium mt-1 text-slate-600">Contact</span>
               </div>
             )}
           </Link>
