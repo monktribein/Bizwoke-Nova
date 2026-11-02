@@ -197,29 +197,30 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0 opacity-60" />
 
         {/* =========================================================================
-            SECTION 1: HERO SLIDER (AUTO-SCROLLING 3-BANNER ENTERPRISE SHOWCASE)
+            SECTION 1: HERO SLIDER (AUTO-SCROLLING 5-BANNER ENTERPRISE SHOWCASE)
         ========================================================================= */}
-        <section className="relative z-10 pt-2 sm:pt-4">
+        <section className="relative z-10 w-full pt-0">
           <HeroSlider />
 
-          {/* Authentic Enterprise Architecture Triple Card */}
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
-            <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
-              <div className="text-xl font-extrabold text-[#0F294A] text-navy-primary">One Portfolio</div>
-              <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Mission FTC™ Strategy</p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16">
+            {/* Authentic Enterprise Architecture Triple Card */}
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
+                <div className="text-xl font-extrabold text-[#0F294A] text-navy-primary">One Portfolio</div>
+                <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Mission FTC™ Strategy</p>
+              </div>
+              <div className="bg-white bg-card-surface rounded-2xl p-6 border-2 border-orange-200/80 dark:border-orange-500/40 shadow-sm text-center relative transition-colors">
+                <div className="text-xl font-extrabold text-[#F27A24]">12 Platforms</div>
+                <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Specialized Digital Solutions</p>
+              </div>
+              <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
+                <div className="text-xl font-extrabold text-[#0D9488] dark:text-teal-400">One Foundation</div>
+                <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">NKTech Enterprise Platform™</p>
+              </div>
             </div>
-            <div className="bg-white bg-card-surface rounded-2xl p-6 border-2 border-orange-200/80 dark:border-orange-500/40 shadow-sm text-center relative transition-colors">
-              <div className="text-xl font-extrabold text-[#F27A24]">12 Platforms</div>
-              <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Specialized Digital Solutions</p>
-            </div>
-            <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
-              <div className="text-xl font-extrabold text-[#0D9488] dark:text-teal-400">One Foundation</div>
-              <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">NKTech Enterprise Platform™</p>
-            </div>
-          </div>
 
-          {/* 3 Real Product Telemetry Pods */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* 3 Real Product Telemetry Pods */}
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Pod 1: Tirvona */}
             <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl transition-all group">
               <div className="flex items-center justify-between mb-4">
@@ -288,6 +289,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </div>
           </div>
         </section>
 
