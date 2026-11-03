@@ -6,9 +6,9 @@ export default function BrandLogo({ variant = 'default', size = 'md', className 
 
   // Sizing styles
   const imgHeights = {
-    sm: 'h-9',
-    md: 'h-11',
-    lg: 'h-14',
+    sm: 'h-8 sm:h-9',
+    md: 'h-10 sm:h-11',
+    lg: 'h-12 sm:h-14',
   };
 
   return (

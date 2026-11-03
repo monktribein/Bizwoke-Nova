@@ -149,8 +149,8 @@ export default function HeroSlider() {
       role="region"
       aria-label="Bizwoke Nova Full-Page Enterprise Banner Slider"
     >
-      {/* 100% Full-Width Edge-to-Edge Panoramic Canvas with Natural 2.71:1 Ratio */}
-      <div className="relative w-full aspect-[2560/945] max-h-[85vh] overflow-hidden">
+      {/* Edge-to-Edge Responsive Hero Canvas: Optimal Height for Mobile, Natural 2.71:1 Ratio on Desktop */}
+      <div className="relative w-full h-[280px] xs:h-[320px] sm:h-[380px] md:h-[440px] lg:h-auto lg:aspect-[2560/945] max-h-[85vh] overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.div
             key={current.id}
@@ -167,7 +167,7 @@ export default function HeroSlider() {
               <img
                 src={current.image}
                 alt={current.alt}
-                className="w-full h-full object-cover object-center select-none banner-hd-render"
+                className="w-full h-full object-cover object-[15%_center] sm:object-center select-none banner-hd-render"
                 loading="eager"
                 draggable={false}
               />
@@ -184,7 +184,7 @@ export default function HeroSlider() {
                     const el = document.querySelector('#platforms');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="pointer-events-auto absolute left-[6%] sm:left-[10%] bottom-[8%] sm:bottom-[12%] w-[38%] sm:w-[26%] lg:w-[22%] h-[24%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
+                  className="pointer-events-auto absolute left-[4%] sm:left-[10%] bottom-[16%] sm:bottom-[12%] w-[44%] sm:w-[26%] lg:w-[22%] h-[20%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
                   aria-label="Launch Our Platforms"
                   title="Launch Our Platforms"
                 />
@@ -193,7 +193,7 @@ export default function HeroSlider() {
                 <Link
                   to="/contact/?type=project"
                   onClick={(e) => e.stopPropagation()}
-                  className="pointer-events-auto absolute left-[46%] sm:left-[38%] lg:left-[34%] bottom-[8%] sm:bottom-[12%] w-[38%] sm:w-[26%] lg:w-[20%] h-[24%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
+                  className="pointer-events-auto absolute left-[50%] sm:left-[38%] lg:left-[34%] bottom-[16%] sm:bottom-[12%] w-[44%] sm:w-[26%] lg:w-[20%] h-[20%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
                   aria-label="Discuss Your Project"
                   title="Discuss Your Project"
                 />
@@ -205,7 +205,7 @@ export default function HeroSlider() {
               <Link
                 to={current.primaryLink}
                 onClick={(e) => e.stopPropagation()}
-                className="absolute left-[6%] sm:left-[8%] bottom-[8%] sm:bottom-[12%] w-[38%] sm:w-[26%] lg:w-[22%] h-[24%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
+                className="absolute left-[4%] sm:left-[8%] bottom-[16%] sm:bottom-[12%] w-[46%] sm:w-[26%] lg:w-[22%] h-[20%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
                 aria-label={`Go to ${current.name}`}
                 title={current.title}
               />

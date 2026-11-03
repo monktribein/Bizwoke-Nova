@@ -364,45 +364,45 @@ export default function Home() {
         <section className="relative z-10 w-full pt-0">
           <HeroSlider />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-6 sm:pb-8">
-            {/* One band instead of three cards */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-6 sm:pb-8">
+            {/* Streamlined Executive Ticker Bar: 3 Columns on Mobile & Desktop */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
               viewport={viewportConfig}
-              className="grid grid-cols-1 sm:grid-cols-3 border-y border-slate-300 dark:border-slate-700/60 divide-y sm:divide-y-0 sm:divide-x divide-slate-300 dark:divide-slate-700/60"
+              className="grid grid-cols-3 border-y border-slate-200 dark:border-slate-700/60 divide-x divide-slate-200 dark:border-slate-700/60 py-3 sm:py-5 text-center sm:text-left"
             >
               {[
                 { a: "One Portfolio", b: "Mission FTC™ Strategy", cls: "text-[#0F294A] text-navy-primary" },
                 { a: "12 Platforms", b: "Specialized Digital Solutions", cls: "text-[#F27A24]" },
                 { a: "One Foundation", b: "NKTech Enterprise Platform™", cls: "text-[#0D9488] dark:text-teal-400" }
               ].map((s, i) => (
-                <div key={s.a} className={`py-5 sm:px-6 ${i === 0 ? 'sm:pl-0' : ''}`}>
-                  <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${s.cls}`}>{s.a}</div>
-                  <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">{s.b}</p>
+                <div key={s.a} className={`px-2 sm:px-6 ${i === 0 ? 'sm:pl-0' : ''}`}>
+                  <div className={`text-sm xs:text-base sm:text-2xl lg:text-3xl font-extrabold tracking-tight ${s.cls}`}>{s.a}</div>
+                  <p className="text-[10px] sm:text-xs font-semibold text-slate-500 text-slate-body mt-0.5 sm:mt-1 line-clamp-1 sm:line-clamp-none">{s.b}</p>
                 </div>
               ))}
             </motion.div>
 
             {/* Featured platforms: one ledger panel, three columns */}
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-slate-200/90 bg-white bg-card-surface overflow-hidden divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-700/60">
+            <div className="mt-5 sm:mt-8 grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-slate-200/90 bg-white bg-card-surface overflow-hidden divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-700/60 shadow-xs">
               {pods.map((p) => {
                 const PIcon = p.icon;
                 return (
-                  <div key={p.name} className="group relative p-6 sm:p-7 flex flex-col transition-colors hover:bg-slate-50/80 dark:hover:bg-white/[0.03]">
+                  <div key={p.name} className="group relative p-4.5 sm:p-7 flex flex-col transition-colors hover:bg-slate-50/80 dark:hover:bg-white/[0.03]">
                     <span className={`absolute top-0 left-0 h-[3px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${p.bar}`} />
-                    <div className="flex items-center justify-between mb-5">
-                      <span className={`text-xs font-bold ${p.tagCls}`}>{p.tag}</span>
-                      <PIcon className={`w-5 h-5 ${p.iconCls}`} />
+                    <div className="flex items-center justify-between mb-3.5 sm:mb-5">
+                      <span className={`text-[11px] sm:text-xs font-bold ${p.tagCls}`}>{p.tag}</span>
+                      <PIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${p.iconCls}`} />
                     </div>
-                    <div className="flex items-center gap-3">
-                      <img src={p.logo} alt={p.alt} className="h-8 w-auto object-contain rounded" />
-                      <h3 className={`text-2xl font-extrabold tracking-tight text-[#0F294A] dark:text-white transition-colors ${p.nameHover}`}>{p.name}</h3>
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <img src={p.logo} alt={p.alt} className="h-7 sm:h-8 w-auto object-contain rounded" />
+                      <h3 className={`text-xl sm:text-2xl font-extrabold tracking-tight text-[#0F294A] dark:text-white transition-colors ${p.nameHover}`}>{p.name}</h3>
                     </div>
-                    <p className="text-sm text-[#475569] dark:text-slate-300 mt-3 line-clamp-3 leading-relaxed flex-1">{p.desc}</p>
-                    <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                      <span className="text-slate-500 dark:text-slate-400 font-medium">{p.meta}</span>
+                    <p className="text-xs sm:text-sm text-[#475569] dark:text-slate-300 mt-2.5 sm:mt-3 line-clamp-2 sm:line-clamp-3 leading-relaxed flex-1">{p.desc}</p>
+                    <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
+                      <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">{p.meta}</span>
                       <Link to={p.to} className={`${p.linkCls} font-bold inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform`}>
                         View Platform →
                       </Link>

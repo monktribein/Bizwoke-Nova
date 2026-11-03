@@ -20,7 +20,7 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F294A] selection:bg-[#F27A24]/20 selection:text-[#0F294A] w-full max-w-full overflow-x-hidden">
       <Header />
-      <main className="flex-1 pb-20 lg:pb-0 w-full max-w-full overflow-x-hidden">
+      <main className="flex-1 pb-24 sm:pb-28 lg:pb-0 w-full max-w-full overflow-x-hidden">
         <motion.div
           key={location.pathname}
           initial={{ opacity: 0, y: 8 }}

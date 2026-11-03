@@ -206,7 +206,7 @@ export default function Header() {
     <>
       {/* ================= DESKTOP FLOATING CAPSULE HEADER ================= */}
       <header
-        className="sticky top-2 sm:top-3.5 z-50 transition-all duration-300 px-2 sm:px-6 lg:px-8 max-w-full"
+        className="sticky top-2 sm:top-3.5 z-50 transition-all duration-300 px-2.5 sm:px-6 lg:px-8 max-w-full"
         ref={dropdownRef}
       >
         <div className="max-w-7xl mx-auto w-full">
