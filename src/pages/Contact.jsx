@@ -1,32 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
-import {
-  fadeUp,
-  fadeIn,
-  staggerContainer,
-  cardVariant,
-  viewportConfig
-} from '../utils/motion';
+import { fadeUp } from '../utils/motion';
+import { API_ENDPOINTS } from '../utils/api';
 import {
   Mail,
   MapPin,
   Phone,
-  ShieldCheck,
   CheckCircle2,
   Clock,
-  ArrowRight,
-  MessageSquare,
-  Building2,
-  HelpCircle,
-  Briefcase,
-  Sparkles,
-  Send,
-  Lock,
-  Headphones,
-  Compass
+  Send
 } from 'lucide-react';
+
+/* Shared pieces (same system as Home / PlatformDetail) */
+const EASE = [0.22, 1, 0.36, 1];
+const mask = { hidden: { y: '115%' }, visible: { y: 0, transition: { duration: 0.9, ease: EASE } } };
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
+
+function Rule({ dark = false }) {
+  return (
+    <motion.div
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 1.1, ease: EASE }}
+      className={`h-px origin-left ${dark ? 'bg-white/30' : 'bg-[#0F294A]/30 dark:bg-white/25'}`}
+    />
+  );
+}
+
+function Label({ children, dark = false, marker = 'bg-[#F27A24]' }) {
+  return (
+    <div className="flex items-start gap-2.5 text-sm font-semibold">
+      <span className={`mt-[7px] w-2 h-2 shrink-0 ${marker}`} />
+      <span className={dark ? 'text-white/70' : 'text-slate-600 dark:text-slate-300'}>{children}</span>
+    </div>
+  );
+}
+
+const fieldCls =
+  'w-full bg-transparent border-0 border-b-2 border-slate-300 dark:border-slate-600 rounded-none px-0 py-2.5 text-base text-[#0F294A] dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#F27A24] transition-colors';
+const labelCls = 'text-sm font-bold text-slate-700 dark:text-slate-300 block';
 
 export default function Contact() {
   const [searchParams] = useSearchParams();
@@ -69,6 +84,8 @@ export default function Contact() {
     { label: "Headquarters", value: "Noida NCR", detail: "Pan-India presence" }
   ];
 
+  const selectedLabel = channels.find((c) => c.id === enquiryType)?.label;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.honeypot) return; // bot detected
@@ -80,7 +97,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(API_ENDPOINTS.contact, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -111,158 +128,110 @@ export default function Contact() {
         description="Get in touch with Bizwoke Nova for enterprise software consultations, product demonstrations, government solutions, partnerships, or careers."
       />
 
-      {/* =========================================================================
-          SECTION 1: HERO WITH TEXT REVEAL & TELEMETRY TRUST METRICS
-      ========================================================================= */}
-      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-10 sm:pt-14 pb-12 sm:pb-16 relative overflow-hidden">
-        {/* Clean enterprise background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/30 dark:from-[#071322] dark:via-[#0A1C33] dark:to-[#08172b] pointer-events-none" />
-
-        {/* Ambient floating glow */}
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.25, 0.45, 0.25]
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-          className="absolute -top-24 right-1/4 w-96 h-96 bg-gradient-to-br from-orange-200/40 via-amber-100/30 to-transparent rounded-full blur-3xl pointer-events-none"
-        />
+      {/* ===================== 1. HERO ===================== */}
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-12 sm:pt-16 pb-12 sm:pb-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-30 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            variants={staggerContainer(0.12, 0.05)}
-            initial="hidden"
-            animate="visible"
-            className="max-w-4xl space-y-5"
-          >
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-[#F27A24]/30 text-xs font-black text-[#F27A24] uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-[#F27A24] animate-ping" />
-              <span>DIRECT ENTERPRISE ENGAGEMENT</span>
+          <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-4xl space-y-6">
+            <motion.div variants={fadeUp}>
+              <Label>Direct enterprise engagement</Label>
             </motion.div>
 
             <motion.h1
-              variants={fadeUp}
-              className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0F294A] dark:text-white tracking-tight leading-[1.15]"
+              variants={stagger}
+              className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0F294A] dark:text-white tracking-tighter leading-[1.02]"
             >
-              Start the Conversation with <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F27A24] via-orange-500 to-amber-500">
-                Bizwoke Nova.
+              <span className="block overflow-hidden pb-1">
+                <motion.span variants={mask} className="block">Start the Conversation with</motion.span>
+              </span>
+              <span className="block overflow-hidden pb-2">
+                <motion.span variants={mask} className="block text-[#F27A24]">Bizwoke Nova.</motion.span>
               </span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="text-lg sm:text-2xl font-bold text-slate-700 dark:text-slate-200"
-            >
+            <motion.p variants={fadeUp} className="text-lg sm:text-2xl font-bold tracking-tight text-slate-700 dark:text-slate-200 max-w-3xl">
               Direct Access to Enterprise Architects, Product Leads, and Solutions Teams.
             </motion.p>
 
-            <motion.p
-              variants={fadeUp}
-              className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl"
-            >
+            <motion.p variants={fadeUp} className="text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
               Select your specific enquiry path below so your message routes immediately to the relevant engineering or practice leader without delays.
             </motion.p>
           </motion.div>
 
-          {/* Staggered Telemetry Row */}
+          {/* Trust metrics: one band, not four cards */}
           <motion.div
-            variants={staggerContainer(0.08, 0.25)}
+            variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5"
+            transition={{ delay: 0.5 }}
+            className="mt-12 grid grid-cols-2 lg:grid-cols-4 border-y border-slate-300 dark:border-slate-700/60 divide-slate-300 dark:divide-slate-700/60 divide-x [&>*:nth-child(n+3)]:border-t lg:[&>*:nth-child(n+3)]:border-t-0 [&>*]:border-slate-300 dark:[&>*]:border-slate-700/60"
           >
             {trustMetrics.map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={cardVariant}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="bg-white dark:bg-[#0F294A]/70 rounded-2xl p-4 sm:p-5 border border-slate-200/90 dark:border-slate-700/60 shadow-xs hover:border-[#F27A24]/40 transition-colors"
-              >
-                <div className="text-2xl sm:text-3xl font-black text-[#F27A24] tracking-tight">
-                  {item.value}
-                </div>
-                <div className="text-xs sm:text-sm font-bold text-[#0F294A] dark:text-white mt-1">
-                  {item.label}
-                </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">
-                  {item.detail}
-                </div>
-              </motion.div>
+              <div key={idx} className={`py-5 px-4 sm:px-6 ${idx === 0 ? 'pl-0 sm:pl-0' : ''}`}>
+                <div className="text-2xl sm:text-3xl font-black tracking-tight text-[#F27A24]">{item.value}</div>
+                <div className="text-sm font-bold text-[#0F294A] dark:text-white mt-1">{item.label}</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">{item.detail}</div>
+              </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* =========================================================================
-          SECTION 2: MAIN CONTACT GRID WITH ANIMATED PATHWAYS & FORM
-      ========================================================================= */}
-      <section className="py-12 sm:py-16">
+      {/* ===================== 2. PATHWAY + FORM + DIRECTORY ===================== */}
+      <section className="py-14 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            {/* Left Column: Pathway Selector & Form */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportConfig}
-              className="lg:col-span-7 space-y-6"
-            >
-              {/* Channel Selector Pills */}
-              <div className="bg-white dark:bg-[#0F294A] p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-slate-700/60 shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    Select Enquiry Pathway:
-                  </label>
-                  <span className="text-[11px] font-bold text-[#F27A24]">
-                    {channels.find(c => c.id === enquiryType)?.label}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {channels.map((ch) => {
-                    const isSelected = enquiryType === ch.id;
-                    return (
-                      <motion.button
-                        key={ch.id}
-                        type="button"
-                        whileHover={{ scale: 1.015 }}
-                        whileTap={{ scale: 0.985 }}
-                        onClick={() => setEnquiryType(ch.id)}
-                        className={`text-left p-3.5 rounded-2xl border text-xs transition-all cursor-pointer ${
-                          isSelected
-                            ? 'border-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 text-[#0F294A] dark:text-white font-bold ring-2 ring-[#F27A24]/20'
-                            : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0A1C33] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#143761] hover:border-slate-300 font-medium'
-                        }`}
-                      >
-                        <div className="font-bold flex items-center justify-between">
-                          <span>{ch.label}</span>
-                          {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />}
-                        </div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-1">
-                          {ch.desc}
-                        </div>
-                      </motion.button>
-                    );
-                  })}
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left: pathway selector and form */}
+            <div className="lg:col-span-7">
+              <Rule />
+              <div className="pt-6 flex items-center justify-between gap-4">
+                <Label>Select Enquiry Pathway:</Label>
+                <span className="text-sm font-bold text-[#F27A24] text-right">{selectedLabel}</span>
               </div>
 
-              {/* Form Card with AnimatePresence */}
-              <div className="bg-white dark:bg-[#0F294A] p-7 sm:p-10 rounded-3xl border border-slate-200/90 dark:border-slate-700/60 shadow-xs space-y-6">
-                <div>
-                  <div className="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-wider text-[#F27A24]">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Direct Practice Dispatch</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-[#0F294A] dark:text-white mt-1">
-                    {channels.find(c => c.id === enquiryType)?.label || 'Enterprise Enquiry'}
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <div role="radiogroup" aria-label="Enquiry pathway" className="mt-6 border-b border-slate-300 dark:border-slate-700/60">
+                {channels.map((ch) => {
+                  const isSelected = enquiryType === ch.id;
+                  return (
+                    <button
+                      key={ch.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      onClick={() => setEnquiryType(ch.id)}
+                      className="group relative w-full flex items-center gap-4 py-4 text-left border-t border-slate-300 dark:border-slate-700/60 cursor-pointer"
+                    >
+                      {isSelected && (
+                        <motion.span layoutId="channel-bar" className="absolute left-0 inset-y-0 w-[3px] bg-[#F27A24]" />
+                      )}
+                      <span
+                        className={`ml-4 w-[18px] h-[18px] shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
+                          isSelected ? 'border-[#F27A24]' : 'border-slate-400 dark:border-slate-500 group-hover:border-[#F27A24]'
+                        }`}
+                      >
+                        {isSelected && <span className="w-2 h-2 rounded-full bg-[#F27A24]" />}
+                      </span>
+                      <span className="flex-1 min-w-0">
+                        <span className={`block text-lg font-extrabold tracking-tight transition-colors ${isSelected ? 'text-[#0F294A] dark:text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-[#0F294A] dark:group-hover:text-white'}`}>
+                          {ch.label}
+                        </span>
+                        <span className="block text-sm text-slate-500 dark:text-slate-400 mt-0.5">{ch.desc}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Form */}
+              <div className="mt-16">
+                <Rule />
+                <div className="pt-6 space-y-3">
+                  <Label>Direct practice dispatch</Label>
+                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight text-[#0F294A] dark:text-white">
+                    {selectedLabel || 'Enterprise Enquiry'}
+                  </h2>
+                  <p className="text-base text-slate-600 dark:text-slate-300 max-w-xl">
                     Direct communication with dedicated technical practice leads and solution architects.
                   </p>
                 </div>
@@ -273,280 +242,215 @@ export default function Contact() {
                       initial={{ opacity: 0, y: -8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      className="p-3 bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-xs rounded-xl flex items-center gap-2"
+                      role="alert"
+                      className="mt-6 border-l-4 border-red-500 pl-4 py-1 text-sm font-semibold text-red-700 dark:text-red-400"
                     >
-                      <span className="w-2 h-2 rounded-full bg-red-500" />
-                      <span>{errorMessage}</span>
+                      {errorMessage}
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                <AnimatePresence mode="wait">
-                  {isSubmitted ? (
-                    <motion.div
-                      key="success"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.3 }}
-                      className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 rounded-3xl p-8 sm:p-10 text-center space-y-4"
-                    >
+                <div className="mt-8">
+                  <AnimatePresence mode="wait">
+                    {isSubmitted ? (
                       <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: 'spring', damping: 12, stiffness: 200 }}
-                        className="w-16 h-16 mx-auto rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center"
+                        key="success"
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.35 }}
+                        className="border-l-4 border-emerald-500 pl-6 sm:pl-8 py-2 space-y-4"
                       >
-                        <CheckCircle2 className="w-10 h-10" />
-                      </motion.div>
-                      <h4 className="text-2xl font-black text-slate-900 dark:text-white">
-                        Enquiry Dispatched Successfully
-                      </h4>
-                      <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
-                        Thank you, <strong className="text-slate-900 dark:text-white">{formData.name}</strong>. Your enquiry for <strong className="text-slate-900 dark:text-white">{channels.find(c => c.id === enquiryType)?.label}</strong> has been logged into our practice queue. Our team will contact you at <strong className="text-slate-900 dark:text-white">{formData.email}</strong> within 1 business day.
-                      </p>
-                      <motion.button
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => {
-                          setIsSubmitted(false);
-                          setFormData({ name: '', email: '', phone: '', organization: '', message: '', honeypot: '' });
-                        }}
-                        className="mt-4 px-6 py-2.5 text-xs font-bold text-white bg-[#0F294A] dark:bg-[#F27A24] hover:bg-[#143761] dark:hover:bg-[#DE6713] rounded-xl transition-colors cursor-pointer"
-                      >
-                        Submit Another Enquiry
-                      </motion.button>
-                    </motion.div>
-                  ) : (
-                    <motion.form
-                      key="form"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      onSubmit={handleSubmit}
-                      className="space-y-4"
-                    >
-                      {/* Anti-spam honeypot */}
-                      <input
-                        type="text"
-                        name="hp_field"
-                        value={formData.honeypot}
-                        onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
-                        style={{ display: 'none' }}
-                        tabIndex={-1}
-                        autoComplete="off"
-                      />
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                            Full Name *
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="e.g. Vikram Singhania"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#F27A24] focus:border-transparent transition-all"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                            Work Email *
-                          </label>
-                          <input
-                            type="email"
-                            required
-                            placeholder="vikram@enterprise.com"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#F27A24] focus:border-transparent transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                            Contact Phone / WhatsApp
-                          </label>
-                          <input
-                            type="tel"
-                            placeholder="+91-XXXXXXXXXX"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#F27A24] focus:border-transparent transition-all"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                            Organization / Company Name
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="e.g. Acme Corp, Smart City SPV"
-                            value={formData.organization}
-                            onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                            className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#F27A24] focus:border-transparent transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                          Detailed Project Requirements or Question *
-                        </label>
-                        <textarea
-                          rows={4}
-                          required
-                          placeholder="Please provide details regarding your requirements, timelines, or questions..."
-                          value={formData.message}
-                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                          className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#0A1C33] border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-[#0F294A] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#F27A24] focus:border-transparent transition-all"
-                        />
-                      </div>
-
-                      <div className="pt-2">
-                        <motion.button
-                          type="submit"
-                          disabled={isSubmitting}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-md transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-70"
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: 'spring', damping: 12, stiffness: 200 }}
+                          className="text-emerald-600 dark:text-emerald-400"
                         >
-                          {isSubmitting ? (
-                            <span className="inline-flex items-center gap-2">
-                              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                              <span>Processing Enquiry...</span>
-                            </span>
-                          ) : (
-                            <>
-                              <span>Send Secure Enterprise Enquiry</span>
-                              <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </>
-                          )}
-                        </motion.button>
-                        <p className="text-[11px] text-slate-400 dark:text-slate-500 text-center mt-2.5">
-                          By submitting, you agree to confidential processing under our enterprise privacy guidelines. Zero spam guarantee.
+                          <CheckCircle2 className="w-10 h-10" />
+                        </motion.div>
+                        <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white">
+                          Enquiry Dispatched Successfully
+                        </h3>
+                        <p className="text-base text-slate-600 dark:text-slate-300 max-w-lg leading-relaxed">
+                          Thank you, <strong className="text-slate-900 dark:text-white">{formData.name}</strong>. Your enquiry for <strong className="text-slate-900 dark:text-white">{selectedLabel}</strong> has been logged into our practice queue. Our team will contact you at <strong className="text-slate-900 dark:text-white">{formData.email}</strong> within 1 business day.
                         </p>
-                      </div>
-                    </motion.form>
-                  )}
-                </AnimatePresence>
+                        <button
+                          onClick={() => {
+                            setIsSubmitted(false);
+                            setFormData({ name: '', email: '', phone: '', organization: '', message: '', honeypot: '' });
+                          }}
+                          className="px-6 py-3 text-sm font-bold text-white bg-[#0F294A] dark:bg-[#F27A24] hover:opacity-90 rounded-full transition-opacity cursor-pointer"
+                        >
+                          Submit Another Enquiry
+                        </button>
+                      </motion.div>
+                    ) : (
+                      <motion.form
+                        key="form"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onSubmit={handleSubmit}
+                        className="space-y-7"
+                      >
+                        {/* Anti-spam honeypot */}
+                        <input
+                          type="text"
+                          name="hp_field"
+                          value={formData.honeypot}
+                          onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                          style={{ display: 'none' }}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7">
+                          <div>
+                            <label className={labelCls}>Full Name *</label>
+                            <input
+                              type="text"
+                              required
+                              placeholder="e.g. Vikram Singhania"
+                              value={formData.name}
+                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                              className={fieldCls}
+                            />
+                          </div>
+                          <div>
+                            <label className={labelCls}>Work Email *</label>
+                            <input
+                              type="email"
+                              required
+                              placeholder="vikram@enterprise.com"
+                              value={formData.email}
+                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                              className={fieldCls}
+                            />
+                          </div>
+                          <div>
+                            <label className={labelCls}>Contact Phone / WhatsApp</label>
+                            <input
+                              type="tel"
+                              placeholder="+91-XXXXXXXXXX"
+                              value={formData.phone}
+                              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                              className={fieldCls}
+                            />
+                          </div>
+                          <div>
+                            <label className={labelCls}>Organization / Company Name</label>
+                            <input
+                              type="text"
+                              placeholder="e.g. Acme Corp, Smart City SPV"
+                              value={formData.organization}
+                              onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
+                              className={fieldCls}
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className={labelCls}>Detailed Project Requirements or Question *</label>
+                          <textarea
+                            rows={4}
+                            required
+                            placeholder="Please provide details regarding your requirements, timelines, or questions..."
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                            className={`${fieldCls} resize-y`}
+                          />
+                        </div>
+
+                        <div className="pt-2 space-y-3">
+                          <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="px-8 py-4 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-colors inline-flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed w-full sm:w-auto"
+                          >
+                            {isSubmitting ? (
+                              <span className="inline-flex items-center gap-2">
+                                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                <span>Processing Enquiry...</span>
+                              </span>
+                            ) : (
+                              <>
+                                <span>Send Secure Enterprise Enquiry</span>
+                                <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                              </>
+                            )}
+                          </button>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
+                            By submitting, you agree to confidential processing under our enterprise privacy guidelines. Zero spam guarantee.
+                          </p>
+                        </div>
+                      </motion.form>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Right Column: Verified Office & Contact Directory */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportConfig}
-              className="lg:col-span-5 space-y-6"
-            >
-              {/* Corporate Office Card */}
-              <motion.div
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="bg-white dark:bg-[#0F294A] p-7 sm:p-8 rounded-3xl border border-slate-200/90 dark:border-slate-700/60 shadow-xs hover:border-[#F27A24]/40 transition-all space-y-6 group"
-              >
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-[#F27A24] px-2.5 py-1 rounded-full bg-orange-500/10 border border-[#F27A24]/20">
-                    Corporate Headquarters
-                  </span>
-                  <h3 className="text-xl font-black text-[#0F294A] dark:text-white mt-2">
-                    Bizwoke Nova™ Headquarters
-                  </h3>
-                </div>
+            {/* Right: directory (dark panel) */}
+            <aside className="lg:col-span-5 lg:sticky lg:top-24 rounded-2xl bg-[#0F294A] dark:bg-[#0A1C33] dark:border dark:border-white/10 text-white p-7 sm:p-9">
+              <Label dark marker="bg-orange-400">Corporate Headquarters</Label>
+              <h3 className="text-2xl sm:text-3xl font-black tracking-tight mt-3">Bizwoke Nova™ Headquarters</h3>
 
-                <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300">
-                  <div className="flex items-start gap-3.5 group/item">
-                    <div className="w-9 h-9 rounded-xl bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 group-hover/item:scale-110 group-hover/item:rotate-6 transition-transform">
-                      <MapPin className="w-4 h-4" />
-                    </div>
+              <dl className="mt-7 border-b border-white/15 text-sm">
+                {[
+                  {
+                    icon: MapPin,
+                    dt: 'Office Address:',
+                    dd: <><span className="leading-relaxed">Sector 62, Noida, Uttar Pradesh 201309, Delhi NCR, India</span><span className="text-xs text-white/50 block mt-1 italic">[Official corporate address placeholder]</span></>
+                  },
+                  {
+                    icon: Mail,
+                    dt: 'General Communications:',
+                    dd: <a href="mailto:contact@bizwoke.com" className="text-orange-300 hover:underline font-semibold">contact@bizwoke.com</a>
+                  },
+                  {
+                    icon: Phone,
+                    dt: 'Telephone:',
+                    dd: <><span className="font-semibold">+91 (0) 120-BIZWOKE</span><span className="text-xs text-white/50 block mt-1 italic">[PBX Line]</span></>
+                  },
+                  {
+                    icon: Clock,
+                    dt: 'Operating Hours:',
+                    dd: <span>Monday – Friday: 9:30 AM – 6:30 PM IST</span>
+                  }
+                ].map(({ icon: I, dt, dd }) => (
+                  <div key={dt} className="flex items-start gap-4 py-4 border-t border-white/15">
+                    <I className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-800 dark:text-white block font-bold">Office Address:</strong>
-                      <span className="leading-relaxed">Sector 62, Noida, Uttar Pradesh 201309, Delhi NCR, India</span>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 block mt-0.5 italic">[Official corporate address placeholder]</span>
+                      <dt className="font-bold text-white">{dt}</dt>
+                      <dd className="text-white/75 mt-0.5">{dd}</dd>
                     </div>
                   </div>
+                ))}
+              </dl>
 
-                  <div className="flex items-start gap-3.5 group/item">
-                    <div className="w-9 h-9 rounded-xl bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 group-hover/item:scale-110 group-hover/item:rotate-6 transition-transform">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <strong className="text-slate-800 dark:text-white block font-bold">General Communications:</strong>
-                      <a href="mailto:contact@bizwoke.com" className="text-[#F27A24] hover:underline font-semibold">
-                        contact@bizwoke.com
-                      </a>
-                    </div>
-                  </div>
+              <div className="mt-10 flex items-center justify-between gap-4">
+                <Label dark marker="bg-orange-400">Direct Inboxes</Label>
+                <span className="text-xs font-semibold text-white/60">Response within 24h</span>
+              </div>
+              <h4 className="text-lg font-extrabold tracking-tight mt-3">Department Email Directory</h4>
 
-                  <div className="flex items-start gap-3.5 group/item">
-                    <div className="w-9 h-9 rounded-xl bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 group-hover/item:scale-110 group-hover/item:rotate-6 transition-transform">
-                      <Phone className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <strong className="text-slate-800 dark:text-white block font-bold">Telephone:</strong>
-                      <span className="font-semibold">+91 (0) 120-BIZWOKE</span>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 block mt-0.5 italic">[PBX Line]</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3.5 group/item">
-                    <div className="w-9 h-9 rounded-xl bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 group-hover/item:scale-110 group-hover/item:rotate-6 transition-transform">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <strong className="text-slate-800 dark:text-white block font-bold">Operating Hours:</strong>
-                      <span>Monday – Friday: 9:30 AM – 6:30 PM IST</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Segregated Department Inboxes */}
-              <motion.div
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="bg-white dark:bg-[#0F294A] p-7 rounded-3xl shadow-xs space-y-4 border border-slate-200/90 dark:border-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600 transition-all"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#F27A24]">
-                    Direct Inboxes
-                  </span>
-                  <span className="text-[10px] font-bold text-slate-400">Response within 24h</span>
-                </div>
-                <h4 className="text-base font-bold text-[#0F294A] dark:text-white">Department Email Directory</h4>
-
-                <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-                  <div className="flex justify-between items-center pb-2.5 border-b border-slate-100 dark:border-slate-700/60">
-                    <span className="text-slate-500 dark:text-slate-400">Enterprise Solutions:</span>
-                    <a href="mailto:enterprise@bizwoke.com" className="font-bold text-[#0F294A] dark:text-white hover:text-[#F27A24] transition-colors">
-                      enterprise@bizwoke.com
+              <ul className="mt-5 border-b border-white/15 text-sm">
+                {[
+                  ['Enterprise Solutions:', 'enterprise@bizwoke.com'],
+                  ['Strategic Partnerships:', 'partners@bizwoke.com'],
+                  ['Government Initiatives:', 'gov@bizwoke.com'],
+                  ['Careers & Recruiting:', 'careers@bizwoke.com']
+                ].map(([name, mail]) => (
+                  <li key={mail} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 py-3.5 border-t border-white/15">
+                    <span className="text-white/60">{name}</span>
+                    <a href={`mailto:${mail}`} className="font-bold text-white hover:text-orange-300 transition-colors break-all">
+                      {mail}
                     </a>
-                  </div>
-                  <div className="flex justify-between items-center pb-2.5 border-b border-slate-100 dark:border-slate-700/60">
-                    <span className="text-slate-500 dark:text-slate-400">Strategic Partnerships:</span>
-                    <a href="mailto:partners@bizwoke.com" className="font-bold text-[#0F294A] dark:text-white hover:text-[#F27A24] transition-colors">
-                      partners@bizwoke.com
-                    </a>
-                  </div>
-                  <div className="flex justify-between items-center pb-2.5 border-b border-slate-100 dark:border-slate-700/60">
-                    <span className="text-slate-500 dark:text-slate-400">Government Initiatives:</span>
-                    <a href="mailto:gov@bizwoke.com" className="font-bold text-[#0F294A] dark:text-white hover:text-[#F27A24] transition-colors">
-                      gov@bizwoke.com
-                    </a>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500 dark:text-slate-400">Careers & Recruiting:</span>
-                    <a href="mailto:careers@bizwoke.com" className="font-bold text-[#0F294A] dark:text-white hover:text-[#F27A24] transition-colors">
-                      careers@bizwoke.com
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           </div>
         </div>
       </section>

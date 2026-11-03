@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
+import { API_ENDPOINTS } from '../utils/api';
 import {
   fadeUp,
   fadeIn,
@@ -63,7 +64,7 @@ export default function Partners() {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
     try {
-      await fetch('/api/partner', {
+      await fetch(API_ENDPOINTS.partner, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

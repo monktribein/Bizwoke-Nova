@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
 import { PLATFORMS_DATA } from '../data/platformsData';
 import { fadeUp, viewportConfig } from '../utils/motion';
+import { API_ENDPOINTS } from '../utils/api';
 import {
   ArrowRight,
   ShieldCheck,
@@ -131,7 +132,7 @@ export default function PlatformDetail({ overrideSlug }) {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
     try {
-      await fetch('/api/demo', {
+      await fetch(API_ENDPOINTS.demo, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

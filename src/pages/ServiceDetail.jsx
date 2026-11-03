@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEOHead from '../components/common/SEOHead';
+import { API_ENDPOINTS } from '../utils/api';
 import { SERVICES_DATA } from '../data/servicesData';
 import {
   ArrowRight,
@@ -31,7 +32,7 @@ export default function ServiceDetail() {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
     try {
-      await fetch('/api/service-enquiry', {
+      await fetch(API_ENDPOINTS.serviceEnquiry, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

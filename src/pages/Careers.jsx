@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/common/SEOHead';
+import { API_ENDPOINTS } from '../utils/api';
 import {
   ArrowRight,
   ShieldCheck,
@@ -79,7 +80,7 @@ export default function Careers() {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
     try {
-      await fetch('/api/careers', {
+      await fetch(API_ENDPOINTS.careers, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
