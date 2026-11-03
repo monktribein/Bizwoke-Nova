@@ -309,14 +309,7 @@ export default function About() {
             animate="visible"
             className="max-w-4xl space-y-6"
           >
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-[#F27A24]/30 text-[#F27A24] text-xs font-extrabold tracking-wide backdrop-blur">
-              <span className="relative flex w-2 h-2">
-                <span className="absolute inline-flex w-full h-full rounded-full bg-[#F27A24] opacity-75 animate-ping" />
-                <span className="relative inline-flex w-2 h-2 rounded-full bg-[#F27A24]" />
-              </span>
-              <span>CORPORATE PROFILE & STRATEGY</span>
-            </motion.div>
-
+           
             <motion.h1
               variants={headlineParent}
               className="text-4xl sm:text-5xl lg:text-7xl font-black text-[#0F294A] dark:text-white tracking-tight leading-[1.1]"
