@@ -28,6 +28,7 @@ import {
   Cloud,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Bot,
   Code2,
   LayoutGrid,
@@ -70,18 +71,18 @@ function Label({ children, dark = false, marker = 'bg-[#F27A24]' }) {
 function SectionHead({ label, title, intro, children, size = 'lg', dark = false, marker }) {
   const sizes = { lg: 'text-3xl sm:text-5xl', xl: 'text-5xl sm:text-7xl lg:text-8xl' };
   return (
-    <div className="mb-10 sm:mb-14">
+    <div className="mb-6 sm:mb-14">
       <Rule dark={dark} />
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 pt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-10 pt-3 sm:pt-6">
         <div className="lg:col-span-3">
           <Label dark={dark} marker={marker}>{label}</Label>
         </div>
-        <div className="lg:col-span-9 space-y-4">
-          <h2 className={`${sizes[size]} font-extrabold tracking-tight leading-[1.05] ${dark ? 'text-white' : 'text-[#0F294A] text-navy-primary'}`}>
+        <div className="lg:col-span-9 space-y-3 sm:space-y-4">
+          <h2 className={`${sizes[size]} font-extrabold tracking-tight leading-[1.08] sm:leading-[1.05] ${dark ? 'text-white' : 'text-[#0F294A] text-navy-primary'}`}>
             {title}
           </h2>
           {intro && (
-            <p className={`text-base sm:text-lg leading-relaxed max-w-2xl ${dark ? 'text-white/70' : 'text-[#475569] text-slate-body'}`}>
+            <p className={`text-sm sm:text-lg leading-relaxed max-w-2xl ${dark ? 'text-white/70' : 'text-[#475569] text-slate-body'}`}>
               {intro}
             </p>
           )}
@@ -99,6 +100,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [activeIndustry, setActiveIndustry] = useState(0);
+  const [showAllNEP, setShowAllNEP] = useState(false);
   const carouselRef = useRef(null);
   const resumeTimerRef = useRef(null);
 
@@ -682,7 +684,7 @@ export default function Home() {
 
         {/* ===================== SECTION 6: NEP FOUNDATION (dark spec grid) ===================== */}
         <section className={`${sectionCls} relative z-10`}>
-          <div className="rounded-2xl bg-[#0F294A] dark:bg-[#0A1C33] dark:border dark:border-white/10 text-white p-6 sm:p-10 lg:p-12">
+          <div className="rounded-2xl bg-[#0F294A] dark:bg-[#0A1C33] dark:border dark:border-white/10 text-white p-4.5 sm:p-10 lg:p-12">
             <SectionHead
               dark
               marker="bg-orange-400"
@@ -690,9 +692,9 @@ export default function Home() {
               title="One Platform. One Technology Foundation."
               intro="The NKTech Enterprise Platform™ (NEP) powers all 12 Bizwoke Nova digital platforms, delivering shared security, unified identity, high-throughput APIs, and AI workflow automation."
             >
-              <div className="inline-flex items-center gap-3 pt-2">
-                <span className="bg-white rounded-md p-1.5">
-                  <img src="/assets/nktech-logo.jpg" alt="NKTech Logo" className="h-8 w-auto object-contain" />
+              <div className="inline-flex items-center gap-2.5 sm:gap-3 pt-1 sm:pt-2">
+                <span className="bg-white rounded-md p-1 sm:p-1.5 shrink-0">
+                  <img src="/assets/nktech-logo.jpg" alt="NKTech Logo" className="h-7 sm:h-8 w-auto object-contain" />
                 </span>
                 <div>
                   <div className="text-xs font-bold text-white">NEP Stack Core</div>
@@ -701,33 +703,53 @@ export default function Home() {
               </div>
             </SectionHead>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/15 border border-white/15 rounded-xl overflow-hidden">
+            {/* Responsive Foundation Grid: 2 Columns on Mobile, 4 Columns on Desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/15 border border-white/15 rounded-xl overflow-hidden">
               {nepFoundation.map((cap, i) => {
                 const CIcon = cap.icon;
+                const isHiddenOnMobile = !showAllNEP && i >= 4;
+
                 return (
-                  <div key={cap.title} className="group relative bg-[#0F294A] dark:bg-[#0A1C33] p-5 sm:p-6 transition-colors hover:bg-[#16396a] dark:hover:bg-[#10284a]">
+                  <div
+                    key={cap.title}
+                    className={`group relative bg-[#0F294A] dark:bg-[#0A1C33] p-3.5 sm:p-6 transition-colors hover:bg-[#16396a] dark:hover:bg-[#10284a] ${
+                      isHiddenOnMobile ? 'hidden sm:block' : 'block'
+                    }`}
+                  >
                     {/* status LED */}
                     <span
                       aria-hidden
-                      className="absolute top-4 right-4 w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"
+                      className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"
                       style={{ animationDelay: `${i * 0.35}s`, animationDuration: '2.4s' }}
                     />
-                    <CIcon className="w-6 h-6 text-orange-400 mb-5 group-hover:-translate-y-0.5 transition-transform" />
-                    <h3 className="text-base font-extrabold tracking-tight text-white">{cap.title}</h3>
-                    <p className="text-sm text-white/60 mt-2 leading-relaxed">{cap.desc}</p>
+                    <CIcon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 mb-2 sm:mb-5 group-hover:-translate-y-0.5 transition-transform" />
+                    <h3 className="text-xs sm:text-base font-extrabold tracking-tight text-white leading-snug">{cap.title}</h3>
+                    <p className="text-[11px] sm:text-sm text-white/60 mt-1 sm:mt-2 line-clamp-2 sm:line-clamp-none leading-snug sm:leading-relaxed">{cap.desc}</p>
                   </div>
                 );
               })}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            {/* Mobile Expand / Collapse Control */}
+            <div className="sm:hidden mt-3.5 text-center">
+              <button
+                type="button"
+                onClick={() => setShowAllNEP(!showAllNEP)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-orange-400 bg-white/10 hover:bg-white/15 border border-white/15 active:bg-white/20 transition-colors"
+              >
+                <span>{showAllNEP ? 'Show Core 4 Specs' : 'View All 8 NEP Capabilities (+4)'}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showAllNEP ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+
+            <div className="mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div>
-                <h4 className="text-base font-bold text-white">Explore Deep Architecture Specifications</h4>
-                <p className="text-sm text-white/60 mt-0.5">Multi-tenant data isolation, zero-trust encryption, and API adapters</p>
+                <h4 className="text-sm sm:text-base font-bold text-white">Explore Deep Architecture Specifications</h4>
+                <p className="hidden sm:block text-sm text-white/60 mt-0.5">Multi-tenant data isolation, zero-trust encryption, and API adapters</p>
               </div>
               <Link
                 to="/technology/"
-                className="shrink-0 px-6 py-2.5 rounded-full text-sm font-bold text-[#0F294A] bg-white hover:bg-orange-100 transition-colors inline-block"
+                className="w-full sm:w-auto text-center shrink-0 px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-[#0F294A] bg-white hover:bg-orange-100 transition-colors inline-block"
               >
                 View NEP Technology Overview →
               </Link>
