@@ -85,8 +85,8 @@ export default function Partners() {
           SECTION 1: HERO (NORMAL, CLEAN CORPORATE LAYOUT WITH TELEMETRY)
       ========================================================================= */}
       <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-10 sm:pt-14 pb-12 sm:pb-16 relative overflow-hidden">
-        {/* Subtle dot pattern background */}
-        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+        {/* Clean enterprise background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/30 dark:from-[#071322] dark:via-[#0A1C33] dark:to-[#08172b] pointer-events-none" />
 
         {/* Ambient floating glow */}
         <motion.div
