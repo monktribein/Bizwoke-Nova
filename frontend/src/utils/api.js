@@ -10,3 +10,4 @@ export const API_ENDPOINTS = {
   leads: `${API_BASE}/api/leads`,
   health: `${API_BASE}/api/health`,
 };
+
