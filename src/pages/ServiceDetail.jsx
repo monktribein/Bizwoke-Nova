@@ -116,13 +116,13 @@ export default function ServiceDetail() {
 
             {/* Scope Quick Glance Card */}
             <div className="lg:col-span-5">
-              <div className="bg-[#0F294A] text-white rounded-2xl p-8 shadow-xl space-y-5 border border-slate-700/70">
+              <div className="bg-[#F8FAFC] text-[#0F294A] rounded-2xl p-8 shadow-sm space-y-5 border border-slate-200/90">
                 <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
                   Service Overview
                 </span>
-                <h3 className="text-xl font-bold text-white">Standard Engagement Scope</h3>
+                <h3 className="text-xl font-bold text-[#0F294A]">Standard Engagement Scope</h3>
 
-                <ul className="space-y-3 text-sm text-slate-300">
+                <ul className="space-y-3 text-sm text-slate-600">
                   {service.scope.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
                       <CheckCircle2 className="w-4 h-4 text-[#0D9488] shrink-0 mt-0.5" />
@@ -131,9 +131,9 @@ export default function ServiceDetail() {
                   ))}
                 </ul>
 
-                <div className="pt-4 border-t border-slate-700/80 flex items-center justify-between text-xs text-slate-400">
+                <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
                   <span>Target Search Entity</span>
-                  <span className="text-[#F27A24] font-medium">{service.seoTarget}</span>
+                  <span className="text-[#F27A24] font-semibold">{service.seoTarget}</span>
                 </div>
               </div>
             </div>
@@ -274,105 +274,135 @@ export default function ServiceDetail() {
       </section>
 
       {/* 6. CONVERSION & SERVICE ENQUIRY FORM */}
-      <section id="service-enquiry" className="py-20 bg-[#F8FAFC] dark:bg-[#081528]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#0F294A] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border border-slate-700/70">
-            <div className="text-center space-y-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
-                Service Inquiry
-              </span>
-              <h2 className="text-3xl font-black tracking-tight text-white">
-                Request a Proposal for {service.title}
-              </h2>
-              <p className="text-sm text-slate-300 max-w-md mx-auto">
-                Discuss your business objectives, timeline, and technical constraints directly with our engineering team.
-              </p>
-            </div>
-
-            {inquirySent ? (
-              <div className="bg-emerald-950/60 border border-emerald-500/50 rounded-2xl p-8 text-center space-y-3">
-                <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-                <h3 className="text-xl font-bold text-white">Inquiry Received</h3>
-                <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Thank you, <strong className="text-white">{formData.name}</strong>. Our enterprise team will review your requirements for <strong className="text-white">{service.title}</strong> and email you at <strong className="text-white">{formData.email}</strong> within 1 business day.
-                </p>
-                <button
-                  onClick={() => setInquirySent(false)}
-                  className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] bg-white rounded-lg hover:bg-slate-100"
-                >
-                  Submit Another Inquiry
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleInquirySubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Priya Nair"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
-                      Official Email *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="name@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">
-                    Contact Phone (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="+91-XXXXXXXXXX"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">
-                    Project Requirements / Current Stack
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder={`Tell us about your objectives for ${service.title}...`}
-                    value={formData.details}
-                    onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                  />
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
-                  >
-                    Send Service Inquiry
-                  </button>
-                  <p className="text-[11px] text-slate-400 text-center mt-2">
-                    Direct enquiry routed to technical leads. Confidentiality respected.
+      <section id="service-enquiry" className="py-20 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white text-[#0F294A] rounded-3xl p-8 sm:p-12 lg:p-14 shadow-xl border border-slate-200/90 relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              {/* Left Column: Context & Commitments */}
+              <div className="lg:col-span-5 space-y-6">
+                <div className="space-y-2">
+                  <span className="text-xs font-black uppercase tracking-widest text-[#F27A24]">
+                    Service Inquiry
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0F294A] leading-tight">
+                    Request a Proposal for {service.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    Discuss your business objectives, timeline, and technical constraints directly with our engineering team.
                   </p>
                 </div>
-              </form>
-            )}
+
+                <div className="pt-2 space-y-3.5 text-xs sm:text-sm text-slate-700">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 mt-0.5">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-bold block text-[#0F294A]">Architecture First</span>
+                      <span className="text-slate-500 text-xs">Direct technical feasibility and scope assessment from Day 1.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-[#0D9488] flex items-center justify-center shrink-0 mt-0.5">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-bold block text-[#0F294A]">Fixed-Scope SLA & NDA</span>
+                      <span className="text-slate-500 text-xs">Strict confidentiality and Milestone-driven execution delivery.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Form */}
+              <div className="lg:col-span-7">
+                {inquirySent ? (
+                  <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-8 text-center space-y-3">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+                    <h3 className="text-xl font-bold text-[#0F294A]">Inquiry Received</h3>
+                    <p className="text-sm text-slate-600 max-w-md mx-auto">
+                      Thank you, <strong className="text-[#0F294A]">{formData.name}</strong>. Our enterprise team will review your requirements for <strong className="text-[#0F294A]">{service.title}</strong> and email you at <strong className="text-[#0F294A]">{formData.email}</strong> within 1 business day.
+                    </p>
+                    <button
+                      onClick={() => setInquirySent(false)}
+                      className="mt-4 px-6 py-2 text-xs font-bold text-white bg-[#0F294A] rounded-lg hover:bg-[#143761] cursor-pointer"
+                    >
+                      Submit Another Inquiry
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleInquirySubmit} className="space-y-4 bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-semibold text-slate-700 block mb-1">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Priya Nair"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-[#0F294A] placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24] focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-slate-700 block mb-1">
+                          Official Email *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="name@company.com"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-[#0F294A] placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24] focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-semibold text-slate-700 block mb-1">
+                        Contact Phone (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="+91-XXXXXXXXXX"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-[#0F294A] placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24] focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-semibold text-slate-700 block mb-1">
+                        Project Requirements / Current Stack
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder={`Tell us about your objectives for ${service.title}...`}
+                        value={formData.details}
+                        onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                        className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-[#0F294A] placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24] focus:border-transparent"
+                      />
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all cursor-pointer"
+                      >
+                        Send Service Inquiry
+                      </button>
+                      <p className="text-[11px] text-slate-500 text-center mt-2">
+                        Direct enquiry routed to technical leads. Confidentiality respected.
+                      </p>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>

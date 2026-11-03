@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
 import { SOLUTIONS_DATA } from '../data/solutionsData';
+import { cardVariant, staggerContainer, fadeUp, viewportConfig } from '../utils/motion';
 import {
   ArrowRight,
   ShieldCheck,
@@ -37,7 +39,7 @@ export default function Solutions() {
       />
 
       {/* Hero */}
-      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-10 pb-12 relative overflow-hidden">
         {/* Subtle dot pattern background */}
         <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
 
@@ -61,15 +63,23 @@ export default function Solutions() {
       </section>
 
       {/* Solutions Grid */}
-      <section className="py-16">
+      <section className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            variants={staggerContainer(0.08)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
             {SOLUTIONS_DATA.map((solution) => {
               const Icon = industryIcons[solution.slug] || Building;
               return (
-                <div
+                <motion.div
                   key={solution.id}
-                  className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/50 dark:hover:border-[#F27A24]/60 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group space-y-6"
+                  variants={cardVariant}
+                  whileHover={{ y: -6, transition: { duration: 0.22, ease: 'easeOut' } }}
+                  className="bg-white dark:bg-[#0F294A] rounded-2xl p-8 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/50 dark:hover:border-[#F27A24]/60 shadow-sm hover:shadow-lg transition-colors flex flex-col justify-between group space-y-6"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -123,10 +133,10 @@ export default function Solutions() {
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

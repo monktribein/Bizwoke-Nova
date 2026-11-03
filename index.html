@@ -18,17 +18,10 @@
     <script>
       (function() {
         try {
-          var params = new URLSearchParams(window.location.search);
-          var queryTheme = params.get('theme');
-          var saved = localStorage.getItem('bizwoke_theme');
-          var theme = queryTheme || saved || 'light';
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
+          localStorage.removeItem('bizwoke_theme');
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+          document.documentElement.setAttribute('data-theme', 'light');
         } catch(e) {}
       })();
     </script>

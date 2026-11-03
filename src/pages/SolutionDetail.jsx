@@ -183,18 +183,18 @@ export default function SolutionDetail() {
       )}
 
       {/* Sector Consultation CTA */}
-      <section className="py-20 bg-[#0A1C33] text-white border-y border-slate-800">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+      <section className="py-16 bg-gradient-to-br from-orange-50/50 via-white to-blue-50/50 text-[#0F294A] border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
             Sector Consultation
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0F294A]">
             Deploy {solution.title} Technology
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
             Speak directly with our solutions architects to assess pilot feasibility, security accreditations, and institutional deployment roadmaps.
           </p>
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/contact/?type=sector"
               className="px-8 py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
@@ -203,7 +203,7 @@ export default function SolutionDetail() {
             </Link>
             <Link
               to="/solutions/"
-              className="px-8 py-3.5 text-sm font-bold text-slate-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all"
+              className="px-8 py-3.5 text-sm font-bold text-[#0F294A] bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all"
             >
               View All 8 Sectors
             </Link>

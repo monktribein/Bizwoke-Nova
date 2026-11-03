@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@variant dark (&:is(.dark, .dark *));
+@variant dark (&:not(*));
 
 @theme {
   --color-navy-950: #0a1c33;
@@ -22,49 +22,32 @@
 /* Base custom styles */
 html {
   scroll-behavior: smooth;
-}
-
-html.light, html:not(.dark) {
   color-scheme: light;
-}
-
-html.dark {
-  color-scheme: dark;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-html.light body, html:not(.dark) body {
+  width: 100%;
+  max-width: 100%;
   color: #0f294a;
   background-color: #f8fafc;
 }
 
-html.dark body {
-  color: #f8fafc;
-  background-color: #071526;
+/* Hide default browser scrollbar line across all browsers */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
 }
 
-/* Specific Dark Mode overrides to guarantee razor-sharp contrast in the same color format */
-html.dark .text-navy-primary {
-  color: #ffffff !important;
-}
-
-html.dark .text-slate-body {
-  color: #cbd5e1 !important;
-}
-
-html.dark .bg-card-surface {
-  background-color: #0f294a !important;
-  border-color: rgba(51, 65, 85, 0.8) !important;
-}
-
-html.dark .bg-surface-elevated {
-  background-color: #0a1c33 !important;
-  border-color: rgba(51, 65, 85, 0.8) !important;
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 /* Focus indicators */
@@ -76,11 +59,6 @@ html.dark .bg-surface-elevated {
 /* Architectural grid patterns */
 .bg-grid-pattern {
   background-image: radial-gradient(rgba(15, 41, 74, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-html.dark .bg-grid-pattern {
-  background-image: radial-gradient(rgba(242, 122, 36, 0.12) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 

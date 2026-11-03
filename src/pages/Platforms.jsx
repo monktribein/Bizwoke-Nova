@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
 import { PLATFORMS_DATA } from '../data/platformsData';
+import { cardVariant, staggerContainer, fadeUp, viewportConfig } from '../utils/motion';
 import {
   Search,
   Filter,
@@ -63,7 +65,7 @@ export default function Platforms() {
       />
 
       {/* Hero Section */}
-      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-10 pb-12 relative overflow-hidden">
         {/* Subtle dot pattern background */}
         <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
 
@@ -103,7 +105,7 @@ export default function Platforms() {
       </section>
 
       {/* Directory & Interactive Filters */}
-      <section id="directory" className="py-16">
+      <section id="directory" className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Controls Bar: Search & Category Pills */}
           <div className="bg-white dark:bg-[#0F294A] p-6 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-5">
@@ -158,7 +160,11 @@ export default function Platforms() {
 
           {/* Platforms Grid (All 12) */}
           {filteredPlatforms.length === 0 ? (
-            <div className="bg-white dark:bg-[#0F294A] rounded-2xl p-16 text-center border border-slate-200/90 dark:border-slate-700/60 space-y-3">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-white dark:bg-[#0F294A] rounded-2xl p-16 text-center border border-slate-200/90 dark:border-slate-700/60 space-y-3"
+            >
               <h3 className="text-lg font-bold text-[#0F294A] dark:text-white">No platforms match your search</h3>
               <p className="text-sm text-slate-500 dark:text-slate-400">
                 Try clearing your search query or selecting "All" categories.
@@ -169,108 +175,124 @@ export default function Platforms() {
               >
                 Reset Filters
               </button>
-            </div>
+            </motion.div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPlatforms.map((platform) => (
-                <div
-                  key={platform.id}
-                  className="bg-white dark:bg-[#0F294A] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/50 dark:hover:border-[#F27A24]/60 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group"
-                >
-                  <div className="space-y-4">
-                    {/* Card Top: ID and Verified Maturity Badge */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-black text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-[#F27A24]/30">
-                        {platform.id}
-                      </span>
-                      <span
-                        className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
-                          platform.maturityStatus === 'Live'
-                            ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                            : platform.maturityStatus === 'Pilot'
-                            ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800'
-                            : platform.maturityStatus === 'Early Access'
-                            ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800'
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
-                        }`}
-                        title="Verified Product Maturity Status"
-                      >
-                        {platform.maturityStatus}
-                      </span>
-                    </div>
-
-                    {/* Title & Category */}
-                    <div>
-                      <h3 className="text-2xl font-black text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors">
-                        {platform.name}
-                      </h3>
-                      <div className="text-xs font-bold text-[#0D9488] dark:text-teal-400 mt-0.5">
-                        {platform.categoryLabel}
+            <motion.div
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              <AnimatePresence>
+                {filteredPlatforms.map((platform) => (
+                  <motion.div
+                    layout
+                    key={platform.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                    whileHover={{ y: -2, transition: { duration: 0.2, ease: 'easeOut' } }}
+                    className="bg-white dark:bg-[#0F294A] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/50 dark:hover:border-[#F27A24]/60 shadow-none hover:shadow-none transition-colors flex flex-col justify-between group"
+                  >
+                    <div className="space-y-4">
+                      {/* Card Top: ID and Verified Maturity Badge */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-[#F27A24]/30">
+                          {platform.id}
+                        </span>
+                        <span
+                          className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                            platform.maturityStatus === 'Live'
+                              ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+                              : platform.maturityStatus === 'Pilot'
+                              ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800'
+                              : platform.maturityStatus === 'Early Access'
+                              ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+                          }`}
+                          title="Verified Product Maturity Status"
+                        >
+                          {platform.maturityStatus}
+                        </span>
                       </div>
-                    </div>
 
-                    {/* Tagline */}
-                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 italic">
-                      "{platform.tagline}"
-                    </p>
-
-                    {/* Concise Description */}
-                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
-                      {platform.description}
-                    </p>
-
-                    {/* Sample Key Solutions */}
-                    <div className="pt-2">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
-                        Core Capabilities
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {platform.coreModules.slice(0, 3).map((mod, i) => (
-                          <span
-                            key={i}
-                            className="text-[11px] font-medium bg-[#F8FAFC] dark:bg-[#0A1C33] text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded border border-slate-200/70 dark:border-slate-700"
-                          >
-                            {mod.name}
-                          </span>
-                        ))}
-                        {platform.coreModules.length > 3 && (
-                          <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 px-1 py-0.5">
-                            +{platform.coreModules.length - 3} more
-                          </span>
+                      {/* Title & Category */}
+                      <div className="flex items-center gap-3">
+                        {platform.logo && platform.logo !== '/assets/favicon.svg' && (
+                          <img src={platform.logo} alt={`${platform.name} Logo`} className="h-9 w-auto object-contain rounded-lg p-0.5 bg-white border border-slate-200/80 shadow-none" />
                         )}
+                        <div>
+                          <h3 className="text-2xl font-black text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors">
+                            {platform.name}
+                          </h3>
+                          <div className="text-xs font-bold text-[#0D9488] dark:text-teal-400 mt-0.5">
+                            {platform.categoryLabel}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tagline */}
+                      <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 italic">
+                        "{platform.tagline}"
+                      </p>
+
+                      {/* Concise Description */}
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                        {platform.description}
+                      </p>
+
+                      {/* Sample Key Solutions */}
+                      <div className="pt-2">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
+                          Core Capabilities
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {platform.coreModules.slice(0, 3).map((mod, i) => (
+                            <span
+                              key={i}
+                              className="text-[11px] font-medium bg-[#F8FAFC] dark:bg-[#0A1C33] text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded border border-slate-200/70 dark:border-slate-700"
+                            >
+                              {mod.name}
+                            </span>
+                          ))}
+                          {platform.coreModules.length > 3 && (
+                            <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 px-1 py-0.5">
+                              +{platform.coreModules.length - 3} more
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Card Bottom CTA */}
-                  <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
-                    <Link
-                      to={platform.route}
-                      className="w-full inline-flex items-center justify-between px-4 py-2.5 text-xs font-bold text-[#0F294A] dark:text-slate-200 bg-[#F8FAFC] dark:bg-[#0A1C33] group-hover:bg-[#F27A24] group-hover:text-white dark:group-hover:bg-[#F27A24] dark:group-hover:text-white rounded-lg border border-slate-200/80 dark:border-slate-700 transition-all shadow-sm"
-                    >
-                      <span>Explore {platform.id}. {platform.name.replace('™', '')}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    {/* Card Bottom CTA */}
+                    <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+                      <Link
+                        to={platform.route}
+                        className="w-full inline-flex items-center justify-between px-4 py-2.5 text-xs font-bold text-[#0F294A] dark:text-slate-200 bg-[#F8FAFC] dark:bg-[#0A1C33] group-hover:bg-[#F27A24] group-hover:text-white dark:group-hover:bg-[#F27A24] dark:group-hover:text-white rounded-lg border border-slate-200/80 dark:border-slate-700 transition-all shadow-none"
+                      >
+                        <span>Explore {platform.id}. {platform.name.replace('™', '')}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
         </div>
       </section>
 
       {/* The Technology Advantage: NEP Foundation */}
-      <section className="py-20 bg-[#0A1C33] text-white border-y border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="max-w-3xl space-y-4">
+      <section className="py-12 bg-gradient-to-br from-orange-50/50 via-white to-blue-50/50 text-[#0F294A] border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="max-w-3xl space-y-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               The Technology Advantage
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0F294A]">
               Different Platforms. One Shared Technology Vision.
             </h2>
-            <p className="text-base text-slate-300 leading-relaxed">
-              Our technology strategy is built around reusable enterprise capabilities that can support multiple applications and industries. Through the <strong className="text-white">NKTech Enterprise Platform™ (NEP)</strong>, we aim to standardize essential capabilities, improve interoperability, and reduce duplicated development effort.
+            <p className="text-base text-slate-600 leading-relaxed">
+              Our technology strategy is built around reusable enterprise capabilities that can support multiple applications and industries. Through the <strong className="text-[#0F294A]">NKTech Enterprise Platform™ (NEP)</strong>, we aim to standardize essential capabilities, improve interoperability, and reduce duplicated development effort.
             </p>
           </div>
 
@@ -287,10 +309,10 @@ export default function Platforms() {
             ].map((cap, idx) => (
               <div
                 key={idx}
-                className="bg-[#0F294A] p-4 rounded-xl border border-slate-700/60 flex items-center gap-3 shadow-sm hover:border-[#F27A24]/40 transition-colors"
+                className="bg-white p-4 rounded-xl border border-slate-200/90 flex items-center gap-3 shadow-xs hover:border-[#F27A24]/40 transition-colors"
               >
                 <CheckCircle2 className="w-4 h-4 text-[#F27A24] shrink-0" />
-                <span className="text-sm font-semibold text-slate-200">{cap}</span>
+                <span className="text-sm font-semibold text-[#0F294A]">{cap}</span>
               </div>
             ))}
           </div>
@@ -298,8 +320,8 @@ export default function Platforms() {
       </section>
 
       {/* Who We Serve Section */}
-      <section className="py-20 bg-white dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-12 bg-white dark:bg-[#081528] border-b border-slate-200/80 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Client & Institutional Reach
@@ -336,7 +358,7 @@ export default function Platforms() {
       {/* Partner With Us & Final CTA */}
       <section className="py-20 bg-[#F8FAFC] dark:bg-[#081528]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white dark:bg-[#0F294A] rounded-3xl p-8 sm:p-14 border border-slate-200/90 dark:border-slate-700/60 shadow-sm text-center max-w-4xl mx-auto space-y-6">
+          <div className="bg-white dark:bg-[#0F294A] rounded-3xl p-8 sm:p-14 border border-slate-200/90 dark:border-slate-700/60 shadow-sm text-center space-y-6">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
               Partner With Us
             </span>

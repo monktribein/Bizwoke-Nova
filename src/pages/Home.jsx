@@ -1,15 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
 import HeroSlider from '../components/home/HeroSlider';
 import { PLATFORMS_DATA } from '../data/platformsData';
+import { fadeUp, viewportConfig } from '../utils/motion';
 import {
   ArrowRight,
   ShieldCheck,
   Cpu,
   Layers,
   Sparkles,
-  Server,
   Zap,
   Globe2,
   Users2,
@@ -20,28 +21,86 @@ import {
   HeartPulse,
   ShoppingBag,
   Truck,
-  Building,
   GraduationCap,
-  ExternalLink,
   Lock,
   Workflow,
   BarChart3,
-  CreditCard,
   Cloud,
   ChevronLeft,
   ChevronRight,
   Bot,
-  Terminal,
-  Activity,
   Code2,
   LayoutGrid,
-  Search,
-  Check
+  Search
 } from 'lucide-react';
+
+/* ---------------------------------------------------------------------------
+   Small shared pieces
+   Design system: one hairline rule that draws in above every section, a square
+   marker + sentence-case label in a left rail, left-aligned headings, and a
+   different body layout per section (table rows, ledger, dark spec grid,
+   interactive index, pull-quotes) instead of one repeated card.
+--------------------------------------------------------------------------- */
+
+const EASE = [0.22, 1, 0.36, 1];
+const mask = { hidden: { y: '115%' }, visible: { y: 0, transition: { duration: 0.9, ease: EASE } } };
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
+
+function Rule({ dark = false }) {
+  return (
+    <motion.div
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 1.1, ease: EASE }}
+      className={`h-px origin-left ${dark ? 'bg-white/30' : 'bg-[#0F294A]/30 dark:bg-white/25'}`}
+    />
+  );
+}
+
+function Label({ children, dark = false, marker = 'bg-[#F27A24]' }) {
+  return (
+    <div className="flex items-start gap-2.5 text-sm font-semibold">
+      <span className={`mt-[7px] w-2 h-2 shrink-0 ${marker}`} />
+      <span className={dark ? 'text-white/70' : 'text-slate-600 dark:text-slate-300'}>{children}</span>
+    </div>
+  );
+}
+
+function SectionHead({ label, title, intro, children, size = 'lg', dark = false, marker }) {
+  const sizes = { lg: 'text-3xl sm:text-5xl', xl: 'text-5xl sm:text-7xl lg:text-8xl' };
+  return (
+    <div className="mb-10 sm:mb-14">
+      <Rule dark={dark} />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 pt-6">
+        <div className="lg:col-span-3">
+          <Label dark={dark} marker={marker}>{label}</Label>
+        </div>
+        <div className="lg:col-span-9 space-y-4">
+          <h2 className={`${sizes[size]} font-extrabold tracking-tight leading-[1.05] ${dark ? 'text-white' : 'text-[#0F294A] text-navy-primary'}`}>
+            {title}
+          </h2>
+          {intro && (
+            <p className={`text-base sm:text-lg leading-relaxed max-w-2xl ${dark ? 'text-white/70' : 'text-[#475569] text-slate-body'}`}>
+              {intro}
+            </p>
+          )}
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const sectionCls = 'py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto';
+const statusDot = (s) => (s === 'Live' ? 'bg-emerald-500' : s === 'Pilot' ? 'bg-blue-500' : 'bg-amber-500');
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+  const [activeIndustry, setActiveIndustry] = useState(0);
   const carouselRef = useRef(null);
+  const resumeTimerRef = useRef(null);
 
   const platforms = PLATFORMS_DATA;
   const categories = ['All', 'Governance', 'Tourism', 'Commerce', 'Industry', 'Healthcare', 'Transport', 'Business'];
@@ -50,12 +109,96 @@ export default function Home() {
     ? platforms
     : platforms.filter(p => p.category.toLowerCase().includes(activeCategory.toLowerCase()));
 
+  // Seamless infinite loop: duplicate items so cards scroll continuously without edge stops
+  const displayPlatforms = useMemo(() => {
+    if (!filteredPlatforms.length) return [];
+    let base = [...filteredPlatforms];
+    while (base.length < 8) {
+      base = [...base, ...filteredPlatforms];
+    }
+    return [...base, ...base];
+  }, [filteredPlatforms]);
+
+  // Reset scroll to start when active category changes
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0;
+    }
+  }, [activeCategory]);
+
+  // Continuous Seamless Infinite Carousel Glide (silky smooth ~42px/sec, no stops or jerks)
+  useEffect(() => {
+    let animId;
+    let lastTime = performance.now();
+    const speed = 42; // pixels per second
+
+    const step = (now) => {
+      const delta = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      if (!isCarouselPaused && carouselRef.current) {
+        const el = carouselRef.current;
+        const half = el.scrollWidth / 2;
+        if (half > 0) {
+          el.scrollLeft += speed * delta;
+          if (el.scrollLeft >= half) {
+            el.scrollLeft -= half;
+          }
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isCarouselPaused, displayPlatforms.length]);
+
   const scrollCarousel = (direction) => {
     if (carouselRef.current) {
-      const scrollAmount = direction === 'left' ? -380 : 380;
-      carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const el = carouselRef.current;
+      const half = el.scrollWidth / 2;
+      const scrollAmount = direction === 'left' ? -360 : 360;
+
+      if (direction === 'left' && el.scrollLeft < 360 && half > 0) {
+        el.scrollLeft += half;
+      }
+
+      el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+
+      // Pause continuous scroll temporarily on manual navigation
+      setIsCarouselPaused(true);
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = setTimeout(() => {
+        setIsCarouselPaused(false);
+      }, 3500);
     }
   };
+
+  /* ------------------------------- DATA ------------------------------- */
+
+  const pods = [
+    {
+      name: "Tirvona™", logo: "/assets/tirvona-logo.png", alt: "Tirvona Logo", icon: Compass,
+      tag: "Tourism & Pilgrimage", meta: "NEP Pilgrim Core", to: "/platforms/tirvona/",
+      desc: "Unified destination management system with virtual darshan queues, multi-language guide apps, and visitor telemetry.",
+      tagCls: "text-amber-700 dark:text-amber-300", iconCls: "text-amber-600 dark:text-amber-400",
+      nameHover: "group-hover:text-[#F27A24]", linkCls: "text-[#F27A24]", bar: "bg-amber-500"
+    },
+    {
+      name: "BharatBN™", logo: "/assets/bharatbn-logo.webp", alt: "BharatBN Logo", icon: Globe2,
+      tag: "Business Discovery", meta: "B2B Trade Network", to: "/platforms/bharatbn/",
+      desc: "India’s business discovery network connecting verified MSMEs, distributors, and buyers across regional trade corridors.",
+      tagCls: "text-blue-700 dark:text-blue-300", iconCls: "text-blue-600 dark:text-blue-400",
+      nameHover: "group-hover:text-blue-600 dark:group-hover:text-blue-400", linkCls: "text-blue-600 dark:text-blue-400", bar: "bg-blue-500"
+    },
+    {
+      name: "BizORM™", logo: "/assets/bizorm-logo.jpg", alt: "BizORM Logo", icon: ShieldCheck,
+      tag: "ORM & Reviews", meta: "Commercial Product", to: "/platforms/bizorm/",
+      desc: "Customer experience & online reputation management system with QR review capture and multi-location analytics.",
+      tagCls: "text-teal-700 dark:text-teal-300", iconCls: "text-teal-600 dark:text-teal-400",
+      nameHover: "group-hover:text-teal-600 dark:group-hover:text-teal-400", linkCls: "text-teal-600 dark:text-teal-400", bar: "bg-teal-500"
+    }
+  ];
 
   // Section 4: Enterprise Capabilities (8 Core Services)
   const coreServices = [
@@ -125,7 +268,7 @@ export default function Home() {
     }
   ];
 
-  // Section 6: NEP Foundation (10 Shared Capabilities)
+  // Section 6: NEP Foundation (shared capabilities)
   const nepFoundation = [
     { title: "AI & Automation Engine", icon: Bot, desc: "Private LLM inference, autonomous bots, and cognitive data pipelines across platforms." },
     { title: "Identity & Access (IAM)", icon: Lock, desc: "Granular RBAC, single sign-on, citizen/worker KYC, and cryptographic session protection." },
@@ -183,6 +326,27 @@ export default function Home() {
     }
   ];
 
+  const quotes = [
+    {
+      tag: "Operational Reliability",
+      text: "\"Architecting high-availability infrastructure requires strict separation of tenant data and resilient failovers. The NEP foundation ensures mission-critical platforms remain uninterrupted.\"",
+      who: "Enterprise Architecture Team", what: "NEP Core Infrastructure", whatCls: "text-[#0D9488] dark:text-teal-400", rule: "border-[#0D9488]"
+    },
+    {
+      tag: "Reputation & Feedback",
+      text: "\"BizORM gave multi-location retail and healthcare institutions automated review collection and instant sentiment alerts, transforming raw ratings into measurable operational improvements.\"",
+      who: "Customer Experience Lead", what: "BizORM™ Operations", whatCls: "text-[#F27A24]", rule: "border-[#F27A24]"
+    },
+    {
+      tag: "Scalable Delivery",
+      text: "\"Moving from disconnected legacy workflows to unified cloud portals empowered our field teams with real-time dispatch, transparent audit trails, and zero paperwork bottlenecks.\"",
+      who: "Solutions Delivery Lead", what: "Civic & Enterprise Systems", whatCls: "text-[#1E5086] dark:text-blue-300", rule: "border-[#1E5086]"
+    }
+  ];
+
+  const ind = industries[activeIndustry];
+  const IndIcon = ind.icon;
+
   return (
     <>
       <SEOHead
@@ -191,451 +355,379 @@ export default function Home() {
         canonical="/"
       />
 
-      <div className="relative bg-[#F8FAFC] dark:bg-[#071526] text-[#0F294A] dark:text-slate-100 transition-colors duration-250">
+      <div className="relative bg-[#F8FAFC] text-[#0F294A]">
 
         {/* Subtle Architectural Grid Pattern */}
         <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0 opacity-60" />
 
-        {/* =========================================================================
-            SECTION 1: HERO SLIDER (AUTO-SCROLLING 5-BANNER ENTERPRISE SHOWCASE)
-        ========================================================================= */}
+        {/* ===================== SECTION 1: HERO SLIDER + PORTFOLIO STRIP ===================== */}
         <section className="relative z-10 w-full pt-0">
           <HeroSlider />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16">
-            {/* Authentic Enterprise Architecture Triple Card */}
-            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
-                <div className="text-xl font-extrabold text-[#0F294A] text-navy-primary">One Portfolio</div>
-                <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Mission FTC™ Strategy</p>
-              </div>
-              <div className="bg-white bg-card-surface rounded-2xl p-6 border-2 border-orange-200/80 dark:border-orange-500/40 shadow-sm text-center relative transition-colors">
-                <div className="text-xl font-extrabold text-[#F27A24]">12 Platforms</div>
-                <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">Specialized Digital Solutions</p>
-              </div>
-              <div className="bg-white bg-card-surface rounded-2xl p-6 border border-slate-200/90 shadow-sm text-center transition-colors">
-                <div className="text-xl font-extrabold text-[#0D9488] dark:text-teal-400">One Foundation</div>
-                <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">NKTech Enterprise Platform™</p>
-              </div>
-            </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-6 sm:pb-8">
+            {/* One band instead of three cards */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
+              className="grid grid-cols-1 sm:grid-cols-3 border-y border-slate-300 dark:border-slate-700/60 divide-y sm:divide-y-0 sm:divide-x divide-slate-300 dark:divide-slate-700/60"
+            >
+              {[
+                { a: "One Portfolio", b: "Mission FTC™ Strategy", cls: "text-[#0F294A] text-navy-primary" },
+                { a: "12 Platforms", b: "Specialized Digital Solutions", cls: "text-[#F27A24]" },
+                { a: "One Foundation", b: "NKTech Enterprise Platform™", cls: "text-[#0D9488] dark:text-teal-400" }
+              ].map((s, i) => (
+                <div key={s.a} className={`py-5 sm:px-6 ${i === 0 ? 'sm:pl-0' : ''}`}>
+                  <div className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${s.cls}`}>{s.a}</div>
+                  <p className="text-xs font-semibold text-slate-500 text-slate-body mt-1">{s.b}</p>
+                </div>
+              ))}
+            </motion.div>
 
-            {/* 3 Real Product Telemetry Pods */}
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Pod 1: Tirvona */}
-            <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl transition-all group">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20">
-                  Tourism & Pilgrimage
-                </span>
-                <Compass className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-              </div>
-              <h3 className="text-xl font-extrabold text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors">
-                Tirvona™
-              </h3>
-              <p className="text-xs text-[#64748B] text-slate-body mt-2 line-clamp-2 leading-relaxed">
-                Unified destination management system with virtual darshan queues, multi-language guide apps, and visitor telemetry.
-              </p>
-              <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400 font-medium">NEP Pilgrim Core</span>
-                <Link to="/platforms/tirvona/" className="text-[#F27A24] font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                  View Platform →
-                </Link>
-              </div>
+            {/* Featured platforms: one ledger panel, three columns */}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-slate-200/90 bg-white bg-card-surface overflow-hidden divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-700/60">
+              {pods.map((p) => {
+                const PIcon = p.icon;
+                return (
+                  <div key={p.name} className="group relative p-6 sm:p-7 flex flex-col transition-colors hover:bg-slate-50/80 dark:hover:bg-white/[0.03]">
+                    <span className={`absolute top-0 left-0 h-[3px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${p.bar}`} />
+                    <div className="flex items-center justify-between mb-5">
+                      <span className={`text-xs font-bold ${p.tagCls}`}>{p.tag}</span>
+                      <PIcon className={`w-5 h-5 ${p.iconCls}`} />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <img src={p.logo} alt={p.alt} className="h-8 w-auto object-contain rounded" />
+                      <h3 className={`text-2xl font-extrabold tracking-tight text-[#0F294A] dark:text-white transition-colors ${p.nameHover}`}>{p.name}</h3>
+                    </div>
+                    <p className="text-sm text-[#475569] dark:text-slate-300 mt-3 line-clamp-3 leading-relaxed flex-1">{p.desc}</p>
+                    <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
+                      <span className="text-slate-500 dark:text-slate-400 font-medium">{p.meta}</span>
+                      <Link to={p.to} className={`${p.linkCls} font-bold inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform`}>
+                        View Platform →
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
-            {/* Pod 2: BharatBN */}
-            <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl transition-all group">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/20">
-                  Business Discovery
-                </span>
-                <Globe2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h3 className="text-xl font-extrabold text-[#0F294A] text-navy-primary group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                BharatBN™
-              </h3>
-              <p className="text-xs text-[#64748B] text-slate-body mt-2 line-clamp-2 leading-relaxed">
-                India’s business discovery network connecting verified MSMEs, distributors, and buyers across regional trade corridors.
-              </p>
-              <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400 font-medium">B2B Trade Network</span>
-                <Link to="/platforms/bharatbn/" className="text-blue-600 dark:text-blue-400 font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                  View Platform →
-                </Link>
-              </div>
-            </div>
-
-            {/* Pod 3: BizORM */}
-            <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-7 shadow-sm hover:shadow-xl transition-all group">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-50 dark:bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-500/20">
-                  ORM & Reviews
-                </span>
-                <ShieldCheck className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-              </div>
-              <div className="flex items-center gap-3">
-                <img src="/assets/bizorm-logo.jpg" alt="BizORM Logo" className="h-8 w-auto object-contain rounded" />
-                <h3 className="text-xl font-extrabold text-[#0F294A] text-navy-primary group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                  BizORM™
-                </h3>
-              </div>
-              <p className="text-xs text-[#64748B] text-slate-body mt-2 line-clamp-2 leading-relaxed">
-                Customer experience & online reputation management system with QR review capture and multi-location analytics.
-              </p>
-              <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400 font-medium">Commercial Product</span>
-                <Link to="/platforms/bizorm/" className="text-teal-600 dark:text-teal-400 font-bold inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                  View Platform →
-                </Link>
-              </div>
-            </div>
-          </div>
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 2: INTRODUCTION (EDITORIAL CORPORATE ARCHITECTURE)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-8 sm:p-14 lg:p-18 shadow-sm transition-colors">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-7 space-y-6">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                  CORPORATE PHILOSOPHY & CAPABILITY
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight leading-tight transition-colors">
-                  Technology Expertise. <br />
-                  Business Understanding. <br />
-                  <span className="text-[#1E5086] dark:text-blue-400">Long-Term Vision.</span>
-                </h2>
-                <div className="space-y-4 text-base sm:text-lg text-[#475569] text-slate-body leading-relaxed transition-colors">
-                  <p>
-                    At Bizwoke Nova™, we design, develop, and deliver scalable enterprise software, AI-powered automation platforms, mobile applications, and digital transformation solutions.
-                  </p>
-                  <p>
-                    From custom technology solutions to specialized digital platforms, we help organizations modernize operations, improve efficiency, and unlock new growth opportunities.
-                  </p>
-                </div>
-
-                <div className="pt-2 flex flex-wrap gap-3 text-xs font-bold text-[#0F294A] text-navy-primary">
-                  <div className="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-4 py-2.5 rounded-full border border-slate-200 dark:border-slate-700/60">
-                    <CheckCircle2 className="w-4 h-4 text-[#F27A24]" /> Custom Enterprise Software
-                  </div>
-                  <div className="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-4 py-2.5 rounded-full border border-slate-200 dark:border-slate-700/60">
-                    <CheckCircle2 className="w-4 h-4 text-[#0D9488] dark:text-teal-400" /> Autonomous AI & Agents
-                  </div>
-                  <div className="flex items-center gap-2 bg-slate-50 dark:bg-white/5 px-4 py-2.5 rounded-full border border-slate-200 dark:border-slate-700/60">
-                    <CheckCircle2 className="w-4 h-4 text-[#1E5086] dark:text-blue-400" /> 12 Scalable Digital Platforms
-                  </div>
-                </div>
+        {/* ===================== SECTION 2: INTRODUCTION ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <Rule />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 pt-8">
+            <div className="lg:col-span-7 space-y-6">
+              <Label>Corporate philosophy & capability</Label>
+              <motion.h2
+                variants={stagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportConfig}
+                className="text-4xl sm:text-6xl font-extrabold text-[#0F294A] text-navy-primary tracking-tighter leading-[1.02]"
+              >
+                <span className="block overflow-hidden pb-1"><motion.span variants={mask} className="block">Technology Expertise.</motion.span></span>
+                <span className="block overflow-hidden pb-1"><motion.span variants={mask} className="block">Business Understanding.</motion.span></span>
+                <span className="block overflow-hidden pb-2"><motion.span variants={mask} className="block text-[#1E5086] dark:text-blue-400">Long-Term Vision.</motion.span></span>
+              </motion.h2>
+              <div className="space-y-4 text-base sm:text-lg text-[#475569] text-slate-body leading-relaxed max-w-xl">
+                <p>
+                  At Bizwoke Nova™, we design, develop, and deliver scalable enterprise software, AI-powered automation platforms, mobile applications, and digital transformation solutions.
+                </p>
+                <p>
+                  From custom technology solutions to specialized digital platforms, we help organizations modernize operations, improve efficiency, and unlock new growth opportunities.
+                </p>
               </div>
+              <ul className="flex flex-wrap gap-x-7 gap-y-2.5 text-sm font-bold text-[#0F294A] text-navy-primary">
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#F27A24]" /> Custom Enterprise Software</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#0D9488] dark:text-teal-400" /> Autonomous AI & Agents</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#1E5086] dark:text-blue-400" /> 12 Scalable Digital Platforms</li>
+              </ul>
+            </div>
 
-              {/* Option A Brand Architecture Box */}
-              <div className="lg:col-span-5">
-                <div className="bg-[#F8FAFC] bg-surface-elevated rounded-2xl border border-slate-200 p-7 space-y-5 transition-colors">
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700/60">
-                    <span className="text-xs font-extrabold text-[#0F294A] text-navy-primary uppercase tracking-wider">Corporate Architecture</span>
-                    <span className="text-[10px] font-bold text-[#F27A24] bg-orange-100 dark:bg-orange-500/20 px-2.5 py-0.5 rounded-full">
-                      Option A Approved
-                    </span>
+            {/* Architecture as a connected tree */}
+            <div className="lg:col-span-5 lg:pt-9">
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-300 dark:border-slate-700/60">
+                <span className="text-sm font-extrabold text-[#0F294A] text-navy-primary">Corporate Architecture</span>
+                <span className="text-xs font-bold text-[#F27A24]">Option A Approved</span>
+              </div>
+              <div className="relative pl-8 space-y-8">
+                <motion.span
+                  aria-hidden
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, ease: EASE }}
+                  className="absolute left-[4px] top-2 bottom-2 w-px origin-top bg-slate-300 dark:bg-slate-600"
+                />
+                {[
+                  { k: "Primary Corporate Brand", t: "Bizwoke Nova™", d: "Enterprise Technology, AI Solutions & Digital Transformation", c: "text-[#F27A24]", dot: "bg-[#F27A24]" },
+                  { k: "Portfolio Growth Strategy", t: "Mission FTC™", d: "One Portfolio. Many Platforms. One Technology Foundation.", c: "text-[#0D9488] dark:text-teal-400", dot: "bg-[#0D9488]" },
+                  { k: "Shared Technology Foundation", t: "NKTech Enterprise Platform™ (NEP)", d: "Shared core capabilities, identity, multi-tenancy, and security", c: "text-[#1E5086] dark:text-blue-400", dot: "bg-[#1E5086]" }
+                ].map((n) => (
+                  <div key={n.t} className="relative">
+                    <span className={`absolute -left-8 top-1.5 w-[9px] h-[9px] ${n.dot} ring-4 ring-[#F8FAFC] dark:ring-transparent`} />
+                    <div className={`text-xs font-bold ${n.c}`}>{n.k}</div>
+                    <div className="text-xl font-extrabold text-[#0F294A] text-navy-primary mt-0.5 tracking-tight">{n.t}</div>
+                    <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">{n.d}</p>
                   </div>
-
-                  <div className="space-y-3.5">
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#112A4A] border border-slate-200/90 dark:border-slate-700/80 shadow-xs transition-colors">
-                      <div className="text-xs text-[#F27A24] font-extrabold uppercase tracking-wider">Primary Corporate Brand</div>
-                      <div className="text-lg font-extrabold text-[#0F294A] text-navy-primary mt-0.5">Bizwoke Nova™</div>
-                      <p className="text-xs text-slate-500 dark:text-slate-300 mt-1">Enterprise Technology, AI Solutions & Digital Transformation</p>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#112A4A] border border-slate-200/90 dark:border-slate-700/80 shadow-xs transition-colors">
-                      <div className="text-xs text-[#0D9488] dark:text-teal-400 font-extrabold uppercase tracking-wider">Portfolio Growth Strategy</div>
-                      <div className="text-lg font-extrabold text-[#0F294A] text-navy-primary mt-0.5">Mission FTC™</div>
-                      <p className="text-xs text-slate-500 dark:text-slate-300 mt-1">One Portfolio. Many Platforms. One Technology Foundation.</p>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#112A4A] border border-slate-200/90 dark:border-slate-700/80 shadow-xs transition-colors">
-                      <div className="text-xs text-[#1E5086] dark:text-blue-400 font-extrabold uppercase tracking-wider">Shared Technology Foundation</div>
-                      <div className="text-lg font-extrabold text-[#0F294A] text-navy-primary mt-0.5">NKTech Enterprise Platform™ (NEP)</div>
-                      <p className="text-xs text-slate-500 dark:text-slate-300 mt-1">Shared core capabilities, identity, multi-tenancy, and security</p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 3: OUR DIGITAL PLATFORMS (12 PRODUCTS CAROUSEL)
-        ========================================================================= */}
-        <section id="platforms" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                12 PROPRIETARY DIGITAL PLATFORMS
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight mt-2 transition-colors">
-                One Vision. Multiple Digital Platforms.
-              </h2>
-              <p className="text-base sm:text-lg text-[#475569] text-slate-body mt-2 max-w-2xl transition-colors">
-                Specialized enterprise software products and digital networks, each architected to solve distinct institutional and market needs.
-              </p>
+        {/* ===================== SECTION 3: PLATFORMS CAROUSEL ===================== */}
+        <section id="platforms" className={`${sectionCls} relative z-10 overflow-hidden`}>
+          <SectionHead
+            label="12 proprietary digital platforms"
+            title="One Vision. Multiple Digital Platforms."
+            intro="Specialized enterprise software products and digital networks, each architected to solve distinct institutional and market needs."
+          />
+
+          <div className="flex items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-700/60">
+            {/* Category tabs with sliding underline */}
+            <div className="min-w-0 overflow-x-auto no-scrollbar">
+              <div className="flex items-center gap-6 w-max">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`relative pb-3 text-sm font-semibold whitespace-nowrap transition-colors ${
+                      activeCategory === cat ? 'text-[#0F294A] dark:text-white' : 'text-slate-500 hover:text-[#0F294A] dark:hover:text-white'
+                    }`}
+                  >
+                    {cat}
+                    {activeCategory === cat && (
+                      <motion.span layoutId="platform-tab" className="absolute left-0 right-0 -bottom-px h-[3px] bg-[#F27A24]" />
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Carousel Navigation Arrows */}
-            <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2 pb-2 shrink-0">
               <button
                 onClick={() => scrollCarousel('left')}
-                className="w-11 h-11 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0F294A] hover:bg-slate-50 dark:hover:bg-white/10 text-[#0F294A] text-navy-primary flex items-center justify-center transition-all shadow-xs"
+                className="w-9 h-9 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0F294A] hover:border-[#F27A24] hover:text-[#F27A24] text-[#0F294A] text-navy-primary flex items-center justify-center transition-colors"
                 aria-label="Previous platform"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => scrollCarousel('right')}
-                className="w-11 h-11 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0F294A] hover:bg-slate-50 dark:hover:bg-white/10 text-[#0F294A] text-navy-primary flex items-center justify-center transition-all shadow-xs"
+                className="w-9 h-9 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0F294A] hover:border-[#F27A24] hover:text-[#F27A24] text-[#0F294A] text-navy-primary flex items-center justify-center transition-colors"
                 aria-label="Next platform"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap border ${
-                  activeCategory === cat
-                    ? 'bg-[#0F294A] dark:bg-[#F27A24] text-white border-[#0F294A] dark:border-[#F27A24] shadow-xs'
-                    : 'bg-white dark:bg-[#0F294A] text-slate-600 text-slate-body hover:text-[#0F294A] border-slate-200 dark:border-slate-700 hover:border-slate-300'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Horizontal Scrolling Cards Container */}
+          {/* Horizontal Scrolling Cards Container with Smooth Auto-Scroll */}
           <div
             ref={carouselRef}
-            className="flex items-stretch gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar scroll-smooth"
+            onMouseEnter={() => setIsCarouselPaused(true)}
+            onMouseLeave={() => setIsCarouselPaused(false)}
+            onTouchStart={() => setIsCarouselPaused(true)}
+            onTouchEnd={() => {
+              if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+              resumeTimerRef.current = setTimeout(() => setIsCarouselPaused(false), 2500);
+            }}
+            onWheel={() => {
+              setIsCarouselPaused(true);
+              if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+              resumeTimerRef.current = setTimeout(() => setIsCarouselPaused(false), 2000);
+            }}
+            className="w-full max-w-full overflow-x-auto pb-3 pt-6 no-scrollbar min-w-0"
           >
-            {filteredPlatforms.map((p, idx) => (
-              <div
-                key={p.id}
-                className="min-w-[320px] sm:min-w-[360px] max-w-[380px] rounded-3xl border border-slate-200/90 bg-white bg-card-surface p-7 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group shrink-0 shadow-sm"
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-slate-700/60">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
-                      Platform {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                      p.maturityStatus === 'Live' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/20' :
-                      p.maturityStatus === 'Pilot' ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/20' :
-                      'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/20'
-                    }`}>
-                      {p.maturityStatus}
-                    </span>
+            <div className="flex items-stretch gap-5 w-max">
+              {displayPlatforms.map((p, idx) => (
+                <div
+                  key={`${p.id}-${idx}`}
+                  className="w-[82vw] sm:w-[340px] min-w-[260px] sm:min-w-[320px] max-w-[360px] rounded-xl border border-slate-200/90 hover:border-[#F27A24]/60 bg-white bg-card-surface p-5 sm:p-6 flex flex-col justify-between transition-colors duration-200 group shrink-0"
+                >
+                  <div>
+                    <div className="flex items-end justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-700/60">
+                      <span className="text-xs font-semibold text-slate-400 flex items-baseline gap-2">
+                        Platform
+                        <span className="text-3xl font-black tracking-tighter text-slate-300 dark:text-slate-600 group-hover:text-[#F27A24] transition-colors">
+                          {String((idx % filteredPlatforms.length) + 1).padStart(2, '0')}
+                        </span>
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-300">
+                        <span className={`w-1.5 h-1.5 rounded-full ${statusDot(p.maturityStatus)}`} />
+                        {p.maturityStatus}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                      {p.logo && p.logo !== '/assets/favicon.svg' && (
+                        <img src={p.logo} alt={`${p.name} Logo`} className="h-7 w-auto object-contain rounded shrink-0" />
+                      )}
+                      <Link to={p.route || `/platforms/${p.slug}/`}>
+                        <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors">
+                          {p.name}
+                        </h3>
+                      </Link>
+                    </div>
+                    <div className="text-xs font-bold text-[#0D9488] dark:text-teal-400 mt-1">{p.category}</div>
+                    <p className="text-sm text-[#475569] text-slate-body mt-2.5 line-clamp-3 leading-relaxed">
+                      {p.shortDesc || p.description}
+                    </p>
                   </div>
 
-                  <h3 className="text-2xl font-extrabold text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors">
-                    {p.name}
-                  </h3>
-                  <div className="text-xs font-bold text-[#0D9488] dark:text-teal-400 mt-1">{p.category}</div>
-                  <p className="text-sm text-[#475569] text-slate-body mt-3 line-clamp-3 leading-relaxed">
-                    {p.shortDesc}
-                  </p>
+                  <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">NEP Platform Core</span>
+                    <Link
+                      to={p.route || `/platforms/${p.slug}/`}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F294A] text-navy-primary hover:text-[#F27A24] transition-colors cursor-pointer"
+                    >
+                      <span>Explore Platform</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">NEP Platform Core</span>
-                  <Link
-                    to={p.path}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors"
-                  >
-                    <span>Explore Platform</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="mt-8 text-center">
+          <div className="mt-4">
             <Link
               to="/platforms/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-[#0F294A] text-navy-primary bg-white dark:bg-[#0F294A] hover:bg-slate-50 dark:hover:bg-white/10 border border-slate-200 dark:border-slate-700 shadow-xs hover:shadow-md transition-all"
+              className="group inline-flex items-center gap-2 text-sm font-bold text-[#0F294A] text-navy-primary border-b-2 border-[#F27A24] pb-0.5 hover:text-[#F27A24] transition-colors"
             >
               <span>Explore Complete Platforms Directory (All 12)</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 4: ENTERPRISE CAPABILITIES (8 CORE SERVICES)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-              FULL-STACK PROFESSIONAL SERVICES
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-              Technology Built Around Real Business Challenges.
-            </h2>
-            <p className="text-base sm:text-lg text-[#475569] text-slate-body transition-colors">
-              We design and deliver scalable software architectures, autonomous workflows, and digital capabilities for modern enterprises.
-            </p>
-          </div>
+        {/* ===================== SECTION 4: CORE SERVICES (ruled index) ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <SectionHead
+            label="Full-stack professional services"
+            title="Technology Built Around Real Business Challenges."
+            intro="We design and deliver scalable software architectures, autonomous workflows, and digital capabilities for modern enterprises."
+          />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-14 border-b border-slate-300 dark:border-slate-700/60">
             {coreServices.map((srv) => {
               const Icon = srv.icon;
               return (
                 <Link
                   key={srv.title}
                   to={srv.path}
-                  className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-7 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group shadow-sm"
+                  className="group relative flex items-start gap-4 py-6 border-t border-slate-300 dark:border-slate-700/60"
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-5">
-                      <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${srv.color} group-hover:scale-105 transition-all`}>
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                        {srv.badge}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg font-extrabold text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors leading-snug">
-                      {srv.title}
-                    </h3>
-                    <p className="text-xs text-[#475569] text-slate-body mt-3 leading-relaxed">
-                      {srv.desc}
-                    </p>
+                  <span aria-hidden className="absolute inset-y-0 -inset-x-3 bg-[#F27A24]/[0.07] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
+                  <div className={`relative w-11 h-11 shrink-0 rounded-lg border flex items-center justify-center ${srv.color}`}>
+                    <Icon className="w-5 h-5" />
                   </div>
-
-                  <div className="pt-4 mt-6 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-[#F27A24] transition-colors">
-                    <span>Explore Service</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  <div className="relative flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="text-lg font-extrabold tracking-tight text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors">
+                        {srv.title}
+                      </h3>
+                      <span className="hidden sm:inline text-xs font-semibold text-slate-500 dark:text-slate-400 shrink-0">{srv.badge}</span>
+                    </div>
+                    <span className="sm:hidden text-xs font-semibold text-slate-500 dark:text-slate-400">{srv.badge}</span>
+                    <p className="text-sm text-[#475569] text-slate-body mt-1.5 leading-relaxed">{srv.desc}</p>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-[#F27A24] transition-colors">
+                      Explore Service
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </div>
                 </Link>
               );
             })}
           </div>
 
-          <div className="mt-12 text-center">
+          <div className="mt-6">
             <Link
               to="/services/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-[#0F294A] text-navy-primary bg-white dark:bg-[#0F294A] hover:bg-slate-50 dark:hover:bg-white/10 border border-slate-200 dark:border-slate-700 shadow-xs hover:shadow-md transition-all"
+              className="group inline-flex items-center gap-2 text-sm font-bold text-[#0F294A] text-navy-primary border-b-2 border-[#F27A24] pb-0.5 hover:text-[#F27A24] transition-colors"
             >
               <span>View All 14 Professional Services</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 5: FULL-WIDTH EDITORIAL SECTION (HIGH CONTRAST)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[40px] bg-[#0F294A] text-white p-8 sm:p-16 lg:p-20 text-center relative overflow-hidden shadow-2xl border border-slate-700/60">
-            <div className="relative z-10 max-w-3xl mx-auto space-y-6">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                EMPOWERING INDIA'S DIGITAL FUTURE
-              </span>
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-                Empowering Businesses Through Intelligent Technology.
-              </h2>
-              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
-                We believe true digital infrastructure connects technology, people, processes, and economic opportunities into a coherent, resilient ecosystem.
-              </p>
-
-              <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-                <Link
-                  to="/contact/?type=consultation"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-lg shadow-orange-500/25 transition-all inline-flex items-center gap-2 group"
-                >
-                  <span>Schedule an Executive Briefing</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/about-us/"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-white/10 hover:bg-white/15 border border-white/20 transition-colors"
-                >
-                  Our Leadership & Story
-                </Link>
-              </div>
+        {/* ===================== SECTION 5: EDITORIAL STATEMENT ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <SectionHead
+            label="Empowering India's digital future"
+            title="Empowering Businesses Through Intelligent Technology."
+            intro="We believe true digital infrastructure connects technology, people, processes, and economic opportunities into a coherent, resilient ecosystem."
+          >
+            <div className="pt-3 flex flex-wrap items-center gap-3">
+              <Link
+                to="/contact/?type=consultation"
+                className="px-7 py-3 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] transition-colors inline-flex items-center gap-2 group"
+              >
+                <span>Schedule an Executive Briefing</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                to="/about-us/"
+                className="px-7 py-3 rounded-full font-bold text-sm text-[#0F294A] text-navy-primary border border-slate-400 dark:border-slate-600 hover:border-[#0F294A] dark:hover:border-white transition-colors inline-block"
+              >
+                Our Leadership & Story
+              </Link>
             </div>
-          </div>
+          </SectionHead>
         </section>
 
-        {/* =========================================================================
-            SECTION 6: OUR TECHNOLOGY FOUNDATION (NKTech Platform™ - NEP)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-8 sm:p-14 lg:p-18 shadow-sm transition-colors">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-14">
-              <div className="max-w-3xl space-y-3">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-[#1E5086] dark:text-blue-400">
-                  SHARED TECHNOLOGY FOUNDATION
+        {/* ===================== SECTION 6: NEP FOUNDATION (dark spec grid) ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <div className="rounded-2xl bg-[#0F294A] dark:bg-[#0A1C33] dark:border dark:border-white/10 text-white p-6 sm:p-10 lg:p-12">
+            <SectionHead
+              dark
+              marker="bg-orange-400"
+              label="Shared technology foundation"
+              title="One Platform. One Technology Foundation."
+              intro="The NKTech Enterprise Platform™ (NEP) powers all 12 Bizwoke Nova digital platforms, delivering shared security, unified identity, high-throughput APIs, and AI workflow automation."
+            >
+              <div className="inline-flex items-center gap-3 pt-2">
+                <span className="bg-white rounded-md p-1.5">
+                  <img src="/assets/nktech-logo.jpg" alt="NKTech Logo" className="h-8 w-auto object-contain" />
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-                  One Platform. One Technology Foundation.
-                </h2>
-                <p className="text-base sm:text-lg text-[#475569] text-slate-body leading-relaxed transition-colors">
-                  The NKTech Enterprise Platform™ (NEP) powers all 12 Bizwoke Nova digital platforms, delivering shared security, unified identity, high-throughput APIs, and AI workflow automation.
-                </p>
-              </div>
-
-              <div className="shrink-0 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
-                <img src="/assets/nktech-logo.jpg" alt="NKTech Logo" className="h-10 w-auto object-contain rounded" />
                 <div>
-                  <div className="text-xs font-bold text-[#0F294A] text-navy-primary">NEP Stack Core</div>
-                  <div className="text-[11px] text-slate-500 text-slate-body">Shared Infrastructure</div>
+                  <div className="text-xs font-bold text-white">NEP Stack Core</div>
+                  <div className="text-[11px] text-white/60">Shared Infrastructure</div>
                 </div>
               </div>
-            </div>
+            </SectionHead>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {nepFoundation.map((cap) => {
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/15 border border-white/15 rounded-xl overflow-hidden">
+              {nepFoundation.map((cap, i) => {
                 const CIcon = cap.icon;
                 return (
-                  <div
-                    key={cap.title}
-                    className="rounded-2xl border border-slate-200/90 bg-[#F8FAFC] bg-surface-elevated p-6 hover:shadow-md transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200/80 dark:border-blue-500/20 text-[#1E5086] dark:text-blue-400 flex items-center justify-center mb-4 group-hover:bg-[#0F294A] dark:group-hover:bg-[#2563EB] group-hover:text-white transition-all">
-                      <CIcon className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-base font-extrabold text-[#0F294A] text-navy-primary group-hover:text-[#1E5086] dark:group-hover:text-blue-400 transition-colors">
-                      {cap.title}
-                    </h3>
-                    <p className="text-xs text-[#64748B] text-slate-body mt-2 leading-relaxed">
-                      {cap.desc}
-                    </p>
+                  <div key={cap.title} className="group relative bg-[#0F294A] dark:bg-[#0A1C33] p-5 sm:p-6 transition-colors hover:bg-[#16396a] dark:hover:bg-[#10284a]">
+                    {/* status LED */}
+                    <span
+                      aria-hidden
+                      className="absolute top-4 right-4 w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"
+                      style={{ animationDelay: `${i * 0.35}s`, animationDuration: '2.4s' }}
+                    />
+                    <CIcon className="w-6 h-6 text-orange-400 mb-5 group-hover:-translate-y-0.5 transition-transform" />
+                    <h3 className="text-base font-extrabold tracking-tight text-white">{cap.title}</h3>
+                    <p className="text-sm text-white/60 mt-2 leading-relaxed">{cap.desc}</p>
                   </div>
                 );
               })}
             </div>
 
-            <div className="mt-12 p-6 rounded-2xl border border-slate-200 bg-[#F8FAFC] bg-surface-elevated flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors">
-              <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 rounded-xl bg-white dark:bg-white/10 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-[#0F294A] text-navy-primary shrink-0">
-                  <Cpu className="w-6 h-6 text-[#1E5086] dark:text-blue-400" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-[#0F294A] text-navy-primary">Explore Deep Architecture Specifications</h4>
-                  <p className="text-xs text-slate-500 text-slate-body">Multi-tenant data isolation, zero-trust encryption, and API adapters</p>
-                </div>
+            <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h4 className="text-base font-bold text-white">Explore Deep Architecture Specifications</h4>
+                <p className="text-sm text-white/60 mt-0.5">Multi-tenant data isolation, zero-trust encryption, and API adapters</p>
               </div>
               <Link
                 to="/technology/"
-                className="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[#0F294A] dark:bg-[#2563EB] hover:bg-[#1E3A5F] dark:hover:bg-blue-600 transition-colors shrink-0"
+                className="shrink-0 px-6 py-2.5 rounded-full text-sm font-bold text-[#0F294A] bg-white hover:bg-orange-100 transition-colors inline-block"
               >
                 View NEP Technology Overview →
               </Link>
@@ -643,204 +735,192 @@ export default function Home() {
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 7: INDUSTRIES WE SERVE (8 VERTICALS)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#0D9488] dark:text-teal-400">
-              ECONOMIC SECTORS & DOMAINS
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-              Industries We Serve.
-            </h2>
-            <p className="text-base sm:text-lg text-[#475569] text-slate-body transition-colors">
-              Purpose-built digital architectures engineered for high-stake sectors across the Indian economic landscape.
-            </p>
-          </div>
+        {/* ===================== SECTION 7: INDUSTRIES (interactive index) ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <SectionHead
+            marker="bg-[#0D9488]"
+            label="Economic sectors & domains"
+            title="Industries We Serve."
+            intro="Purpose-built digital architectures engineered for high-stake sectors across the Indian economic landscape."
+          />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {industries.map((ind) => {
-              const IIcon = ind.icon;
-              return (
-                <Link
-                  key={ind.title}
-                  to={ind.path}
-                  className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-6 flex flex-col justify-between hover:shadow-xl transition-all group shadow-sm"
-                >
-                  <div>
-                    <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 border border-teal-200/80 dark:border-teal-500/20 text-[#0D9488] dark:text-teal-400 flex items-center justify-center mb-4 group-hover:bg-[#0D9488] group-hover:text-white transition-all">
-                      <IIcon className="w-5 h-5" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14">
+            <ul className="lg:col-span-7 border-b border-slate-300 dark:border-slate-700/60">
+              {industries.map((it, i) => {
+                const active = i === activeIndustry;
+                const ItIcon = it.icon;
+                return (
+                  <li key={it.title} className="border-t border-slate-300 dark:border-slate-700/60">
+                    <button
+                      onMouseEnter={() => setActiveIndustry(i)}
+                      onFocus={() => setActiveIndustry(i)}
+                      onClick={() => setActiveIndustry(i)}
+                      aria-pressed={active}
+                      className="relative w-full flex items-center gap-4 py-4 sm:py-5 text-left"
+                    >
+                      {active && <motion.span layoutId="industry-bar" className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#0D9488]" />}
+                      <ItIcon className={`ml-4 w-5 h-5 shrink-0 transition-colors ${active ? 'text-[#0D9488] dark:text-teal-400' : 'text-slate-400'}`} />
+                      <span className={`flex-1 text-lg sm:text-2xl font-extrabold tracking-tight leading-snug transition-colors ${active ? 'text-[#0F294A] text-navy-primary' : 'text-slate-400 dark:text-slate-500'}`}>
+                        {it.title}
+                      </span>
+                      <ArrowRight className={`w-5 h-5 shrink-0 transition-all ${active ? 'text-[#0D9488] dark:text-teal-400 translate-x-0 opacity-100' : '-translate-x-2 opacity-0'}`} />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="lg:col-span-5">
+              <div className="lg:sticky lg:top-24 rounded-2xl border border-slate-200/90 bg-white bg-card-surface p-7 sm:p-9 overflow-hidden min-h-[300px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndustry}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.28, ease: 'easeOut' }}
+                    className="relative"
+                  >
+                    <IndIcon aria-hidden className="absolute -right-6 -top-6 w-40 h-40 text-[#0D9488]/10" strokeWidth={1} />
+                    <div className="relative">
+                      <div className="w-12 h-12 rounded-xl bg-[#0D9488] text-white flex items-center justify-center mb-6">
+                        <IndIcon className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-2xl font-extrabold tracking-tight text-[#0F294A] text-navy-primary leading-snug">{ind.title}</h3>
+                      <p className="text-base text-[#475569] text-slate-body mt-3 leading-relaxed">{ind.desc}</p>
+                      <Link
+                        to={ind.path}
+                        className="group mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#0D9488] dark:text-teal-400 border-b-2 border-current pb-0.5"
+                      >
+                        <span>View Solutions</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
                     </div>
-                    <h3 className="text-base font-extrabold text-[#0F294A] text-navy-primary group-hover:text-[#0D9488] dark:group-hover:text-teal-400 transition-colors leading-snug">
-                      {ind.title}
-                    </h3>
-                    <p className="text-xs text-[#64748B] text-slate-body mt-2.5 leading-relaxed">
-                      {ind.desc}
-                    </p>
-                  </div>
-                  <div className="pt-4 mt-6 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs font-bold text-slate-500 text-slate-body group-hover:text-[#0D9488] transition-colors">
-                    <span>View Solutions</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              );
-            })}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 8: WHY BIZWOKE NOVA (6 DIFFERENTIATORS)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-8 sm:p-14 lg:p-18 shadow-sm transition-colors">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                ENGINEERING RIGOR & STEWARDSHIP
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-                Technology That Moves Business Forward.
-              </h2>
-              <p className="text-base sm:text-lg text-[#475569] text-slate-body transition-colors">
-                Why forward-thinking enterprises, civic bodies, and institutions partner with Bizwoke Nova.
-              </p>
-            </div>
+        {/* ===================== SECTION 8: DIFFERENTIATORS ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <SectionHead
+            label="Engineering rigor & stewardship"
+            title="Technology That Moves Business Forward."
+            intro="Why forward-thinking enterprises, civic bodies, and institutions partner with Bizwoke Nova."
+          />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {differentiators.map((diff) => (
-                <div
-                  key={diff.title}
-                  className="rounded-2xl border border-slate-200/90 bg-[#F8FAFC] bg-surface-elevated p-7 hover:shadow-md transition-all group"
-                >
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white dark:bg-white/10 text-[#0F294A] text-navy-primary border border-slate-200 dark:border-slate-700 shadow-xs">
-                    {diff.badge}
-                  </span>
-                  <h3 className="text-lg font-extrabold text-[#0F294A] text-navy-primary group-hover:text-[#F27A24] transition-colors mt-3">
-                    {diff.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#475569] text-slate-body mt-2.5 leading-relaxed">
-                    {diff.desc}
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
+            {differentiators.map((diff) => (
+              <div key={diff.title} className="group relative pt-5">
+                <span className="absolute top-0 left-0 right-0 h-px bg-slate-300 dark:bg-slate-700/60" />
+                <span className="absolute top-0 left-0 h-[3px] w-12 group-hover:w-full bg-[#F27A24] transition-all duration-500 ease-out" />
+                <span className="text-xs font-bold text-[#F27A24]">{diff.badge}</span>
+                <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] text-navy-primary mt-2">{diff.title}</h3>
+                <p className="text-sm sm:text-base text-[#475569] text-slate-body mt-3 leading-relaxed">{diff.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===================== SECTION 9: MISSION FTC ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <SectionHead
+            size="xl"
+            label="Long-term corporate portfolio strategy"
+            title={<>Mission FTC<span className="text-[#F27A24]">™</span></>}
+          >
+            <p className="text-xl sm:text-2xl font-bold tracking-tight text-[#1E5086] dark:text-blue-300 max-w-2xl">
+              One Portfolio. Many Platforms. One Technology Foundation.
+            </p>
+            <p className="text-base sm:text-lg text-[#475569] text-slate-body leading-relaxed max-w-2xl">
+              Mission FTC is Bizwoke Nova’s long-term portfolio initiative dedicated to engineering, nurturing, and scaling specialized digital platforms across India’s core economic infrastructure.
+            </p>
+            <div className="pt-2">
+              <Link
+                to="/about-us/#vision"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-[#0F294A] dark:bg-[#F27A24] hover:bg-[#1E3A5F] dark:hover:bg-[#DE6713] transition-colors"
+              >
+                <span>Read Corporate Vision & Roadmap</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </SectionHead>
+        </section>
+
+        {/* ===================== SECTION 10: IMPACT (pull quotes) ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <SectionHead
+            label="Stakeholder impact & collaboration"
+            title="Enterprise Value & Operational Impact."
+            intro="Verified engineering feedback and performance principles across our deployed systems."
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+            {/* Featured quote */}
+            <figure className={`lg:col-span-7 border-l-4 pl-6 sm:pl-8 ${quotes[0].rule} flex flex-col justify-between gap-8`}>
+              <div>
+                <figcaption className="text-sm font-bold text-slate-500 text-slate-body">{quotes[0].tag}</figcaption>
+                <blockquote className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight leading-snug text-[#0F294A] text-navy-primary">
+                  {quotes[0].text}
+                </blockquote>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-3 text-sm">
+                <span className="font-extrabold text-[#0F294A] text-navy-primary">{quotes[0].who}</span>
+                <span className={`font-semibold ${quotes[0].whatCls}`}>{quotes[0].what}</span>
+              </div>
+            </figure>
+
+            <div className="lg:col-span-5 space-y-10">
+              {quotes.slice(1).map((q) => (
+                <figure key={q.tag} className={`border-l-4 pl-6 ${q.rule}`}>
+                  <figcaption className="text-sm font-bold text-slate-500 text-slate-body">{q.tag}</figcaption>
+                  <blockquote className="mt-3 text-base text-[#475569] text-slate-body leading-relaxed">{q.text}</blockquote>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-3 text-sm">
+                    <span className="font-extrabold text-[#0F294A] text-navy-primary">{q.who}</span>
+                    <span className={`font-semibold ${q.whatCls}`}>{q.what}</span>
+                  </div>
+                </figure>
               ))}
             </div>
           </div>
         </section>
 
-        {/* =========================================================================
-            SECTION 9: MISSION FTC™ (STRATEGIC INITIATIVE)
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-3xl border-2 border-orange-200 dark:border-orange-500/40 bg-orange-50/50 dark:bg-orange-500/10 p-8 sm:p-14 lg:p-18 relative overflow-hidden shadow-sm transition-colors">
-            <div className="max-w-3xl space-y-4">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                LONG-TERM CORPORATE PORTFOLIO STRATEGY
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-                Mission FTC™
-              </h2>
-              <p className="text-lg font-bold text-[#1E5086] dark:text-blue-300">
-                One Portfolio. Many Platforms. One Technology Foundation.
-              </p>
-              <p className="text-base text-[#475569] text-slate-body leading-relaxed transition-colors">
-                Mission FTC is Bizwoke Nova’s long-term portfolio initiative dedicated to engineering, nurturing, and scaling specialized digital platforms across India’s core economic infrastructure.
-              </p>
-              <div className="pt-4">
-                <Link
-                  to="/about-us/#vision"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold text-white bg-[#0F294A] dark:bg-[#F27A24] hover:bg-[#1E3A5F] dark:hover:bg-[#DE6713] transition-colors shadow-sm"
-                >
-                  <span>Read Corporate Vision & Roadmap</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+        {/* ===================== SECTION 11: FINAL CTA ===================== */}
+        <section className={`${sectionCls} relative z-10`}>
+          <div className="relative overflow-hidden rounded-2xl bg-[#F27A24] text-[#0F294A] p-8 sm:p-14 lg:p-20">
+            <div aria-hidden className="absolute -right-28 -bottom-28 w-[26rem] h-[26rem] rounded-full border-[44px] border-[#0F294A]/10" />
+            <div aria-hidden className="absolute -right-4 -bottom-4 w-52 h-52 rounded-full border-[22px] border-[#0F294A]/10" />
+            <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+              <div className="lg:col-span-8 space-y-5">
+                <div className="flex items-center gap-2.5 text-sm font-bold">
+                  <span className="w-2 h-2 bg-[#0F294A]" />
+                  Awakening your success
+                </div>
+                <h2 className="text-5xl sm:text-7xl font-black tracking-tighter leading-[0.95]">
+                  Let's Build What's Next.
+                </h2>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 10: TESTIMONIALS / ENTERPRISE IMPACT SHOWCASE
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-              STAKEHOLDER IMPACT & COLLABORATION
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-              Enterprise Value & Operational Impact.
-            </h2>
-            <p className="text-base sm:text-lg text-[#475569] text-slate-body transition-colors">
-              Verified engineering feedback and performance principles across our deployed systems.
-            </p>
-          </div>
-
-          {/* Floating Impact Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-8 space-y-4 shadow-sm hover:shadow-md transition-all">
-              <div className="text-xs font-bold text-slate-500 text-slate-body uppercase tracking-wider">Operational Reliability</div>
-              <p className="text-sm text-[#475569] text-slate-body italic leading-relaxed">
-                "Architecting high-availability infrastructure requires strict separation of tenant data and resilient failovers. The NEP foundation ensures mission-critical platforms remain uninterrupted."
-              </p>
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                <span className="font-extrabold text-[#0F294A] text-navy-primary">Enterprise Architecture Team</span>
-                <span className="text-[#0D9488] dark:text-teal-400 font-semibold">NEP Core Infrastructure</span>
-              </div>
-            </div>
-
-            <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-8 space-y-4 shadow-sm hover:shadow-md transition-all">
-              <div className="text-xs font-bold text-slate-500 text-slate-body uppercase tracking-wider">Reputation & Feedback</div>
-              <p className="text-sm text-[#475569] text-slate-body italic leading-relaxed">
-                "BizORM gave multi-location retail and healthcare institutions automated review collection and instant sentiment alerts, transforming raw ratings into measurable operational improvements."
-              </p>
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                <span className="font-extrabold text-[#0F294A] text-navy-primary">Customer Experience Lead</span>
-                <span className="text-[#F27A24] font-semibold">BizORM™ Operations</span>
-              </div>
-            </div>
-
-            <div className="bg-white bg-card-surface rounded-3xl border border-slate-200/90 p-8 space-y-4 shadow-sm hover:shadow-md transition-all">
-              <div className="text-xs font-bold text-slate-500 text-slate-body uppercase tracking-wider">Scalable Delivery</div>
-              <p className="text-sm text-[#475569] text-slate-body italic leading-relaxed">
-                "Moving from disconnected legacy workflows to unified cloud portals empowered our field teams with real-time dispatch, transparent audit trails, and zero paperwork bottlenecks."
-              </p>
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
-                <span className="font-extrabold text-[#0F294A] text-navy-primary">Solutions Delivery Lead</span>
-                <span className="text-[#1E5086] dark:text-blue-300 font-semibold">Civic & Enterprise Systems</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 11: FINAL HIGH-IMPACT CTA
-        ========================================================================= */}
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="rounded-[40px] border border-orange-200 dark:border-orange-500/40 bg-white bg-card-surface p-8 sm:p-16 lg:p-20 text-center relative overflow-hidden shadow-lg transition-colors">
-            <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-[#F27A24]">
-                AWAKENING YOUR SUCCESS
-              </span>
-              <h2 className="text-4xl sm:text-6xl font-extrabold text-[#0F294A] text-navy-primary tracking-tight transition-colors">
-                Let's Build What's Next.
-              </h2>
-              <p className="text-base sm:text-lg text-[#475569] text-slate-body leading-relaxed transition-colors">
-                Have a business challenge, technology idea or digital transformation requirement? Let's explore how we can build it together.
-              </p>
-
-              <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-                <Link
-                  to="/contact/?type=consultation"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-lg shadow-orange-500/25 transition-all inline-flex items-center gap-2 group"
-                >
-                  <span>Schedule a Consultation</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/contact/"
-                  className="px-8 py-4 rounded-full font-bold text-sm text-[#0F294A] text-navy-primary bg-slate-50 dark:bg-white/10 hover:bg-slate-100 dark:hover:bg-white/15 border border-slate-300 dark:border-slate-700 transition-colors"
-                >
-                  Contact Our Team
-                </Link>
+              <div className="lg:col-span-4 space-y-6">
+                <p className="text-base sm:text-lg leading-relaxed font-medium">
+                  Have a business challenge, technology idea or digital transformation requirement? Let's explore how we can build it together.
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Link
+                    to="/contact/?type=consultation"
+                    className="px-7 py-3 rounded-full font-bold text-sm text-white bg-[#0F294A] hover:bg-[#1E3A5F] transition-colors inline-flex items-center gap-2 group"
+                  >
+                    <span>Schedule a Consultation</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/contact/"
+                    className="px-7 py-3 rounded-full font-bold text-sm text-[#0F294A] border-2 border-[#0F294A] hover:bg-[#0F294A]/10 transition-colors inline-block"
+                  >
+                    Contact Our Team
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

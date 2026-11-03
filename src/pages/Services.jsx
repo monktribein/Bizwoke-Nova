@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
 import { SERVICES_DATA } from '../data/servicesData';
+import { cardVariant, staggerContainer } from '../utils/motion';
 import {
   ArrowRight,
   ShieldCheck,
@@ -52,7 +54,7 @@ export default function Services() {
       />
 
       {/* Hero */}
-      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-16 pb-20 relative overflow-hidden">
+      <section className="bg-white dark:bg-[#0A1C33] border-b border-slate-200/80 dark:border-slate-800 pt-10 pb-12 relative overflow-hidden">
         {/* Subtle dot pattern background */}
         <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e3a5f_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
 
@@ -76,7 +78,7 @@ export default function Services() {
       </section>
 
       {/* Catalogue & Filters */}
-      <section className="py-16">
+      <section className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Controls Bar */}
           <div className="bg-white dark:bg-[#0F294A] p-6 rounded-2xl border border-slate-200/90 dark:border-slate-700/60 shadow-sm space-y-5">
@@ -127,72 +129,83 @@ export default function Services() {
           </div>
 
           {/* Services Grid (All 14) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredServices.map((service) => (
-              <div
-                key={service.id}
-                className="bg-white dark:bg-[#0F294A] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/50 dark:hover:border-[#F27A24]/60 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-[#F27A24]/30">
-                      {service.category}
-                    </span>
-                    <span className="text-xs font-black text-slate-400 dark:text-slate-500">
-                      #{service.id}
-                    </span>
-                  </div>
+          <motion.div
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <AnimatePresence>
+              {filteredServices.map((service) => (
+                <motion.div
+                  layout
+                  key={service.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
+                  className="bg-white dark:bg-[#0F294A] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-700/60 hover:border-[#F27A24]/50 dark:hover:border-[#F27A24]/60 shadow-sm hover:shadow-lg transition-colors flex flex-col justify-between group"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#F27A24] bg-orange-500/10 dark:bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-[#F27A24]/30">
+                        {service.category}
+                      </span>
+                      <span className="text-xs font-black text-slate-400 dark:text-slate-500">
+                        #{service.id}
+                      </span>
+                    </div>
 
-                  <div>
-                    <h3 className="text-xl font-black text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors leading-snug">
-                      {service.title}
-                    </h3>
-                    <div className="text-[11px] font-bold text-[#0D9488] dark:text-teal-400 mt-1">
-                      SEO Focus: {service.seoTarget}
+                    <div>
+                      <h3 className="text-xl font-black text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors leading-snug">
+                        {service.title}
+                      </h3>
+                      <div className="text-[11px] font-bold text-[#0D9488] dark:text-teal-400 mt-1">
+                        SEO Focus: {service.seoTarget}
+                      </div>
+                    </div>
+
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 italic">
+                      "{service.tagline}"
+                    </p>
+
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                      {service.shortDescription}
+                    </p>
+
+                    {/* Scope bullets */}
+                    <div className="pt-2">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1">
+                        Key Deliverables
+                      </span>
+                      <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                        {service.scope.slice(0, 2).map((item, i) => (
+                          <li key={i} className="flex items-start gap-1.5 line-clamp-1">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#0D9488] shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
 
-                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 italic">
-                    "{service.tagline}"
-                  </p>
-
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
-                    {service.shortDescription}
-                  </p>
-
-                  {/* Scope bullets */}
-                  <div className="pt-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1">
-                      Key Deliverables
-                    </span>
-                    <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
-                      {service.scope.slice(0, 2).map((item, i) => (
-                        <li key={i} className="flex items-start gap-1.5 line-clamp-1">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#0D9488] shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+                    <Link
+                      to={`/services/${service.slug}/`}
+                      className="w-full inline-flex items-center justify-between px-4 py-2.5 text-xs font-bold text-[#0F294A] dark:text-slate-200 bg-[#F8FAFC] dark:bg-[#0A1C33] group-hover:bg-[#F27A24] group-hover:text-white dark:group-hover:bg-[#F27A24] dark:group-hover:text-white rounded-lg border border-slate-200/80 dark:border-slate-700 transition-all shadow-sm"
+                    >
+                      <span>View Service Scope & Architecture</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
-                  <Link
-                    to={`/services/${service.slug}/`}
-                    className="w-full inline-flex items-center justify-between px-4 py-2.5 text-xs font-bold text-[#0F294A] dark:text-slate-200 bg-[#F8FAFC] dark:bg-[#0A1C33] group-hover:bg-[#F27A24] group-hover:text-white dark:group-hover:bg-[#F27A24] dark:group-hover:text-white rounded-lg border border-slate-200/80 dark:border-slate-700 transition-all shadow-sm"
-                  >
-                    <span>View Service Scope & Architecture</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
       {/* Bottom Service Consultation CTA */}
-      <section className="py-20 bg-white dark:bg-[#0A1C33] border-t border-slate-200/80 dark:border-slate-800">
+      <section className="py-12 bg-white dark:bg-[#0A1C33] border-t border-slate-200/80 dark:border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <span className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
             Custom Development & Advisory

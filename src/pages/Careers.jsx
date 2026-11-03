@@ -104,9 +104,7 @@ export default function Careers() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 dark:bg-orange-500/15 border border-[#F27A24]/30 text-xs font-bold text-[#F27A24] uppercase tracking-wider">
-              <span>CAREERS AT BIZWOKE NOVA</span>
-            </div>
+            
             <h1 className="text-4xl sm:text-5xl font-black text-[#0F294A] dark:text-white tracking-tight leading-tight">
               Build Technology That Impacts <br />
               <span className="text-[#F27A24]">Real Economic Sectors.</span>
@@ -267,122 +265,152 @@ export default function Careers() {
 
       {/* Application Form */}
       <section id="apply-form" className="py-20 bg-[#F8FAFC] dark:bg-[#081528]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#0F294A] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border border-slate-700/70">
-            <div className="text-center space-y-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#F27A24]">
-                Quick Application
-              </span>
-              <h2 className="text-3xl font-black tracking-tight text-white">
-                Submit Your Application
-              </h2>
-              <p className="text-sm text-slate-300 max-w-md mx-auto">
-                Send your resume, GitHub, or portfolio link directly to our engineering leadership.
-              </p>
-            </div>
-
-            {submitted ? (
-              <div className="bg-emerald-950/60 border border-emerald-500/50 rounded-2xl p-8 text-center space-y-3">
-                <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-                <h3 className="text-xl font-bold text-white">Application Received</h3>
-                <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Thank you, <strong className="text-white">{formData.name}</strong>. Our hiring team will review your application for <strong className="text-white">{formData.role}</strong> and reach out to <strong className="text-white">{formData.email}</strong>.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] bg-white rounded-lg hover:bg-slate-100"
-                >
-                  Submit Another Profile
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Rahul Verma"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="rahul@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
-                      Target Role
-                    </label>
-                    <select
-                      value={formData.role}
-                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-[#0A1C33] border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                    >
-                      {openRoles.map((r, i) => (
-                        <option key={i} value={r.title}>{r.title}</option>
-                      ))}
-                      <option value="Internship">Student / Graduate Internship</option>
-                      <option value="General Engineering">General Engineering Interest</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
-                      GitHub / LinkedIn / Portfolio URL
-                    </label>
-                    <input
-                      type="url"
-                      placeholder="https://github.com/yourhandle"
-                      value={formData.portfolio}
-                      onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">
-                    Tell Us About Your Best Code / Work
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Briefly highlight what you enjoy building and what technologies you master..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white/10 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
-                  />
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all"
-                  >
-                    Submit Job Application
-                  </button>
-                  <p className="text-[11px] text-slate-400 text-center mt-2">
-                    All candidate communications are handled confidentially.
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white dark:bg-[#0F294A] text-[#0F294A] dark:text-white rounded-3xl p-8 sm:p-12 lg:p-14 shadow-lg border border-slate-200/90 dark:border-slate-700/80 relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              {/* Left Column: Context & Culture */}
+              <div className="lg:col-span-5 space-y-6">
+                <div className="space-y-2">
+                  <span className="text-xs font-black uppercase tracking-widest text-[#F27A24]">
+                    Quick Application
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0F294A] dark:text-white leading-tight">
+                    Submit Your Application
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Send your resume, GitHub, or portfolio link directly to our engineering leadership team.
                   </p>
                 </div>
-              </form>
-            )}
+
+                <div className="pt-2 space-y-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 mt-0.5">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-bold block text-[#0F294A] dark:text-white">High Technical Rigor</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-xs">Architect real enterprise infrastructure used by thousands.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-[#0D9488] flex items-center justify-center shrink-0 mt-0.5">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-bold block text-[#0F294A] dark:text-white">Direct Founder Access</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-xs">Work side-by-side with principal architects without middle bureaucracy.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Form */}
+              <div className="lg:col-span-7">
+                {submitted ? (
+                  <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-8 text-center space-y-3">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+                    <h3 className="text-xl font-bold text-[#0F294A] dark:text-white">Application Received</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
+                      Thank you, <strong className="text-[#0F294A] dark:text-white">{formData.name}</strong>. Our hiring team will review your application for <strong className="text-[#0F294A] dark:text-white">{formData.role}</strong> and reach out to <strong className="text-[#0F294A] dark:text-white">{formData.email}</strong>.
+                    </p>
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      className="mt-4 px-6 py-2 text-xs font-bold text-[#0F294A] dark:text-white bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-200 cursor-pointer"
+                    >
+                      Submit Another Profile
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4 bg-[#F8FAFC] dark:bg-[#0A1C33] p-6 sm:p-8 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Rahul Verma"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className="w-full px-4 py-2.5 bg-white dark:bg-[#0F294A] border border-slate-300 dark:border-slate-700 rounded-xl text-[#0F294A] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="rahul@example.com"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className="w-full px-4 py-2.5 bg-white dark:bg-[#0F294A] border border-slate-300 dark:border-slate-700 rounded-xl text-[#0F294A] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                          Target Role
+                        </label>
+                        <select
+                          value={formData.role}
+                          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                          className="w-full px-4 py-2.5 bg-white dark:bg-[#0F294A] border border-slate-300 dark:border-slate-700 rounded-xl text-[#0F294A] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
+                        >
+                          {openRoles.map((r, i) => (
+                            <option key={i} value={r.title}>{r.title}</option>
+                          ))}
+                          <option value="Internship">Student / Graduate Internship</option>
+                          <option value="General Engineering">General Engineering Interest</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                          GitHub / LinkedIn / Portfolio URL
+                        </label>
+                        <input
+                          type="url"
+                          placeholder="https://github.com/yourhandle"
+                          value={formData.portfolio}
+                          onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
+                          className="w-full px-4 py-2.5 bg-white dark:bg-[#0F294A] border border-slate-300 dark:border-slate-700 rounded-xl text-[#0F294A] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                        Tell Us About Your Best Code / Work
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Briefly highlight what you enjoy building and what technologies you master..."
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-[#0F294A] border border-slate-300 dark:border-slate-700 rounded-xl text-[#0F294A] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#F27A24]"
+                      />
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        className="w-full py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-xl shadow-lg transition-all cursor-pointer"
+                      >
+                        Submit Job Application
+                      </button>
+                      <p className="text-[11px] text-slate-500 text-center mt-2">
+                        All candidate communications are handled confidentially.
+                      </p>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>

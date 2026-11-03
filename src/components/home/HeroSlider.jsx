@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function HeroSlider() {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ export default function HeroSlider() {
 
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const slides = [
     {
@@ -71,13 +74,13 @@ export default function HeroSlider() {
     }
   ];
 
-  // Auto-scroll every 5.5 seconds, paused when hovering
+  // Auto-scroll every 3.5 seconds, paused when hovering
   useEffect(() => {
     if (isPaused) return;
 
     timerRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5500);
+    }, 3500);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -98,6 +101,28 @@ export default function HeroSlider() {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // Swipe Left -> next
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      } else {
+        // Swipe Right -> prev
+        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+      }
+    }
+  };
+
   const handleBannerClick = (slide) => {
     if (slide.isPrimaryHash) {
       const el = document.querySelector(slide.primaryLink);
@@ -111,118 +136,122 @@ export default function HeroSlider() {
     }
   };
 
+  const current = slides[currentSlide];
+
   return (
     <div
-      className="relative w-full overflow-hidden bg-[#0A1C33] group border-b border-slate-200 dark:border-slate-800 select-none shadow-md"
+      className="relative w-full overflow-hidden bg-[#F8FAFC] group border-b border-slate-200 select-none shadow-xs"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       role="region"
       aria-label="Bizwoke Nova Full-Page Enterprise Banner Slider"
     >
-      {/* 100% Full-Width Edge-to-Edge Panoramic Canvas */}
-      <div className="relative w-full aspect-[16/9] sm:aspect-[2.4/1] md:aspect-[2.6/1] lg:aspect-[2.7/1] min-h-[240px] sm:min-h-[360px] md:min-h-[440px] lg:min-h-[500px] xl:min-h-[560px] max-h-[85vh] overflow-hidden">
-        {slides.map((slide, idx) => {
-          const isActive = idx === currentSlide;
-          return (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out cursor-pointer ${
-                isActive ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
-              }`}
-              onClick={() => handleBannerClick(slide)}
-              title={`Click to view: ${slide.title}`}
-              aria-hidden={!isActive}
-            >
-              <picture className="w-full h-full block">
-                <source srcSet={slide.webp} type="image/webp" />
-                <img
-                  src={slide.image}
-                  alt={slide.alt}
-                  className="w-full h-full object-cover object-center select-none banner-hd-render"
-                  loading={idx === 0 ? "eager" : "lazy"}
-                  decoding={idx === 0 ? "sync" : "async"}
-                  style={{
-                    imageRendering: '-webkit-optimize-contrast',
-                    transform: 'translateZ(0)'
+      {/* 100% Full-Width Edge-to-Edge Panoramic Canvas with Natural 2.71:1 Ratio */}
+      <div className="relative w-full aspect-[2560/945] max-h-[85vh] overflow-hidden">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={current.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 w-full h-full cursor-pointer"
+            onClick={() => handleBannerClick(current)}
+            title={`Click to view: ${current.title}`}
+          >
+            <picture className="w-full h-full block">
+              <source srcSet={current.webp} type="image/webp" />
+              <img
+                src={current.image}
+                alt={current.alt}
+                className="w-full h-full object-cover object-center select-none banner-hd-render"
+                loading="eager"
+                draggable={false}
+              />
+            </picture>
+
+            {/* Accessible Hotspot Links for Slide 1 Dual Buttons */}
+            {current.hasDualButtons && (
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Left Button Hotspot: Launch Our Platforms */}
+                <a
+                  href="#platforms"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const el = document.querySelector('#platforms');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  draggable={false}
+                  className="pointer-events-auto absolute left-[6%] sm:left-[10%] bottom-[8%] sm:bottom-[12%] w-[38%] sm:w-[26%] lg:w-[22%] h-[24%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
+                  aria-label="Launch Our Platforms"
+                  title="Launch Our Platforms"
                 />
-              </picture>
 
-              {/* Accessible Hotspot Links for Slide 1 Dual Buttons */}
-              {slide.hasDualButtons && (
-                <div className="absolute inset-0 pointer-events-none">
-                  {/* Left Button Hotspot: Launch Our Platforms */}
-                  <a
-                    href="#platforms"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const el = document.querySelector('#platforms');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="pointer-events-auto absolute left-[10%] sm:left-[15%] bottom-[12%] sm:bottom-[15%] w-[32%] sm:w-[22%] h-[18%] sm:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
-                    aria-label="Launch Our Platforms"
-                    title="Launch Our Platforms"
-                  />
-
-                  {/* Right Button Hotspot: Discuss Your Project */}
-                  <Link
-                    to="/contact/?type=project"
-                    onClick={(e) => e.stopPropagation()}
-                    className="pointer-events-auto absolute left-[44%] sm:left-[39%] bottom-[12%] sm:bottom-[15%] w-[32%] sm:w-[20%] h-[18%] sm:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
-                    aria-label="Discuss Your Project"
-                    title="Discuss Your Project"
-                  />
-                </div>
-              )}
-
-              {/* Accessible Hotspot Link for Single Button on other slides */}
-              {!slide.hasDualButtons && (
+                {/* Right Button Hotspot: Discuss Your Project */}
                 <Link
-                  to={slide.primaryLink}
+                  to="/contact/?type=project"
                   onClick={(e) => e.stopPropagation()}
-                  className="absolute left-[6%] sm:left-[8%] bottom-[12%] sm:bottom-[15%] w-[35%] sm:w-[24%] h-[20%] sm:h-[16%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
-                  aria-label={`Go to ${slide.name}`}
-                  title={slide.title}
+                  className="pointer-events-auto absolute left-[46%] sm:left-[38%] lg:left-[34%] bottom-[8%] sm:bottom-[12%] w-[38%] sm:w-[26%] lg:w-[20%] h-[24%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
+                  aria-label="Discuss Your Project"
+                  title="Discuss Your Project"
                 />
-              )}
-            </div>
-          );
-        })}
+              </div>
+            )}
+
+            {/* Accessible Hotspot Link for Single Button on other slides */}
+            {!current.hasDualButtons && (
+              <Link
+                to={current.primaryLink}
+                onClick={(e) => e.stopPropagation()}
+                className="absolute left-[6%] sm:left-[8%] bottom-[8%] sm:bottom-[12%] w-[38%] sm:w-[26%] lg:w-[22%] h-[24%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
+                aria-label={`Go to ${current.name}`}
+                title={current.title}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Left Navigation Arrow */}
-      <button
+      {/* Left Navigation Arrow with Tactile Hover (Hidden on phones to keep banner text clean) */}
+      <motion.button
         onClick={prevSlide}
-        className="absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-black/45 hover:bg-[#F27A24] text-white border border-white/20 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
+        className="hidden md:flex absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-white/95 hover:bg-[#F27A24] text-[#0F294A] hover:text-white border border-slate-200/90 backdrop-blur-md shadow-lg items-center justify-center transition-all opacity-85 group-hover:opacity-100"
         aria-label="Previous Banner Slide"
         title="Previous Slide"
       >
         <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
-      </button>
+      </motion.button>
 
-      {/* Right Navigation Arrow */}
-      <button
+      {/* Right Navigation Arrow with Tactile Hover (Hidden on phones to keep banner text clean) */}
+      <motion.button
         onClick={nextSlide}
-        className="absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-black/45 hover:bg-[#F27A24] text-white border border-white/20 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
+        className="hidden md:flex absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-white/95 hover:bg-[#F27A24] text-[#0F294A] hover:text-white border border-slate-200/90 backdrop-blur-md shadow-lg items-center justify-center transition-all opacity-85 group-hover:opacity-100"
         aria-label="Next Banner Slide"
         title="Next Slide"
       >
         <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
-      </button>
+      </motion.button>
 
-      {/* Bottom Center Indicator Dots & Play/Pause State */}
-      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl">
-        <button
+      {/* Bottom Center Indicator Dots (Responsive Scaled) */}
+      <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-slate-200/90 shadow-lg text-[#0F294A] scale-75 sm:scale-90 md:scale-100 origin-bottom">
+        <motion.button
           onClick={prevSlide}
-          className="text-white/80 hover:text-white transition-colors p-0.5"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+          className="text-slate-500 hover:text-[#0F294A] transition-colors p-0.5"
           title="Previous Slide"
           aria-label="Previous Slide"
         >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
+          <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        </motion.button>
 
-        <div className="flex items-center gap-2 px-1.5">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-1">
           {slides.map((slide, idx) => (
             <button
               key={slide.id}
@@ -230,40 +259,33 @@ export default function HeroSlider() {
                 e.stopPropagation();
                 goToSlide(idx);
               }}
-              className={`transition-all duration-300 rounded-full ${
-                currentSlide === idx
-                  ? 'w-7 h-2.5 bg-[#F27A24] shadow-sm'
-                  : 'w-2.5 h-2.5 bg-white/50 hover:bg-white'
-              }`}
+              className="relative p-0.5 sm:p-1 focus:outline-none"
               aria-label={`Jump to slide ${idx + 1}: ${slide.name}`}
               title={`Slide ${idx + 1}: ${slide.name}`}
-            />
+            >
+              {currentSlide === idx ? (
+                <motion.div
+                  layoutId="heroActivePill"
+                  className="w-5 sm:w-7 h-2 sm:h-2.5 rounded-full bg-[#F27A24] shadow-xs"
+                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                />
+              ) : (
+                <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-colors" />
+              )}
+            </button>
           ))}
         </div>
 
-        <button
+        <motion.button
           onClick={nextSlide}
-          className="text-white/80 hover:text-white transition-colors p-0.5"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+          className="text-slate-500 hover:text-[#0F294A] transition-colors p-0.5"
           title="Next Slide"
           aria-label="Next Slide"
         >
-          <ChevronRight className="w-4 h-4" />
-        </button>
-
-        <span className="w-px h-3.5 bg-white/25 mx-1" />
-
-        {/* Auto-scroll Pause/Play Toggle */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsPaused(!isPaused);
-          }}
-          className="text-white/80 hover:text-white transition-colors p-0.5"
-          title={isPaused ? "Auto-scroll paused. Click to resume." : "Auto-scrolling every 5.5s. Click to pause."}
-          aria-label={isPaused ? "Play slider" : "Pause slider"}
-        >
-          {isPaused ? <Play className="w-3.5 h-3.5 text-[#F27A24]" /> : <Pause className="w-3.5 h-3.5" />}
-        </button>
+          <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        </motion.button>
       </div>
     </div>
   );
