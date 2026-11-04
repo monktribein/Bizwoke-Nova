@@ -154,16 +154,16 @@ export default function PlatformDetail({ overrideSlug }) {
         description={platform.description}
       />
 
-      {/* ===================== 1. HERO (HUMAN-FRIENDLY & IMPACTFUL) ===================== */}
-      <section className={`bg-white dark:bg-[#0A1C33] ${secBorder} pt-5 sm:pt-7 pb-12 sm:pb-16 relative overflow-hidden`}>
+      {/* ===================== 1. HERO (HUMAN-FRIENDLY & BALANCED) ===================== */}
+      <section className={`bg-white dark:bg-[#0A1C33] ${secBorder} pt-4 sm:pt-5 pb-6 sm:pb-8 relative overflow-hidden`}>
         {/* Natural subtle ambient glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/30 dark:from-[#071322] dark:via-[#0A1C33] dark:to-[#08172b] pointer-events-none" />
         <div className="absolute -top-24 right-10 w-96 h-96 bg-gradient-to-br from-[#F27A24]/10 via-[#F27A24]/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-blue-500/[0.05] to-transparent rounded-full blur-3xl pointer-events-none" />
 
-        <div className={`${wrap} relative z-10 space-y-6 sm:space-y-8`}>
+        <div className={`${wrap} relative z-10 space-y-5 sm:space-y-6`}>
           {/* Friendly Top Navigation & Unified Status Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/70 dark:border-slate-800">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200/70 dark:border-slate-800">
             <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
               <Link
                 to="/platforms/"
@@ -179,7 +179,7 @@ export default function PlatformDetail({ overrideSlug }) {
             </nav>
 
             {/* Single Human-Friendly Status Badge */}
-            <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold ${st.pill} border shadow-2xs`}>
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${st.pill} border shadow-2xs`}>
               <span className="relative flex h-2 w-2">
                 {platform.maturityStatus === 'Live' && (
                   <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${st.dot}`} />
@@ -190,9 +190,9 @@ export default function PlatformDetail({ overrideSlug }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left Column: Product Identity & Purpose */}
-            <motion.div variants={stagger} initial="hidden" animate="visible" className="lg:col-span-7 space-y-6">
+            <motion.div variants={stagger} initial="hidden" animate="visible" className="lg:col-span-7 space-y-4 sm:space-y-5">
               {/* Category Eyebrow Pill */}
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#F27A24]/10 text-[#DE6713] dark:text-[#F27A24] border border-[#F27A24]/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />
@@ -202,13 +202,13 @@ export default function PlatformDetail({ overrideSlug }) {
               {/* Logo + Platform Name */}
               <div className="flex items-center gap-4 sm:gap-5">
                 {platform.logo && (
-                  <motion.div variants={fadeUp} className="w-16 h-16 sm:w-20 sm:h-20 p-2.5 rounded-2xl bg-white dark:bg-[#081528] border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center shrink-0">
+                  <motion.div variants={fadeUp} className="w-14 h-14 sm:w-16 sm:h-16 p-2 rounded-2xl bg-white dark:bg-[#081528] border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center shrink-0">
                     <img src={platform.logo} alt={`${platform.name} Logo`} className="max-h-full max-w-full object-contain" />
                   </motion.div>
                 )}
                 <div>
                   <h1 className="overflow-hidden pb-1">
-                    <motion.span variants={mask} className="block text-4xl sm:text-5xl lg:text-6xl font-black text-[#0F294A] dark:text-white tracking-tight leading-none">
+                    <motion.span variants={mask} className="block text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F294A] dark:text-white tracking-tight leading-none">
                       {platform.name}
                     </motion.span>
                   </h1>
@@ -219,29 +219,29 @@ export default function PlatformDetail({ overrideSlug }) {
               </div>
 
               {/* Tagline */}
-              <motion.div variants={fadeUp} className="border-l-4 border-[#F27A24] pl-4 sm:pl-5 py-1">
-                <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0F294A] dark:text-white tracking-tight leading-snug">
+              <motion.div variants={fadeUp} className="border-l-3 border-[#F27A24] pl-4 py-0.5">
+                <p className="text-lg sm:text-xl lg:text-2xl font-extrabold text-[#0F294A] dark:text-white tracking-tight leading-snug">
                   "{platform.tagline}"
                 </p>
               </motion.div>
 
               {/* Human-Centered Hero Subtitle */}
-              <motion.p variants={fadeUp} className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+              <motion.p variants={fadeUp} className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
                 {platform.heroSubtitle || platform.description}
               </motion.p>
 
               {/* Action Buttons */}
-              <motion.div variants={fadeUp} className="pt-2 flex flex-wrap items-center gap-3.5">
+              <motion.div variants={fadeUp} className="pt-1 flex flex-wrap items-center gap-3">
                 <a
                   href="#request-demo"
-                  className="px-7 py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-all inline-flex items-center gap-2 group shadow-sm hover:shadow-md"
+                  className="px-6 py-3 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-all inline-flex items-center gap-2 group shadow-sm hover:shadow-md"
                 >
                   <span>{platform.primaryCTA}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <Link
                   to="/partners/"
-                  className="px-7 py-3.5 text-sm font-bold text-[#0F294A] dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:border-[#0F294A] dark:hover:border-white rounded-full transition-colors inline-flex items-center gap-2 bg-white/60 dark:bg-slate-800/60"
+                  className="px-6 py-3 text-sm font-bold text-[#0F294A] dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:border-[#0F294A] dark:hover:border-white rounded-full transition-colors inline-flex items-center gap-2 bg-white/60 dark:bg-slate-800/60"
                 >
                   <span>Become a Partner</span>
                   <ArrowUpRight className="w-4 h-4 opacity-70" />
@@ -249,89 +249,84 @@ export default function PlatformDetail({ overrideSlug }) {
               </motion.div>
 
               {/* Trust Credentials */}
-              <motion.div variants={fadeUp} className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              <motion.div variants={fadeUp} className="pt-1 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <span className="inline-flex items-center gap-1.5 text-[#0D9488]">
                   <ShieldCheck className="w-4 h-4 shrink-0" />
-                  <span>NEP™ Enterprise Architecture</span>
+                  <span>NEP™ Architecture</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>100% Indian Sovereign Data</span>
+                  <span>100% Indian Sovereign</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                  <span>DPDP Act 2023 Compliant</span>
+                  <span>DPDP Act Compliant</span>
                 </span>
               </motion.div>
             </motion.div>
 
-            {/* Right Column: Human-Friendly Real-World Snapshot Card */}
+            {/* Right Column: Platform Impact & Quick Specs (Compact & Balanced) */}
             <motion.aside
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              transition={{ delay: 0.2 }}
-              className="lg:col-span-5 rounded-3xl border border-slate-200 dark:border-slate-700/80 bg-slate-50/70 dark:bg-[#0F294A]/80 backdrop-blur-sm p-6 sm:p-7 shadow-sm space-y-6"
+              transition={{ delay: 0.15 }}
+              className="lg:col-span-5 rounded-2xl border border-slate-200/90 dark:border-slate-700/80 bg-slate-50/70 dark:bg-[#0F294A]/80 backdrop-blur-sm p-4 sm:p-5 shadow-2xs space-y-3.5"
             >
               {/* Card Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-slate-200/80 dark:border-slate-700/80">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-700/80">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">Real-World Impact</div>
-                  <h3 className="text-lg sm:text-xl font-black text-[#0F294A] dark:text-white mt-0.5">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#F27A24]">Impact Summary</div>
+                  <h3 className="text-base sm:text-lg font-black text-[#0F294A] dark:text-white mt-0.5">
                     What {platform.name} Delivers
                   </h3>
                 </div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Verified
                 </span>
               </div>
 
-              {/* Core Measurable Outcome Banner */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-500/10 via-orange-500/[0.04] to-transparent border border-[#F27A24]/20">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#DE6713] dark:text-[#F27A24]">
-                  <Sparkles className="w-4 h-4" />
+              {/* Primary Value Outcome */}
+              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#DE6713] dark:text-[#F27A24]">
+                  <Sparkles className="w-3.5 h-3.5" />
                   <span>Primary Value Outcome</span>
                 </div>
-                <p className="mt-1.5 text-sm sm:text-base font-bold text-[#0F294A] dark:text-white leading-snug">
+                <p className="mt-1 text-xs sm:text-sm font-bold text-[#0F294A] dark:text-white leading-snug">
                   {platform.businessValue}
                 </p>
               </div>
 
-              {/* Key Modules Snapshot Grid */}
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
-                  <span>KEY PLATFORM MODULES</span>
-                  <span className="text-[#F27A24] font-medium">{platform.coreModules.length} Modules Total</span>
+              {/* Key Capabilities Quick Chips */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  <span>KEY CAPABILITIES</span>
+                  <span className="text-[#F27A24] font-semibold">{platform.coreModules.length} Modules</span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-1.5">
                   {platform.coreModules.slice(0, 4).map((mod, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-white dark:bg-[#0A1C33] border border-slate-200/80 dark:border-slate-700/60 shadow-2xs hover:border-[#F27A24]/40 transition-colors"
+                      className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#0A1C33] border border-slate-200/80 dark:border-slate-700/60 shadow-2xs flex items-center gap-1.5"
                     >
-                      <div className="flex items-center gap-2 text-xs font-bold text-[#0F294A] dark:text-white">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24] shrink-0" />
-                        <span className="truncate">{mod.name}</span>
-                      </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                        {mod.desc}
-                      </p>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24] shrink-0" />
+                      <span className="text-xs font-bold text-[#0F294A] dark:text-white truncate">{mod.name}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Ecosystem Beneficiaries */}
-              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-700/80 space-y-2">
-                <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                  Built For Key Stakeholders:
+              {/* Built For Stakeholders */}
+              <div className="pt-2.5 border-t border-slate-200/80 dark:border-slate-700/80 space-y-1.5">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Built For:
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {platform.targetUsers.map((user, idx) => (
                     <span
                       key={idx}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs"
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs"
                     >
                       <Check className="w-3 h-3 text-[#0D9488]" />
                       <span>{user.split(' across ')[0].split(' managing ')[0].split(' sourcing ')[0]}</span>
