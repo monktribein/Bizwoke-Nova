@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
+import AnimatedCounter from '../components/common/AnimatedCounter';
 import { SOLUTIONS_DATA } from '../data/solutionsData';
 import { cardVariant, staggerContainer, fadeUp, viewportConfig } from '../utils/motion';
 import {
@@ -89,7 +90,9 @@ export default function Solutions() {
                       <div className="flex gap-2">
                         {solution.stats.map((s, idx) => (
                           <div key={idx} className="text-right">
-                            <span className="text-sm font-black text-[#0F294A] dark:text-white block leading-none">{s.value}</span>
+                            <span className="text-sm font-black text-[#0F294A] dark:text-white block leading-none">
+                              <AnimatedCounter value={s.value} />
+                            </span>
                             <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">{s.label}</span>
                           </div>
                         ))}

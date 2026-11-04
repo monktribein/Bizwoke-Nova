@@ -788,19 +788,21 @@ export default function Home() {
               title="Empowering Businesses Through Intelligent Technology."
               intro="We believe true digital infrastructure connects technology, people, processes, and economic opportunities into a coherent, resilient ecosystem."
             >
-              <div className="pt-3 flex flex-wrap items-center gap-3">
+              <div className="pt-3 flex items-center gap-2 sm:gap-3">
                 <Link
                   to="/contact/?type=consultation"
-                  className="px-7 py-3 rounded-full font-bold text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] transition-colors inline-flex items-center gap-2 group"
+                  className="px-4 sm:px-7 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] transition-colors inline-flex items-center justify-center gap-1.5 sm:gap-2 group shrink-0"
                 >
-                  <span>Schedule an Executive Briefing</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span className="hidden sm:inline">Schedule an Executive Briefing</span>
+                  <span className="sm:hidden">Schedule Briefing</span>
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/about-us/"
-                  className="px-7 py-3 rounded-full font-bold text-sm text-[#0F294A] text-navy-primary border border-slate-400 dark:border-slate-600 hover:border-[#0F294A] dark:hover:border-white transition-colors inline-block"
+                  className="px-4 sm:px-7 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm text-[#0F294A] text-navy-primary border border-slate-400 dark:border-slate-600 hover:border-[#0F294A] dark:hover:border-white transition-colors inline-flex items-center justify-center text-center shrink-0"
                 >
-                  Our Leadership & Story
+                  <span className="hidden sm:inline">Our Leadership & Story</span>
+                  <span className="sm:hidden">Our Leadership</span>
                 </Link>
               </div>
             </SectionHead>
@@ -1074,22 +1076,29 @@ export default function Home() {
               intro="Why forward-thinking enterprises, civic bodies, and institutions partner with Bizwoke Nova."
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
-              {differentiators.map((diff, i) => (
-                <div key={diff.title} className="group relative pt-5">
-                  <span className="absolute top-0 left-0 right-0 h-px bg-slate-300 dark:bg-slate-700/60" />
-                  <motion.span
-                    initial={{ scaleX: 0.15 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, margin: '-30px' }}
-                    transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
-                    className="absolute top-0 left-0 h-[3px] w-full origin-left bg-[#F27A24]"
-                  />
-                  <span className="text-xs font-bold text-[#F27A24]">{diff.badge}</span>
-                  <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] text-navy-primary mt-2">{diff.title}</h3>
-                  <p className="text-sm sm:text-base text-[#475569] text-slate-body mt-3 leading-relaxed">{diff.desc}</p>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7 sm:gap-y-12">
+              {differentiators.map((diff, i) => {
+                const isHiddenOnMobile = i >= 4;
+
+                return (
+                  <div
+                    key={diff.title}
+                    className={`group relative pt-5 ${isHiddenOnMobile ? 'hidden md:block' : 'block'}`}
+                  >
+                    <span className="absolute top-0 left-0 right-0 h-px bg-slate-300 dark:bg-slate-700/60" />
+                    <motion.span
+                      initial={{ scaleX: 0.15 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, margin: '-30px' }}
+                      transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
+                      className="absolute top-0 left-0 h-[3px] w-full origin-left bg-[#F27A24]"
+                    />
+                    <span className="text-xs font-bold text-[#F27A24]">{diff.badge}</span>
+                    <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] text-navy-primary mt-2">{diff.title}</h3>
+                    <p className="text-sm sm:text-base text-[#475569] text-slate-body mt-2.5 sm:mt-3 leading-relaxed">{diff.desc}</p>
+                  </div>
+                );
+              })}
             </div>
           </section>
 
@@ -1175,19 +1184,21 @@ export default function Home() {
                   <p className="text-base sm:text-lg leading-relaxed font-medium">
                     Have a business challenge, technology idea or digital transformation requirement? Let's explore how we can build it together.
                   </p>
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-nowrap pt-1">
                     <Link
                       to="/contact/?type=consultation"
-                      className="px-7 py-3 rounded-full font-bold text-sm text-white bg-[#0F294A] hover:bg-[#1E3A5F] transition-colors inline-flex items-center gap-2 group"
+                      className="px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm text-white bg-[#0F294A] hover:bg-[#1E3A5F] transition-colors inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 group"
                     >
-                      <span>Schedule a Consultation</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <span className="hidden sm:inline">Schedule a Consultation</span>
+                      <span className="sm:hidden">Consultation</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                     <Link
                       to="/contact/"
-                      className="px-7 py-3 rounded-full font-bold text-sm text-[#0F294A] border-2 border-[#0F294A] hover:bg-[#0F294A]/10 transition-colors inline-block"
+                      className="px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm text-[#0F294A] border-2 border-[#0F294A] hover:bg-[#0F294A]/10 transition-colors inline-flex items-center justify-center whitespace-nowrap shrink-0"
                     >
-                      Contact Our Team
+                      <span className="hidden sm:inline">Contact Our Team</span>
+                      <span className="sm:hidden">Contact Team</span>
                     </Link>
                   </div>
                 </div>

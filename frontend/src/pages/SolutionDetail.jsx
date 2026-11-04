@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEOHead from '../components/common/SEOHead';
+import AnimatedCounter from '../components/common/AnimatedCounter';
 import { SOLUTIONS_DATA } from '../data/solutionsData';
 import { PLATFORMS_DATA } from '../data/platformsData';
 import {
@@ -80,7 +81,9 @@ export default function SolutionDetail() {
             <div className="pt-4 grid grid-cols-3 gap-4 max-w-lg">
               {solution.stats.map((st, idx) => (
                 <div key={idx} className="bg-[#F8FAFC] dark:bg-[#0F294A] p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
-                  <div className="text-xl font-black text-[#0F294A] dark:text-white">{st.value}</div>
+                  <div className="text-xl font-black text-[#0F294A] dark:text-white">
+                    <AnimatedCounter value={st.value} />
+                  </div>
                   <div className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">{st.label}</div>
                 </div>
               ))}
