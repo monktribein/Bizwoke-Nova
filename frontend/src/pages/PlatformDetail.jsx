@@ -85,27 +85,27 @@ const statusStyle = (s) =>
     ? {
         dot: 'bg-emerald-500',
         text: 'text-emerald-700 dark:text-emerald-400',
-        pill: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200/80 dark:border-emerald-800/40',
+        pill: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/25',
         label: 'Production Live',
       }
     : s === 'Pilot'
     ? {
         dot: 'bg-blue-500',
         text: 'text-blue-700 dark:text-blue-400',
-        pill: 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border-blue-200/80 dark:border-blue-800/40',
+        pill: 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/25',
         label: 'Enterprise Pilot',
       }
     : s === 'Early Access'
     ? {
         dot: 'bg-amber-500',
         text: 'text-amber-700 dark:text-amber-400',
-        pill: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200/80 dark:border-amber-800/40',
-        label: 'Early Access Platform',
+        pill: 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/25',
+        label: 'Early Access',
       }
     : {
         dot: 'bg-slate-400',
         text: 'text-slate-600 dark:text-slate-300',
-        pill: 'bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700',
+        pill: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700',
         label: s || 'General Availability',
       };
 
@@ -153,43 +153,50 @@ export default function PlatformDetail({ overrideSlug }) {
         description={platform.description}
       />
 
-      {/* Breadcrumb */}
-      <div className={`bg-white dark:bg-[#0A1C33] ${secBorder} py-3 text-xs`}>
-        <div className={`${wrap} flex items-center gap-2 text-slate-500 dark:text-slate-400`}>
-          <Link to="/" className="hover:text-[#F27A24] transition-colors">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link to="/platforms/" className="hover:text-[#F27A24] transition-colors">Our Platforms</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-[#0F294A] dark:text-white font-bold">{platform.name}</span>
-        </div>
-      </div>
-
-      {/* ===================== 1. HERO ===================== */}
-      <section className={`bg-white dark:bg-[#0A1C33] ${secBorder} pt-12 pb-16 sm:pt-16 sm:pb-20 relative overflow-hidden`}>
-        {/* Natural enterprise gradient glow & depth (no artificial dot matrix) */}
+      {/* ===================== 1. HERO WITH INTEGRATED BREADCRUMB ===================== */}
+      <section className={`bg-white dark:bg-[#0A1C33] ${secBorder} pt-4 sm:pt-6 pb-12 sm:pb-16 relative overflow-hidden`}>
+        {/* Natural enterprise gradient glow & depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/30 dark:from-[#071322] dark:via-[#0A1C33] dark:to-[#08172b] pointer-events-none" />
         <div className="absolute -top-24 right-10 w-96 h-96 bg-gradient-to-br from-[#F27A24]/10 via-[#F27A24]/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-blue-500/[0.05] to-transparent rounded-full blur-3xl pointer-events-none" />
 
-        <div className={`${wrap} relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start`}>
-          <motion.div variants={stagger} initial="hidden" animate="visible" className="lg:col-span-7 space-y-7">
-            {/* Enterprise Product Badges Bar */}
-            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />
-                <span>{platform.categoryLabel}</span>
-              </span>
+        <div className={`${wrap} relative z-10 space-y-5 sm:space-y-6`}>
+          {/* Streamlined Modern Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <Link to="/" className="hover:text-[#F27A24] transition-colors font-medium">Home</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" />
+            <Link to="/platforms/" className="hover:text-[#F27A24] transition-colors font-medium">Our Platforms</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" />
+            <span className="text-[#0F294A] dark:text-white font-bold">{platform.name}</span>
+          </nav>
 
-              <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold ${st.pill} border shadow-xs`}>
-                <span className="relative flex h-2 w-2">
-                  {platform.maturityStatus === 'Live' && (
-                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${st.dot}`} />
-                  )}
-                  <span className={`relative inline-flex rounded-full h-2 w-2 ${st.dot}`} />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <motion.div variants={stagger} initial="hidden" animate="visible" className="lg:col-span-7 space-y-5 sm:space-y-6">
+              {/* Harmonized, Professional Product Meta Badges */}
+              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                {/* Category Pill */}
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-[#F27A24]/10 text-[#DE6713] dark:text-[#F27A24] border border-[#F27A24]/20 shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />
+                  <span>{platform.category}</span>
                 </span>
-                <span>{st.label}</span>
-              </span>
-            </motion.div>
+
+                {/* Status Pill */}
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${st.pill} border shadow-2xs`}>
+                  <span className="relative flex h-2 w-2">
+                    {platform.maturityStatus === 'Live' && (
+                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${st.dot}`} />
+                    )}
+                    <span className={`relative inline-flex rounded-full h-2 w-2 ${st.dot}`} />
+                  </span>
+                  <span>{st.label}</span>
+                </span>
+
+                {/* Architecture Foundation Tag */}
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
+                  <Cpu className="w-3.5 h-3.5 text-[#0D9488]" />
+                  <span>NEP Core Stack</span>
+                </span>
+              </motion.div>
 
             {/* logo + name */}
             <div className="flex items-center gap-4 sm:gap-5">
@@ -287,6 +294,7 @@ export default function PlatformDetail({ overrideSlug }) {
               </span>
             </div>
           </motion.aside>
+          </div>
         </div>
       </section>
 
