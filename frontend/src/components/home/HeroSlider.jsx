@@ -22,55 +22,53 @@ export default function HeroSlider() {
   const slides = [
     {
       id: 1,
-      name: "Digital Infrastructure",
-      title: "Building Digital Infrastructure for a Smarter India",
-      image: "/assets/banners/banner-1-digital-infrastructure-hd.jpg",
-      webp: "/assets/banners/banner-1-digital-infrastructure-hd.webp",
-      primaryLink: "#platforms",
-      isPrimaryHash: true,
-      secondaryLink: "/contact/?type=project",
-      hasDualButtons: true,
-      alt: "Bizwoke Nova - Building Digital Infrastructure for a Smarter India"
+      name: "Technology & AI Solutions",
+      title: "Technology & AI Solutions for Business Growth — Formerly NKTech (Since 2012)",
+      image: "/assets/banners/banner-tech-ai-solutions.jpg",
+      webp: "/assets/banners/banner-tech-ai-solutions.webp",
+      primaryLink: "/services/",
+      isPrimaryHash: false,
+      alt: "Bizwoke Nova - Technology & AI Solutions for Business Growth"
     },
     {
       id: 2,
-      name: "Our Platforms",
-      title: "One Vision. Multiple Digital Platforms.",
-      image: "/assets/banners/banner-2-our-platforms-hd.jpg",
-      webp: "/assets/banners/banner-2-our-platforms-hd.webp",
-      primaryLink: "/platforms/",
+      name: "AI & Agentic AI",
+      title: "AI & Agentic AI Solutions for Real Business Impact",
+      image: "/assets/banners/banner-agentic-ai.jpg",
+      webp: "/assets/banners/banner-agentic-ai.webp",
+      primaryLink: "/services/ai-automation-services/",
       isPrimaryHash: false,
-      alt: "Bizwoke Nova - One Vision. Multiple Digital Platforms. Tirvona, BharatBN, BizORM"
+      alt: "Bizwoke Nova - AI & Agentic AI Solutions for Real Business Impact"
     },
     {
       id: 3,
-      name: "Our Services",
-      title: "Technology Expertise That Delivers Results.",
-      image: "/assets/banners/banner-3-our-services-hd.jpg",
-      webp: "/assets/banners/banner-3-our-services-hd.webp",
-      primaryLink: "/services/",
+      name: "BharatBN™",
+      title: "BharatBN™ — India's Local Business Search & SEO Platform",
+      image: "/assets/banners/banner-bharatbn.jpg",
+      webp: "/assets/banners/banner-bharatbn.webp",
+      primaryLink: "/platforms/bharatbn/",
       isPrimaryHash: false,
-      alt: "Bizwoke Nova - Technology Expertise That Delivers Results across 8 core services"
+      alt: "BharatBN - India's Local Business Search & SEO Platform"
     },
     {
       id: 4,
-      name: "NKTech NEP™",
-      title: "NKTech Enterprise Platform™ (NEP)",
-      image: "/assets/banners/banner-4-nktech-nep-hd.jpg",
-      webp: "/assets/banners/banner-4-nktech-nep-hd.webp",
-      primaryLink: "/technology/",
+      name: "BizORM™",
+      title: "BizORM™ — Smart Review & Reputation Management Platform",
+      image: "/assets/banners/banner-bizorm.jpg",
+      webp: "/assets/banners/banner-bizorm.webp",
+      primaryLink: "/platforms/bizorm/",
       isPrimaryHash: false,
-      alt: "Bizwoke Nova - NKTech Enterprise Platform (NEP) One Technology Foundation"
+      alt: "BizORM - Smart Review & Reputation Management Platform"
     },
     {
       id: 5,
-      name: "Mission FTC™",
-      title: "Mission FTC™ — One Portfolio. Many Platforms.",
-      image: "/assets/banners/banner-5-mission-ftc-hd.jpg",
-      webp: "/assets/banners/banner-5-mission-ftc-hd.webp",
-      primaryLink: "/about-us/",
+      name: "Digital Ecosystem",
+      title: "A Complete Digital Ecosystem for a Connected India",
+      image: "/assets/banners/banner-digital-ecosystem.jpg",
+      webp: "/assets/banners/banner-digital-ecosystem.webp",
+      primaryLink: "/platforms/",
       isPrimaryHash: false,
-      alt: "Bizwoke Nova - Mission FTC Diversified Portfolio of Digital Platforms"
+      alt: "Bizwoke Nova - A Complete Digital Ecosystem for a Connected India"
     }
   ];
 
@@ -160,56 +158,18 @@ export default function HeroSlider() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 w-full h-full cursor-pointer"
             onClick={() => handleBannerClick(current)}
-            title={`Click to view: ${current.title}`}
+            title={`Click to explore: ${current.title}`}
           >
             <picture className="w-full h-full block">
               <source srcSet={current.webp} type="image/webp" />
               <img
                 src={current.image}
                 alt={current.alt}
-                className="w-full h-full object-cover object-[15%_center] sm:object-center select-none banner-hd-render"
+                className="w-full h-full object-cover object-[20%_center] sm:object-center select-none banner-hd-render"
                 loading="eager"
                 draggable={false}
               />
             </picture>
-
-            {/* Accessible Hotspot Links for Slide 1 Dual Buttons */}
-            {current.hasDualButtons && (
-              <div className="absolute inset-0 pointer-events-none">
-                {/* Left Button Hotspot: Launch Our Platforms */}
-                <a
-                  href="#platforms"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const el = document.querySelector('#platforms');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="pointer-events-auto absolute left-[4%] sm:left-[10%] bottom-[16%] sm:bottom-[12%] w-[44%] sm:w-[26%] lg:w-[22%] h-[20%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
-                  aria-label="Launch Our Platforms"
-                  title="Launch Our Platforms"
-                />
-
-                {/* Right Button Hotspot: Discuss Your Project */}
-                <Link
-                  to="/contact/?type=project"
-                  onClick={(e) => e.stopPropagation()}
-                  className="pointer-events-auto absolute left-[50%] sm:left-[38%] lg:left-[34%] bottom-[16%] sm:bottom-[12%] w-[44%] sm:w-[26%] lg:w-[20%] h-[20%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
-                  aria-label="Discuss Your Project"
-                  title="Discuss Your Project"
-                />
-              </div>
-            )}
-
-            {/* Accessible Hotspot Link for Single Button on other slides */}
-            {!current.hasDualButtons && (
-              <Link
-                to={current.primaryLink}
-                onClick={(e) => e.stopPropagation()}
-                className="absolute left-[4%] sm:left-[8%] bottom-[16%] sm:bottom-[12%] w-[46%] sm:w-[26%] lg:w-[22%] h-[20%] sm:h-[18%] lg:h-[15%] rounded-full opacity-0 hover:opacity-10 bg-white transition-opacity"
-                aria-label={`Go to ${current.name}`}
-                title={current.title}
-              />
-            )}
           </motion.div>
         </AnimatePresence>
       </div>
