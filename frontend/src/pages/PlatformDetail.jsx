@@ -15,7 +15,8 @@ import {
   Check,
   AlertCircle,
   Clock,
-  ArrowUpRight
+  ArrowUpRight,
+  ArrowLeft
 } from 'lucide-react';
 
 /* ---------------------------------------------------------------------------
@@ -153,147 +154,192 @@ export default function PlatformDetail({ overrideSlug }) {
         description={platform.description}
       />
 
-      {/* ===================== 1. HERO WITH INTEGRATED BREADCRUMB ===================== */}
-      <section className={`bg-white dark:bg-[#0A1C33] ${secBorder} pt-4 sm:pt-6 pb-12 sm:pb-16 relative overflow-hidden`}>
-        {/* Natural enterprise gradient glow & depth */}
+      {/* ===================== 1. HERO (HUMAN-FRIENDLY & IMPACTFUL) ===================== */}
+      <section className={`bg-white dark:bg-[#0A1C33] ${secBorder} pt-5 sm:pt-7 pb-12 sm:pb-16 relative overflow-hidden`}>
+        {/* Natural subtle ambient glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/30 dark:from-[#071322] dark:via-[#0A1C33] dark:to-[#08172b] pointer-events-none" />
         <div className="absolute -top-24 right-10 w-96 h-96 bg-gradient-to-br from-[#F27A24]/10 via-[#F27A24]/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-blue-500/[0.05] to-transparent rounded-full blur-3xl pointer-events-none" />
 
-        <div className={`${wrap} relative z-10 space-y-5 sm:space-y-6`}>
-          {/* Streamlined Modern Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-500 dark:text-slate-400">
-            <Link to="/" className="hover:text-[#F27A24] transition-colors font-medium">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" />
-            <Link to="/platforms/" className="hover:text-[#F27A24] transition-colors font-medium">Our Platforms</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" />
-            <span className="text-[#0F294A] dark:text-white font-bold">{platform.name}</span>
-          </nav>
+        <div className={`${wrap} relative z-10 space-y-6 sm:space-y-8`}>
+          {/* Friendly Top Navigation & Unified Status Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/70 dark:border-slate-800">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              <Link
+                to="/platforms/"
+                className="inline-flex items-center gap-1.5 font-bold text-[#0F294A] dark:text-white hover:text-[#F27A24] dark:hover:text-[#F27A24] transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>All Platforms</span>
+              </Link>
+              <span className="text-slate-300 dark:text-slate-700">/</span>
+              <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">{platform.categoryLabel || platform.category}</span>
+              <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">/</span>
+              <span className="text-[#F27A24] font-bold">{platform.name}</span>
+            </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-            <motion.div variants={stagger} initial="hidden" animate="visible" className="lg:col-span-7 space-y-5 sm:space-y-6">
-              {/* Harmonized, Professional Product Meta Badges */}
-              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                {/* Category Pill */}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-[#F27A24]/10 text-[#DE6713] dark:text-[#F27A24] border border-[#F27A24]/20 shadow-2xs">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />
-                  <span>{platform.category}</span>
-                </span>
+            {/* Single Human-Friendly Status Badge */}
+            <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold ${st.pill} border shadow-2xs`}>
+              <span className="relative flex h-2 w-2">
+                {platform.maturityStatus === 'Live' && (
+                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${st.dot}`} />
+                )}
+                <span className={`relative inline-flex rounded-full h-2 w-2 ${st.dot}`} />
+              </span>
+              <span>{st.label}</span>
+            </div>
+          </div>
 
-                {/* Status Pill */}
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${st.pill} border shadow-2xs`}>
-                  <span className="relative flex h-2 w-2">
-                    {platform.maturityStatus === 'Live' && (
-                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${st.dot}`} />
-                    )}
-                    <span className={`relative inline-flex rounded-full h-2 w-2 ${st.dot}`} />
-                  </span>
-                  <span>{st.label}</span>
-                </span>
-
-                {/* Architecture Foundation Tag */}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
-                  <Cpu className="w-3.5 h-3.5 text-[#0D9488]" />
-                  <span>NEP Core Stack</span>
-                </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            {/* Left Column: Product Identity & Purpose */}
+            <motion.div variants={stagger} initial="hidden" animate="visible" className="lg:col-span-7 space-y-6">
+              {/* Category Eyebrow Pill */}
+              <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#F27A24]/10 text-[#DE6713] dark:text-[#F27A24] border border-[#F27A24]/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />
+                <span>{platform.categoryLabel || `${platform.category} Platform`}</span>
               </motion.div>
 
-            {/* logo + name */}
-            <div className="flex items-center gap-4 sm:gap-5">
-              {platform.logo && (
-                <motion.div variants={fadeUp} className="p-2 rounded-xl bg-white dark:bg-[#081528] border border-slate-200 dark:border-slate-700 shrink-0">
-                  <img src={platform.logo} alt={`${platform.name} Logo`} className="h-12 sm:h-14 w-auto object-contain" />
-                </motion.div>
-              )}
-              <h1 className="overflow-hidden pb-2">
-                <motion.span variants={mask} className="block text-5xl sm:text-6xl lg:text-7xl font-black text-[#0F294A] dark:text-white tracking-tighter leading-none">
-                  {platform.name}
-                </motion.span>
-              </h1>
-            </div>
+              {/* Logo + Platform Name */}
+              <div className="flex items-center gap-4 sm:gap-5">
+                {platform.logo && (
+                  <motion.div variants={fadeUp} className="w-16 h-16 sm:w-20 sm:h-20 p-2.5 rounded-2xl bg-white dark:bg-[#081528] border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center shrink-0">
+                    <img src={platform.logo} alt={`${platform.name} Logo`} className="max-h-full max-w-full object-contain" />
+                  </motion.div>
+                )}
+                <div>
+                  <h1 className="overflow-hidden pb-1">
+                    <motion.span variants={mask} className="block text-4xl sm:text-5xl lg:text-6xl font-black text-[#0F294A] dark:text-white tracking-tight leading-none">
+                      {platform.name}
+                    </motion.span>
+                  </h1>
+                  <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">
+                    Enterprise Digital Platform by Bizwoke Nova
+                  </p>
+                </div>
+              </div>
 
-            <motion.div variants={fadeUp} className="border-l-4 border-[#F27A24] pl-5 py-0.5">
-              <p className="text-xl sm:text-2xl font-bold text-[#F27A24] tracking-tight">"{platform.tagline}"</p>
+              {/* Tagline */}
+              <motion.div variants={fadeUp} className="border-l-4 border-[#F27A24] pl-4 sm:pl-5 py-1">
+                <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0F294A] dark:text-white tracking-tight leading-snug">
+                  "{platform.tagline}"
+                </p>
+              </motion.div>
+
+              {/* Human-Centered Hero Subtitle */}
+              <motion.p variants={fadeUp} className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                {platform.heroSubtitle || platform.description}
+              </motion.p>
+
+              {/* Action Buttons */}
+              <motion.div variants={fadeUp} className="pt-2 flex flex-wrap items-center gap-3.5">
+                <a
+                  href="#request-demo"
+                  className="px-7 py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-all inline-flex items-center gap-2 group shadow-sm hover:shadow-md"
+                >
+                  <span>{platform.primaryCTA}</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <Link
+                  to="/partners/"
+                  className="px-7 py-3.5 text-sm font-bold text-[#0F294A] dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:border-[#0F294A] dark:hover:border-white rounded-full transition-colors inline-flex items-center gap-2 bg-white/60 dark:bg-slate-800/60"
+                >
+                  <span>Become a Partner</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-70" />
+                </Link>
+              </motion.div>
+
+              {/* Trust Credentials */}
+              <motion.div variants={fadeUp} className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span className="inline-flex items-center gap-1.5 text-[#0D9488]">
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                  <span>NEP™ Enterprise Architecture</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>100% Indian Sovereign Data</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                  <span>DPDP Act 2023 Compliant</span>
+                </span>
+              </motion.div>
             </motion.div>
 
-            <motion.p variants={fadeUp} className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-              {platform.heroSubtitle || platform.description}
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="pt-1 flex flex-wrap items-center gap-3">
-              <a
-                href="#request-demo"
-                className="px-7 py-3.5 text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] rounded-full transition-colors inline-flex items-center gap-2 group"
-              >
-                <span>{platform.primaryCTA}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link
-                to="/partners/"
-                className="px-7 py-3.5 text-sm font-bold text-[#0F294A] dark:text-slate-200 border border-slate-400 dark:border-slate-600 hover:border-[#0F294A] dark:hover:border-white rounded-full transition-colors inline-flex items-center gap-2"
-              >
-                <span>Become a Partner</span>
-                <ArrowUpRight className="w-4 h-4 opacity-70" />
-              </Link>
-            </motion.div>
-
-            <motion.div variants={fadeUp} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-              <ShieldCheck className="w-4 h-4 text-[#0D9488] shrink-0" />
-              <span>Powered by NKTech Enterprise Platform™ (NEP) Shared Architecture</span>
-            </motion.div>
-          </motion.div>
-
-          {/* Spec sheet */}
-          <motion.aside
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.35 }}
-            className="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-700/80 bg-[#F8FAFC] dark:bg-[#0F294A] overflow-hidden lg:mt-3"
-          >
-            <div className="flex items-start justify-between gap-4 px-6 py-5 border-b border-slate-200 dark:border-slate-700/80">
-              <div>
-                <div className="text-xs font-bold text-[#F27A24]">Enterprise specification</div>
-                <h3 className="text-xl font-black tracking-tight text-[#0F294A] dark:text-white mt-0.5">{platform.name} Architecture</h3>
+            {/* Right Column: Human-Friendly Real-World Snapshot Card */}
+            <motion.aside
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.2 }}
+              className="lg:col-span-5 rounded-3xl border border-slate-200 dark:border-slate-700/80 bg-slate-50/70 dark:bg-[#0F294A]/80 backdrop-blur-sm p-6 sm:p-7 shadow-sm space-y-6"
+            >
+              {/* Card Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200/80 dark:border-slate-700/80">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">Real-World Impact</div>
+                  <h3 className="text-lg sm:text-xl font-black text-[#0F294A] dark:text-white mt-0.5">
+                    What {platform.name} Delivers
+                  </h3>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Verified
+                </span>
               </div>
-              <span className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 shrink-0 pt-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                NEP Core Verified
-              </span>
-            </div>
 
-            <dl className="divide-y divide-slate-200 dark:divide-slate-700/80 text-sm">
-              <div className="px-6 py-4">
-                <dt className="text-xs font-semibold text-slate-500 dark:text-slate-400">Domain / Category</dt>
-                <dd className="mt-1 font-bold text-[#0F294A] dark:text-white">{platform.categoryLabel}</dd>
+              {/* Core Measurable Outcome Banner */}
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-500/10 via-orange-500/[0.04] to-transparent border border-[#F27A24]/20">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#DE6713] dark:text-[#F27A24]">
+                  <Sparkles className="w-4 h-4" />
+                  <span>Primary Value Outcome</span>
+                </div>
+                <p className="mt-1.5 text-sm sm:text-base font-bold text-[#0F294A] dark:text-white leading-snug">
+                  {platform.businessValue}
+                </p>
               </div>
-              <div className="px-6 py-4 bg-orange-50/70 dark:bg-[#143761] border-l-4 border-[#F27A24]">
-                <dt className="text-xs font-bold text-[#F27A24]">Core Business Value Outcome</dt>
-                <dd className="mt-1.5 font-semibold text-[#0F294A] dark:text-white leading-relaxed">{platform.businessValue}</dd>
+
+              {/* Key Modules Snapshot Grid */}
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+                  <span>KEY PLATFORM MODULES</span>
+                  <span className="text-[#F27A24] font-medium">{platform.coreModules.length} Modules Total</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {platform.coreModules.slice(0, 4).map((mod, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3 rounded-xl bg-white dark:bg-[#0A1C33] border border-slate-200/80 dark:border-slate-700/60 shadow-2xs hover:border-[#F27A24]/40 transition-colors"
+                    >
+                      <div className="flex items-center gap-2 text-xs font-bold text-[#0F294A] dark:text-white">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24] shrink-0" />
+                        <span className="truncate">{mod.name}</span>
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                        {mod.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="px-6 py-4">
-                <dt className="text-xs font-semibold text-slate-500 dark:text-slate-400">Deployment Topology</dt>
-                <dd className="mt-2.5 flex flex-wrap gap-2">
-                  {['Cloud Multi-Tenant SaaS', 'Dedicated VPC', 'Hybrid Edge'].map((t) => (
-                    <span key={t} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-white dark:bg-[#0A1C33] text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0D9488]" />
-                      {t}
+
+              {/* Ecosystem Beneficiaries */}
+              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-700/80 space-y-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Built For Key Stakeholders:
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {platform.targetUsers.map((user, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs"
+                    >
+                      <Check className="w-3 h-3 text-[#0D9488]" />
+                      <span>{user.split(' across ')[0].split(' managing ')[0].split(' sourcing ')[0]}</span>
                     </span>
                   ))}
-                </dd>
+                </div>
               </div>
-            </dl>
-
-            <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/80 flex items-center justify-between text-xs">
-              <span className="font-semibold text-slate-500 dark:text-slate-400">
-                Core Engine: <strong className="text-[#0F294A] dark:text-white">NEP Platform Core™</strong>
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 font-bold">
-                <CheckCircle2 className="w-4 h-4" />
-                Verified Specification
-              </span>
-            </div>
-          </motion.aside>
+            </motion.aside>
           </div>
         </div>
       </section>
