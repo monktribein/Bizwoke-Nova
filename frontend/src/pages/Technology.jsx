@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
-import { fadeUp, staggerContainer } from '../utils/motion';
 import {
   ArrowRight,
   ShieldCheck,
@@ -16,543 +15,699 @@ import {
   Cloud,
   Globe2,
   Zap,
-  Database
+  Database,
+  Server,
+  Network,
+  CheckCircle2,
+  Terminal,
+  Copy,
+  Check,
+  Building2,
+  FileCode2,
+  Radio,
+  Share2,
+  KeyRound,
+  ShieldAlert,
+  HardDriveDownload,
+  Activity,
+  ChevronRight
 } from 'lucide-react';
 
-/* Fonts: Bricolage Grotesque (display) + Instrument Sans (body).
-   If you prefer, move this @import into index.html / index.css. */
-const fontCss = `
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap');
-.nep-display { font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; }
-.nep-body { font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; }
-.nep-grid {
-  background-image:
-    linear-gradient(to right, rgba(15,41,74,.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15,41,74,.07) 1px, transparent 1px);
-  background-size: 44px 44px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-          mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-}
-.dark .nep-grid {
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
-}
-`;
-
-/* One tone per category so the list reads at a glance */
-const tones = {
-  core: 'text-[#1E5086] dark:text-blue-300',
-  intelligence: 'text-[#D9660F] dark:text-orange-400',
-  security: 'text-[#0D9488] dark:text-teal-400'
-};
-
 export default function Technology() {
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('stack');
+  const [activeLayer, setActiveLayer] = useState(0);
+  const [codeLang, setCodeLang] = useState('curl');
+  const [copied, setCopied] = useState(false);
 
-  const nepModules = [
-    {
-      id: "01",
-      category: "intelligence",
-      title: "AI & Intelligent Automation",
-      icon: Sparkles,
-      desc: "Private multi-modal LLM inference pipelines, automated prompt grounding against private enterprise vectors, document parsing (IDP), and autonomous agent routers."
-    },
-    {
-      id: "02",
-      category: "security",
-      title: "Enterprise Identity & Access Management (IAM)",
-      icon: Lock,
-      desc: "Fine-grained Role-Based Access Control (RBAC), multi-factor authentication (MFA), SAML/SSO federation, and integration with national citizen KYC registries."
-    },
-    {
-      id: "03",
-      category: "core",
-      title: "Multi-Tenant SaaS Architecture",
-      icon: Layers,
-      desc: "Cryptographically partitioned tenant schemas, automated schema migrations, resource quota governors, and dynamic white-label branding engines."
-    },
-    {
-      id: "04",
-      category: "core",
-      title: "Workflow & Business Process Automation",
-      icon: Workflow,
-      desc: "Event-driven workflow engines supporting complex human-in-the-loop approvals, statutory SLA timers, and automated webhook triggers."
-    },
-    {
-      id: "05",
-      category: "core",
-      title: "Payment & Subscription Infrastructure",
-      icon: CreditCard,
-      desc: "High-volume UPI 2.0 integration, Bharat BillPay (BBPS), auto-debit subscriptions, multi-party escrow payouts, and automated GST e-invoicing compliance."
-    },
-    {
-      id: "06",
-      category: "intelligence",
-      title: "Data Analytics & Real-Time Reporting",
-      icon: BarChart3,
-      desc: "Stream aggregation using Kafka/Redis, columnar warehouse storage, automated daily KPI digest generators, and executive audit logging."
-    },
-    {
-      id: "07",
-      category: "core",
-      title: "API Integration & Interoperability",
-      icon: Zap,
-      desc: "High-throughput API gateway with automated rate-limiting, OpenAPI 3.0 documentation, and standardized microservice connectors."
-    },
-    {
-      id: "08",
-      category: "security",
-      title: "Cloud Infrastructure & High Availability",
-      icon: Cloud,
-      desc: "Automated Kubernetes orchestration across Tier-4 Indian datacenters with 99.9% uptime SLA, DDoS protection, and continuous automated backups."
-    },
-    {
-      id: "09",
-      category: "core",
-      title: "Mobile & Web Application Frameworks",
-      icon: Globe2,
-      desc: "Reusable component libraries, offline-first SQLite synchronization, and progressive web application (PWA) frameworks."
-    },
-    {
-      id: "10",
-      category: "security",
-      title: "Enterprise Security & Compliance",
-      icon: ShieldCheck,
-      desc: "AES-256 encryption at rest, TLS 1.3 in transit, strict PII anonymization, automated vulnerability scanning, and sovereign data residency."
-    }
-  ];
-
-  const tabs = [
-    { id: 'all', label: 'All 10 Modules' },
-    { id: 'core', label: 'Core Engines' },
-    { id: 'intelligence', label: 'AI & Data' },
-    { id: 'security', label: 'Security & Cloud' }
-  ];
-
-  const countFor = (id) =>
-    id === 'all' ? nepModules.length : nepModules.filter((m) => m.category === id).length;
-
-  const filteredModules =
-    activeTab === 'all' ? nepModules : nepModules.filter((m) => m.category === activeTab);
-
+  // Core Architecture Layers (5 Tiers)
   const architectureLayers = [
     {
-      layer: "Tier 3: Platform Application Layer",
-      subtitle: "12 Specialized Digital Platforms",
-      badge: "Commercial & Public Solutions",
-      dot: "bg-[#F27A24]",
-      band: "bg-orange-50/60 dark:bg-orange-500/[0.06]",
-      items: ["Tirvona™ (Pilgrim Hub)", "BharatBN™ (B2B Trade)", "BizORM™ (CX Reputation)", "Pravixo™ (Creator Commerce)", "8 Other Vertical Portals"]
+      tier: 'Tier 05',
+      name: 'Application & Presentation Layer',
+      subtitle: 'Customer & Enterprise Experiences',
+      badge: 'Client Tier',
+      badgeCls: 'bg-orange-500/10 text-[#F27A24] border-orange-500/20',
+      icon: Globe2,
+      desc: 'High-performance responsive web applications, native Android/iOS mobile SDKs, and conversational AI interfaces localized in regional Indian languages.',
+      components: [
+        { name: 'Tirvona™ Web & App', desc: 'Pilgrim darshan queues & tourism telemetry' },
+        { name: 'BharatBN™ Portal', desc: 'Verified B2B discovery & buyer-seller match' },
+        { name: 'BizORM™ Console', desc: 'Review automation & sentiment tracking' },
+        { name: 'Pravixo™ Creator Suite', desc: 'Affiliate commerce & campaign analytics' },
+        { name: 'Political ERP™', desc: 'Constituency analytics & field booth sync' },
+        { name: 'ULB ERP™ Municipal', desc: 'Urban governance & citizen self-service' },
+      ],
+      protocols: ['React 19', 'Next.js', 'React Native', 'Flutter SDK', 'Indic Voice AI', 'Tailwind v4']
     },
     {
-      layer: "Tier 2: NKTech Platform Core (NEP)",
-      subtitle: "Unified Shared Enterprise Engines",
-      badge: "Shared Foundation Core",
-      dot: "bg-[#1E5086] dark:bg-blue-400",
-      band: "bg-blue-50/70 dark:bg-blue-500/[0.07]",
-      items: ["Private LLM Inference Engine", "RBAC & Multi-Tenant IAM", "UPI / BBPS Payments Escrow", "Dynamic Workflow State Machine", "Event Streaming & Analytics"]
+      tier: 'Tier 04',
+      name: 'API Gateway & National Interoperability Fabric',
+      subtitle: 'Edge Routing & Public Rails Integration',
+      badge: 'Edge Fabric',
+      badgeCls: 'bg-blue-500/10 text-[#2563EB] border-blue-500/20',
+      icon: Zap,
+      desc: 'High-throughput edge gateway providing token-bucket rate limiting, circuit breaker resilience, and native adapters for India’s digital public infrastructure.',
+      components: [
+        { name: 'DigiLocker Gateway', desc: 'Verifiable citizen document authentication' },
+        { name: 'UPI & BBPS Routing', desc: 'Sub-second payment settlement & auto-reconciliation' },
+        { name: 'ONDC Protocol Adapter', desc: 'Beckn protocol commerce network discovery' },
+        { name: 'Aadhaar e-KYC/Sign', desc: 'UIDAI-compliant biometric & OTP verification' },
+        { name: 'GSTN Tax Verification', desc: 'Automated e-invoice & GSTIN validation' },
+        { name: 'GraphQL / REST Mesh', desc: 'Federated schema stitching & edge caching' },
+      ],
+      protocols: ['HTTP/3', 'gRPC', 'Beckn Protocol', 'OAuth 2.1', 'mTLS', 'OpenAPI 3.1']
     },
     {
-      layer: "Tier 1: Sovereign Cloud & Security Layer",
-      subtitle: "Mission-Critical Infrastructure & Zero Trust",
-      badge: "Infrastructure & Sovereignty",
-      dot: "bg-[#0D9488]",
-      band: "bg-teal-50/70 dark:bg-teal-500/[0.07]",
-      items: ["MeitY Tier-4 Cloud Datacenters", "Zero-Trust TLS 1.3 Enclave", "AES-256 Cryptographic Vault", "DPDP 2023 Compliance", "Auto-Scaling Kubernetes"]
-    }
-  ];
-
-  const telemetryStats = [
-    { label: "Core Modules", value: "10", detail: "Standardized Engines" },
-    { label: "Platforms Powered", value: "12", detail: "Active Mission FTC™" },
-    { label: "High Availability", value: "99.9%", detail: "Enterprise Uptime SLA" },
-    { label: "Data Residency", value: "India", detail: "Tier-4 Sovereign DCs" }
-  ];
-
-  const standards = [
-    {
-      icon: ShieldCheck,
-      title: "Zero-Trust Security Architecture",
-      text: "Every API call, database query, and admin access requires strict cryptographic validation. No implicit network trust.",
-      tone: "text-[#0D9488] dark:text-teal-400"
-    },
-    {
-      icon: Database,
-      title: "Sovereign Indian Data Residency",
-      text: "All production customer data resides strictly within MeitY-empanelled Tier-4 cloud datacenters in India, adhering to DPDP regulations.",
-      tone: "text-[#D9660F] dark:text-orange-400"
-    },
-    {
+      tier: 'Tier 03',
+      name: 'Core Application Engines (NEP Microservices)',
+      subtitle: 'Shared Intelligence & Domain Logic',
+      badge: 'Platform Core',
+      badgeCls: 'bg-teal-500/10 text-[#0D9488] border-teal-500/20',
       icon: Cpu,
-      title: "High-Concurrency Fault Tolerance",
-      text: "Auto-scaling container pods designed to absorb massive traffic spikes during festival darshan bookings or high-volume flash sales.",
-      tone: "text-[#1E5086] dark:text-blue-300"
+      desc: 'Proprietary shared engines eliminating redundant code and providing uniform security, automated event orchestration, and cognitive capabilities across all platforms.',
+      components: [
+        { name: 'NEP-IAM Identity', desc: 'Granular RBAC, SSO, session isolation & token vaults' },
+        { name: 'NEP-Orchestrate', desc: 'Visual SLA state machines & event-driven routers' },
+        { name: 'NEP-Cognitive AI', desc: 'Private LLM inference, vector RAG & document OCR' },
+        { name: 'NEP-Commerce Billing', desc: 'Universal subscription ledger & tax compliance' },
+        { name: 'NEP-Telemetry Observability', desc: 'OpenTelemetry distributed tracing & SLA monitors' },
+        { name: 'NEP-Dispatch Notification', desc: 'Multi-channel WhatsApp, SMS & push router' },
+      ],
+      protocols: ['Temporal Engine', 'Private LLMs', 'Kafka Event Bus', 'Redis Streams', 'ISO 20022']
+    },
+    {
+      tier: 'Tier 02',
+      name: 'Data Isolation & Multi-Tenant Storage Mesh',
+      subtitle: 'Cryptographic Boundaries & Polyglot Persistence',
+      badge: 'Data Mesh',
+      badgeCls: 'bg-indigo-500/10 text-[#6366F1] border-indigo-500/20',
+      icon: Database,
+      desc: 'Multi-tenant architecture enforcing strict Row-Level Security (RLS) with options for isolated sovereign databases for sensitive government and enterprise tiers.',
+      components: [
+        { name: 'PostgreSQL Relational Core', desc: 'ACID-compliant transactional ledger with RLS' },
+        { name: 'Redis Cache & Queue Tier', desc: 'Sub-millisecond session state & message buffers' },
+        { name: 'pgvector / Embedding Store', desc: 'High-dimension vector index for AI semantic search' },
+        { name: 'Encrypted S3 Document Vault', desc: 'AES-256 encrypted immutable document storage' },
+        { name: 'Audit Trail Ledger', desc: 'Tamper-evident append-only compliance logs' },
+        { name: 'Automated Backup Engine', desc: 'Continuous point-in-time recovery (PITR < 15 min)' },
+      ],
+      protocols: ['PostgreSQL 17', 'Redis 7', 'AES-256-GCM', 'pgvector', 'S3 API', 'Row-Level Security']
+    },
+    {
+      tier: 'Tier 01',
+      name: 'Cloud Infrastructure & Cyber-Resilience',
+      subtitle: 'Domestic Sovereign Indian Cloud Foundation',
+      badge: 'Infrastructure',
+      badgeCls: 'bg-emerald-500/10 text-[#059669] border-emerald-500/20',
+      icon: Server,
+      desc: 'Multi-region Kubernetes deployment running in Tier-4 domestic Indian data centers, guaranteeing zero cross-border data transfer and high availability.',
+      components: [
+        { name: 'Domestic Data Centers', desc: 'Primary & secondary nodes in Delhi NCR, Mumbai & Bengaluru' },
+        { name: 'Kubernetes Container Fabric', desc: 'Automated horizontal pod auto-scaling & zero-downtime rolls' },
+        { name: 'Zero-Trust Network Model', desc: 'Strict perimeterless security with WireGuard mesh & mTLS' },
+        { name: 'Automated DDoS Mitigation', desc: 'Multi-layer scrubbing with Layer 7 rate-limiting' },
+        { name: 'Disaster Recovery Failover', desc: 'Hot standby cross-region replication (RTO < 30 min)' },
+        { name: 'DPDP Act 2023 Compliance', desc: '100% Indian data residency with hardware security modules' },
+      ],
+      protocols: ['Kubernetes', 'Terraform', 'WireGuard', 'TLS 1.3', 'Prometheus', 'eBPF / Cilium']
     }
   ];
 
-  const specRows = [
-    { k: "Architecture:", v: "Cloud-Native Microservices" },
-    { k: "Data Sovereignty:", v: "Tier-4 Sovereign Indian DCs" },
-    { k: "Platforms Powered:", v: "All 12 Portfolio Products", accent: true }
-  ];
+  // Code snippets for developer console
+  const codeSnippets = {
+    curl: `curl -X POST https://api.bizwoke.com/v1/nep/dispatch \\
+  -H "Authorization: Bearer nep_live_sec_89f02a4b18c..." \\
+  -H "X-Tenant-Domain: tirvona.bizwoke.com" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "event": "pilgrim.darshan.queue_allocated",
+    "workflow_id": "wf_tirvona_vip_fast_track",
+    "payload": {
+      "booking_ref": "TIR-2026-9941",
+      "verification": "aadhaar_digilocker_verified",
+      "notification_channel": "whatsapp_sms"
+    }
+  }'`,
+    typescript: `import { NEPClient } from '@bizwoke/nep-sdk';
+
+const nep = new NEPClient({
+  apiKey: process.env.NEP_API_KEY,
+  tenantDomain: 'tirvona.bizwoke.com',
+  environment: 'production'
+});
+
+// Dispatch event across NEP distributed workflow engine
+const dispatch = await nep.workflows.dispatch({
+  event: 'pilgrim.darshan.queue_allocated',
+  workflowId: 'wf_tirvona_vip_fast_track',
+  payload: {
+    bookingRef: 'TIR-2026-9941',
+    verification: 'aadhaar_digilocker_verified',
+    notificationChannel: 'whatsapp_sms'
+  }
+});
+
+console.log('Dispatched in:', dispatch.latencyMs, 'ms');
+// Output: { status: 200, dispatchId: 'dsp_7701a91c', latencyMs: 34 }`,
+    python: `from bizwoke_nep import NEPClient
+import os
+
+nep = NEPClient(
+    api_key=os.getenv("NEP_API_KEY"),
+    tenant_domain="tirvona.bizwoke.com"
+)
+
+# Trigger high-throughput SLA workflow
+response = nep.workflows.dispatch(
+    event="pilgrim.darshan.queue_allocated",
+    workflow_id="wf_tirvona_vip_fast_track",
+    payload={
+        "booking_ref": "TIR-2026-9941",
+        "verification": "aadhaar_digilocker_verified",
+        "notification_channel": "whatsapp_sms"
+    }
+)
+
+print(f"Status: {response.status} | Latency: {response.latency_ms}ms")`
+  };
+
+  const copyCode = () => {
+    navigator.clipboard.writeText(codeSnippets[codeLang]);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <div className="nep-body bg-[#F6F8FB] dark:bg-[#071526] text-[#0F294A] dark:text-slate-100 min-h-screen overflow-x-hidden">
-        <style>{fontCss}</style>
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F294A] selection:bg-[#F27A24]/20 selection:text-[#0F294A]">
+      <SEOHead
+        title="NKTech Enterprise Platform™ (NEP) | Technology Architecture | Bizwoke Nova"
+        description="Explore the shared technology foundation, zero-trust security, distributed workflow orchestration, and national public digital infrastructure adapters powering Bizwoke Nova's 12 platforms."
+        canonical="/technology/"
+      />
 
-        <SEOHead
-          title="NKTech Enterprise Platform™ (NEP) | Shared Technology Foundation — Bizwoke Nova"
-          description="Discover the NKTech Enterprise Platform (NEP) shared architecture powering all 12 Bizwoke Nova digital platforms with standardized AI, security, and cloud scalability."
-        />
+      {/* ===================== HERO SECTION ===================== */}
+      <section className="relative overflow-hidden pt-8 sm:pt-14 pb-12 sm:pb-20 border-b border-slate-200 bg-white">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-60 pointer-events-none" />
 
-        {/* ================= HERO ================= */}
-        <section className="relative bg-white dark:bg-[#0A1C33] border-b border-slate-200 dark:border-slate-800">
-          <div className="nep-grid absolute inset-0 pointer-events-none" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            
+            {/* Left Column: Heading, Vision & Context */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[#F27A24] text-xs font-bold tracking-wide">
+                <span className="w-2 h-2 rounded-full bg-[#F27A24] animate-pulse" />
+                <span>NKTECH ENTERPRISE PLATFORM™ (NEP) • ARCHITECTURAL CORE</span>
+              </div>
 
-          <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-14 sm:pt-20">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              <motion.div
-                variants={staggerContainer(0.1, 0.05)}
-                initial="hidden"
-                animate="visible"
-                className="lg:col-span-7 xl:col-span-8"
-              >
-                <motion.h1
-                  variants={fadeUp}
-                  className="nep-display font-extrabold tracking-[-0.03em] leading-[1.02] text-4xl sm:text-6xl lg:text-[4.5rem] text-[#0F294A] dark:text-white"
-                >
-                  NKTech Enterprise Platform™
-                  <span className="block font-medium text-slate-400 dark:text-slate-500 mt-1">
-                    (NEP Architecture)
-                  </span>
-                </motion.h1>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0F294A] tracking-tight leading-[1.08]">
+                One Foundation. <br />
+                <span className="text-[#F27A24]">12 Scalable Digital Platforms.</span>
+              </h1>
 
-                <motion.p
-                  variants={fadeUp}
-                  className="nep-display mt-6 text-xl sm:text-2xl font-bold text-[#1E5086] dark:text-blue-300"
-                >
-                  One Technology Foundation. Multiple Digital Platforms.
-                </motion.p>
-
-                <motion.p
-                  variants={fadeUp}
-                  className="mt-4 text-[15px] sm:text-base text-slate-600 dark:text-slate-300 leading-[1.7] max-w-[62ch]"
-                >
-                  Our long-term technology architecture is built around the{' '}
-                  <strong className="font-semibold text-[#0F294A] dark:text-white">
-                    NKTech Enterprise Platform™ (NEP)
-                  </strong>
-                  , a shared foundation designed to support multiple enterprise applications and industry-specific platforms. By standardizing essential capabilities, we accelerate time-to-market, eliminate code duplication, enforce zero-trust security, and ensure unified enterprise scalability.
-                </motion.p>
-
-                <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-                  <Link
-                    to="/platforms/"
-                    className="group inline-flex items-center gap-2 rounded-lg bg-[#F27A24] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_1px_0_rgba(0,0,0,.1)] transition-colors hover:bg-[#DE6713] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F27A24]"
-                  >
-                    Explore Platforms Built on NEP
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                  </Link>
-                  <a
-                    href="#capabilities"
-                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-[#0F294A] dark:text-white underline decoration-slate-300 dark:decoration-slate-600 underline-offset-[6px] transition-colors hover:decoration-[#F27A24] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F27A24]"
-                  >
-                    View 10 Modules
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                  </a>
-                </motion.div>
-              </motion.div>
-
-              {/* Spec sheet */}
-              <motion.aside
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                className="lg:col-span-5 xl:col-span-4"
-              >
-                <div className="rounded-xl bg-white dark:bg-[#0F294A] border border-slate-300/80 dark:border-slate-600/60 shadow-[0_18px_40px_-24px_rgba(15,41,74,.35)]">
-                  <div className="flex items-center gap-4 p-5 border-b border-slate-200 dark:border-slate-700/70">
-                    <div className="w-16 h-16 shrink-0 rounded-lg bg-white border border-slate-200 dark:border-slate-600 p-1.5 flex items-center justify-center">
-                      <img
-                        src="/assets/nktech-logo.jpg"
-                        alt="NKTech Enterprise Platform Official Mark"
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <h3 className="nep-display text-xl font-bold leading-tight text-[#0F294A] dark:text-white">
-                        NKTech Platform™
-                      </h3>
-                      <p className="text-sm font-medium text-[#D9660F] dark:text-orange-400">
-                        Core Foundation Engine
-                      </p>
-                    </div>
-                  </div>
-
-                  <dl className="px-5 text-sm">
-                    {specRows.map((r) => (
-                      <div
-                        key={r.k}
-                        className="flex items-baseline justify-between gap-4 py-3 border-b border-dashed border-slate-200 dark:border-slate-700/70"
-                      >
-                        <dt className="text-slate-500 dark:text-slate-400">{r.k}</dt>
-                        <dd
-                          className={`text-right font-semibold ${
-                            r.accent ? 'text-[#D9660F] dark:text-orange-400' : 'text-[#0F294A] dark:text-white'
-                          }`}
-                        >
-                          {r.v}
-                        </dd>
-                      </div>
-                    ))}
-                    <div className="flex items-center justify-between gap-4 py-3">
-                      <dt className="text-slate-500 dark:text-slate-400">Status:</dt>
-                      <dd className="inline-flex items-center gap-2 font-semibold text-emerald-700 dark:text-emerald-400">
-                        <span className="relative flex h-2 w-2">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60 motion-safe:animate-ping" />
-                          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                        </span>
-                        Live & Operational
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-              </motion.aside>
-            </div>
-
-            {/* Stats: one ruled strip, no cards */}
-            <motion.dl
-              variants={staggerContainer(0.07, 0.35)}
-              initial="hidden"
-              animate="visible"
-              className="mt-14 sm:mt-20 grid grid-cols-2 lg:grid-cols-4 border-t border-slate-200 dark:border-slate-700/70"
-            >
-              {telemetryStats.map((stat, idx) => (
-                <motion.div
-                  key={stat.label}
-                  variants={fadeUp}
-                  className={`py-6 sm:py-8 pr-4 ${
-                    idx % 2 === 1 ? 'pl-5 sm:pl-8' : ''
-                  } ${idx > 0 ? 'lg:pl-8' : ''} ${
-                    idx > 0 ? 'lg:border-l border-slate-200 dark:border-slate-700/70' : ''
-                  } ${idx % 2 === 1 ? 'border-l border-slate-200 dark:border-slate-700/70 lg:border-l' : ''} ${
-                    idx >= 2 ? 'border-t lg:border-t-0 border-slate-200 dark:border-slate-700/70' : ''
-                  }`}
-                >
-                  <dd className="nep-display text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0F294A] dark:text-white order-1">
-                    {stat.value}
-                  </dd>
-                  <dt className="mt-1.5 text-sm font-semibold text-[#0F294A] dark:text-slate-200">
-                    {stat.label}
-                  </dt>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{stat.detail}</p>
-                </motion.div>
-              ))}
-            </motion.dl>
-          </div>
-        </section>
-
-        {/* ================= ARCHITECTURE STACK ================= */}
-        <section className="py-16 sm:py-24 border-b border-slate-200 dark:border-slate-800">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8">
-            <div className="max-w-2xl">
-              <p className="text-sm font-semibold text-[#D9660F] dark:text-orange-400">ENTERPRISE BLUEPRINT</p>
-              <h2 className="nep-display mt-2 text-3xl sm:text-5xl font-extrabold tracking-[-0.025em] leading-[1.05] text-[#0F294A] dark:text-white">
-                The 3-Tier NEP Architecture Stack
-              </h2>
-              <p className="mt-4 text-[15px] sm:text-base leading-[1.7] text-slate-600 dark:text-slate-300 max-w-[58ch]">
-                Clear domain separation between foundational infrastructure, shared enterprise core engines, and customer-facing digital applications.
-              </p>
-            </div>
-
-            {/* Layers share one vertical spine, so the stack reads as a single system */}
-            <div className="relative mt-12 sm:mt-14 pl-6 sm:pl-10">
-              <div className="absolute left-[7px] sm:left-[11px] top-3 bottom-3 w-px bg-slate-300 dark:bg-slate-700" aria-hidden="true" />
-
-              <ol className="space-y-4">
-                {architectureLayers.map((layer) => (
-                  <li key={layer.layer} className="relative">
-                    <span
-                      className={`absolute -left-6 sm:-left-10 top-8 h-[15px] w-[15px] sm:h-[23px] sm:w-[23px] rounded-full border-[3px] border-[#F6F8FB] dark:border-[#071526] ${layer.dot}`}
-                      aria-hidden="true"
-                    />
-                    <div
-                      className={`grid lg:grid-cols-[19rem_1fr] gap-6 lg:gap-10 rounded-lg border border-slate-200 dark:border-slate-700/60 p-6 sm:p-8 ${layer.band}`}
-                    >
-                      <div>
-                        <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">{layer.badge}</p>
-                        <h3 className="nep-display mt-1 text-xl sm:text-2xl font-bold leading-snug text-[#0F294A] dark:text-white">
-                          {layer.layer}
-                        </h3>
-                        <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{layer.subtitle}</p>
-                      </div>
-
-                      <ul className="flex flex-wrap content-start gap-2.5">
-                        {layer.items.map((item) => (
-                          <li
-                            key={item}
-                            className="rounded-md border border-slate-200 dark:border-slate-600/70 bg-white dark:bg-[#0F294A] px-3.5 py-2 text-sm font-medium text-[#0F294A] dark:text-slate-100"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        {/* ================= CAPABILITIES ================= */}
-        <section
-          id="capabilities"
-          className="py-16 sm:py-24 bg-white dark:bg-[#0A1C33] border-b border-slate-200 dark:border-slate-800 scroll-mt-4"
-        >
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-[22rem_1fr] gap-10 lg:gap-16">
-            {/* Sticky intro + filter */}
-            <div className="lg:sticky lg:top-24 self-start">
-              <p className="text-sm font-semibold text-[#D9660F] dark:text-orange-400">SHARED CAPABILITIES</p>
-              <h2 className="nep-display mt-2 text-3xl sm:text-5xl font-extrabold tracking-[-0.025em] leading-[1.05] text-[#0F294A] dark:text-white">
-                The 10 Core Architectural Capabilities
-              </h2>
-              <p className="mt-4 text-[15px] leading-[1.7] text-slate-600 dark:text-slate-300">
-                Every digital platform deployed by Bizwoke Nova inherits these battle-tested enterprise capabilities, eliminating technical fragmentation.
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                The <strong className="text-[#0F294A] font-bold">NKTech Enterprise Platform™ (NEP)</strong> is Bizwoke Nova’s proprietary shared application, security, and cloud foundation. Engineered to eliminate fragmentation across Indian digital systems, NEP delivers unified identity, distributed event orchestration, cognitive AI execution, zero-trust data isolation, and national API gateway adapters across our entire software portfolio.
               </p>
 
-              <div role="tablist" aria-label="Filter modules" className="mt-8 flex lg:flex-col gap-1 overflow-x-auto -mx-1 px-1 pb-1">
-                {tabs.map((tab) => {
-                  const on = activeTab === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      role="tab"
-                      aria-selected={on}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`relative flex shrink-0 items-center justify-between gap-6 rounded-md px-4 py-2.5 text-left text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F27A24] ${
-                        on
-                          ? 'bg-[#0F294A] text-white dark:bg-white/10'
-                          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
-                      }`}
-                    >
-                      <span>{tab.label}</span>
-                      <span className={`text-xs tabular-nums ${on ? 'text-orange-300' : 'text-slate-400'}`}>
-                        {countFor(tab.id)}
-                      </span>
-                    </button>
-                  );
-                })}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="#architecture-stack"
+                  className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2 group"
+                >
+                  <span>Explore 5-Tier Architecture</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+
+                <a
+                  href="#developer-console"
+                  className="px-5 py-3 rounded-full text-xs sm:text-sm font-bold text-[#0F294A] bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors inline-flex items-center gap-2"
+                >
+                  <Terminal className="w-4 h-4 text-slate-500" />
+                  <span>Developer & API Specs</span>
+                </a>
               </div>
             </div>
 
-            {/* Module list: rows divided by rules */}
-            <motion.ul
-              key={activeTab}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, ease: 'easeOut' }}
-              className="border-t border-slate-300 dark:border-slate-700"
-            >
-              {filteredModules.map((mod) => {
-                const Icon = mod.icon;
-                return (
-                  <li
-                    key={mod.id}
-                    className="group grid grid-cols-[2.5rem_1fr] sm:grid-cols-[3rem_1fr] gap-x-4 sm:gap-x-6 py-7 border-b border-slate-200 dark:border-slate-700/70"
-                  >
-                    <Icon className={`w-6 h-6 sm:w-7 sm:h-7 mt-0.5 ${tones[mod.category]}`} strokeWidth={1.6} />
+            {/* Right Column: Architectural Live Status Card */}
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl border border-slate-200 bg-slate-900 text-white p-5 sm:p-7 shadow-[0_16px_40px_rgba(15,41,74,0.14)] relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+
+                <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                  <div className="flex items-center gap-2.5">
+                    <img src="/assets/nktech-logo.jpg" alt="NKTech Logo" className="h-8 w-auto rounded bg-white p-1" />
                     <div>
-                      <p className="text-sm font-semibold text-slate-400 dark:text-slate-500">Module {mod.id}</p>
-                      <h3 className="nep-display mt-0.5 text-xl sm:text-2xl font-bold leading-snug text-[#0F294A] dark:text-white transition-colors group-hover:text-[#D9660F] dark:group-hover:text-orange-400">
-                        {mod.title}
-                      </h3>
-                      <p className="mt-2 text-[15px] leading-[1.7] text-slate-600 dark:text-slate-300 max-w-[62ch]">
-                        {mod.desc}
-                      </p>
+                      <div className="text-xs font-bold text-white">NEP Architecture Stack</div>
+                      <div className="text-[10px] text-slate-400">Core Engineering Telemetry</div>
                     </div>
-                  </li>
-                );
-              })}
-            </motion.ul>
-          </div>
-        </section>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Operational
+                  </span>
+                </div>
 
-        {/* ================= STANDARDS ================= */}
-        <section className="py-16 sm:py-24 border-b border-slate-200 dark:border-slate-800">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8">
-            <div className="max-w-2xl">
-              <p className="text-sm font-semibold text-[#D9660F] dark:text-orange-400">ENGINEERING DISCIPLINE</p>
-              <h2 className="nep-display mt-2 text-3xl sm:text-5xl font-extrabold tracking-[-0.025em] leading-[1.05] text-[#0F294A] dark:text-white">
-                Architectural & Security Standards
-              </h2>
-              <p className="mt-4 text-[15px] sm:text-base leading-[1.7] text-slate-600 dark:text-slate-300 max-w-[58ch]">
-                Enterprise technology engineered for mission-critical reliability, government auditing, and strict data confidentiality.
-              </p>
+                <div className="grid grid-cols-2 gap-3 pt-5 pb-5 border-b border-slate-800">
+                  <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                    <div className="text-xl sm:text-2xl font-black text-white">99.99%</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">High-Availability SLA</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                    <div className="text-xl sm:text-2xl font-black text-orange-400">&lt; 45ms</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">P95 Edge Gateway Latency</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                    <div className="text-xl sm:text-2xl font-black text-teal-400">12 / 12</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Active Portfolio Platforms</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                    <div className="text-xl sm:text-2xl font-black text-blue-400">100%</div>
+                    <div className="text-[11px] text-slate-400 mt-0.5">Indian Data Sovereignty</div>
+                  </div>
+                </div>
+
+                <div className="pt-4 space-y-2 text-xs text-slate-300">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">Data Center Locations:</span>
+                    <span className="font-semibold text-white">Delhi NCR • Mumbai • Bengaluru</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">Cryptographic Standard:</span>
+                    <span className="font-semibold text-white">AES-256-GCM / TLS 1.3</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">Regulatory Compliance:</span>
+                    <span className="font-semibold text-emerald-400">India DPDP Act 2023 Ready</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-12 grid md:grid-cols-3 border-t border-slate-300 dark:border-slate-700">
-              {standards.map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <article
-                    key={s.title}
-                    className={`py-8 md:py-10 ${
-                      i > 0 ? 'md:pl-8 lg:pl-10 border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-700/70' : ''
-                    } ${i < 2 ? 'md:pr-8 lg:pr-10' : ''}`}
-                  >
-                    <Icon className={`w-7 h-7 ${s.tone}`} strokeWidth={1.6} />
-                    <h3 className="nep-display mt-5 text-xl sm:text-2xl font-bold leading-snug text-[#0F294A] dark:text-white">
-                      {s.title}
-                    </h3>
-                    <p className="mt-3 text-[15px] leading-[1.7] text-slate-600 dark:text-slate-300">{s.text}</p>
-                  </article>
-                );
-              })}
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ================= DEPLOYMENT / CTA ================= */}
-        <section id="security" className="bg-[#0F294A] text-white scroll-mt-4">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24 grid lg:grid-cols-[1fr_auto] gap-10 lg:gap-20 items-end">
+      {/* ===================== VIEW SELECTOR TABS ===================== */}
+      <section className="sticky top-[56px] sm:top-[68px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar py-2.5">
+            {[
+              { id: 'stack', label: '1. Full 5-Tier Architecture', icon: Layers },
+              { id: 'security', label: '2. Zero-Trust & Data Sovereignty', icon: ShieldCheck },
+              { id: 'integrations', label: '3. National Public Rail Adapters', icon: Network },
+              { id: 'developer', label: '4. Developer Console & API', icon: Terminal },
+            ].map((tab) => {
+              const TIcon = tab.icon;
+              const active = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                    active
+                      ? 'bg-[#0F294A] text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:text-[#0F294A] hover:bg-slate-200/80'
+                  }`}
+                >
+                  <TIcon className={`w-3.5 h-3.5 ${active ? 'text-orange-400' : 'text-slate-500'}`} />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== MAIN ARCHITECTURE EXPLORER ===================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        
+        {/* VIEW 1: FULL 5-TIER ARCHITECTURE */}
+        {activeTab === 'stack' && (
+          <section id="architecture-stack" className="space-y-8">
             <div className="max-w-3xl">
-              <p className="inline-flex items-center gap-2 text-sm font-semibold text-orange-300">
-                <Cloud className="w-4 h-4" strokeWidth={1.8} />
-                ENTERPRISE INTEGRATION MODELS
-              </p>
-              <h2 className="nep-display mt-3 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em] leading-[1.03]">
-                Flexible Deployment Architectures
+              <span className="text-xs font-black uppercase tracking-widest text-[#F27A24]">
+                SYSTEM SCHEMATIC • TIER-BY-TIER
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0F294A] tracking-tight mt-1.5">
+                The 5-Tier Foundation Behind Every Product.
               </h2>
-              <p className="mt-5 text-base sm:text-lg leading-[1.7] text-blue-100/80 max-w-[58ch]">
-                NEP can be consumed as a managed multi-tenant cloud service, deployed within your private corporate VPC (AWS/GCP/Azure), or installed on air-gapped sovereign government infrastructure.
+              <p className="text-sm sm:text-base text-slate-600 mt-2">
+                Click any architectural layer to inspect its components, protocol standards, and data guarantees. Every Bizwoke Nova product is engineered on top of these standardized layers.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:min-w-[19rem]">
+            {/* Layered Interactive Schematic */}
+            <div className="space-y-4">
+              {architectureLayers.map((layer, idx) => {
+                const LIcon = layer.icon;
+                const isSelected = activeLayer === idx;
+
+                return (
+                  <motion.div
+                    key={layer.tier}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    onClick={() => setActiveLayer(idx)}
+                    className={`rounded-2xl border transition-all cursor-pointer overflow-hidden ${
+                      isSelected
+                        ? 'border-[#0F294A] bg-white shadow-lg ring-1 ring-[#0F294A]/10'
+                        : 'border-slate-200 bg-white/70 hover:bg-white hover:border-slate-300 shadow-xs'
+                    }`}
+                  >
+                    {/* Header Bar */}
+                    <div className="p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="flex items-start sm:items-center gap-3.5 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
+                          <LIcon className="w-5 h-5 sm:w-6 sm:h-6 text-[#0F294A]" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-extrabold tracking-wider text-slate-400">{layer.tier}</span>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${layer.badgeCls}`}>
+                              {layer.badge}
+                            </span>
+                          </div>
+                          <h3 className="text-base sm:text-xl font-black text-[#0F294A] tracking-tight">
+                            {layer.name}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 self-end md:self-auto">
+                        <span className="text-xs font-bold text-slate-500 hidden sm:inline-block">
+                          {isSelected ? 'Currently Inspecting' : 'Click to Inspect Components'}
+                        </span>
+                        <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${isSelected ? 'rotate-90 text-[#F27A24]' : ''}`} />
+                      </div>
+                    </div>
+
+                    {/* Expandable Component Inspection Panel */}
+                    <AnimatePresence>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="border-t border-slate-100 bg-slate-50/70 p-4 sm:p-7"
+                        >
+                          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-3xl mb-6">
+                            {layer.desc}
+                          </p>
+
+                          {/* Components Grid */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {layer.components.map((comp) => (
+                              <div
+                                key={comp.name}
+                                className="p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs hover:border-[#F27A24]/40 transition-colors"
+                              >
+                                <div className="text-xs font-bold text-[#0F294A] flex items-center justify-between">
+                                  <span>{comp.name}</span>
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                </div>
+                                <div className="text-[11px] text-slate-500 mt-1 line-clamp-2">
+                                  {comp.desc}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Protocols / Standards Bar */}
+                          <div className="mt-5 pt-4 border-t border-slate-200/80 flex flex-wrap items-center gap-2">
+                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mr-1">
+                              Protocol Standards:
+                            </span>
+                            {layer.protocols.map((proto) => (
+                              <span
+                                key={proto}
+                                className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-700 shadow-2xs"
+                              >
+                                {proto}
+                              </span>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* VIEW 2: ZERO-TRUST & DATA SOVEREIGNTY */}
+        {activeTab === 'security' && (
+          <section className="space-y-8">
+            <div className="max-w-3xl">
+              <span className="text-xs font-black uppercase tracking-widest text-[#0D9488]">
+                CYBER-SECURITY & SOVEREIGNTY ARCHITECTURE
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0F294A] tracking-tight mt-1.5">
+                Zero-Trust Boundaries & Indian DPDP Act 2023.
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 mt-2">
+                We believe security cannot be an afterthought. NEP enforces cryptographic tenant isolation, zero-trust perimeter security, and complete data residency inside Indian borders.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: KeyRound,
+                  title: 'Cryptographic Tenant Isolation',
+                  desc: 'Every database query enforces tenant boundaries at the database engine level via PostgreSQL Row-Level Security (RLS). Sensitive government and enterprise deployments receive isolated sovereign schemas with zero cross-tenant contamination.',
+                  badge: 'Row-Level Security'
+                },
+                {
+                  icon: ShieldCheck,
+                  title: '100% Indian Data Residency',
+                  desc: 'All customer data, telemetry logs, biometric vectors, and financial records reside exclusively in Tier-4 domestic data centers across Delhi NCR, Mumbai, and Bengaluru. No citizen or enterprise data ever crosses international borders.',
+                  badge: 'Data Sovereignty'
+                },
+                {
+                  icon: Lock,
+                  title: 'Envelope Encryption (AES-256)',
+                  desc: 'Data at rest is secured using AES-256-GCM envelope encryption with per-tenant encryption keys managed by dedicated Hardware Security Modules (HSMs). Transit traffic enforces strict TLS 1.3 with forward secrecy.',
+                  badge: 'AES-256-GCM / TLS 1.3'
+                },
+                {
+                  icon: ShieldAlert,
+                  title: 'DPDP Act 2023 Ready',
+                  desc: 'Native compliance engines supporting purpose-limited consent management, automated data erasure, citizen grievance redressal workflows, and tamper-evident audit trails mandated by the Digital Personal Data Protection Act.',
+                  badge: 'DPDP Compliance'
+                },
+                {
+                  icon: HardDriveDownload,
+                  title: 'Disaster Recovery & Hot Standby',
+                  desc: 'Automated asynchronous continuous replication across geographically separated domestic nodes ensures a Recovery Point Objective (RPO) of under 15 minutes and a Recovery Time Objective (RTO) of under 30 minutes.',
+                  badge: 'RPO < 15m • RTO < 30m'
+                },
+                {
+                  icon: Activity,
+                  title: 'Continuous Vulnerability Telemetry',
+                  desc: 'Real-time eBPF network kernel monitoring, automated dependency security scanning, automated rate-limiting, and proactive anomaly detection prevent unauthorized ingress before execution reaches application code.',
+                  badge: 'eBPF / 24x7 SOC'
+                }
+              ].map((item) => {
+                const SIcon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="p-6 rounded-2xl border border-slate-200 bg-white shadow-xs hover:border-[#0D9488]/50 hover:shadow-md transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-teal-500/10 text-[#0D9488] flex items-center justify-center border border-teal-500/20">
+                          <SIcon className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                          {item.badge}
+                        </span>
+                      </div>
+                      <h3 className="text-base font-bold text-[#0F294A]">{item.title}</h3>
+                      <p className="text-xs text-slate-600 leading-relaxed mt-2">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* VIEW 3: NATIONAL PUBLIC DIGITAL RAILS */}
+        {activeTab === 'integrations' && (
+          <section className="space-y-8">
+            <div className="max-w-3xl">
+              <span className="text-xs font-black uppercase tracking-widest text-[#F27A24]">
+                INDIAN PUBLIC DIGITAL INFRASTRUCTURE
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0F294A] tracking-tight mt-1.5">
+                Native Connectors for India Stack & ONDC.
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 mt-2">
+                NEP provides enterprise adapters that natively bridge our platforms with India's pioneering open digital ecosystems, allowing instant verification, payments, and trade discovery.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  title: 'DigiLocker Verification Gateway',
+                  rail: 'Identity & Credentials',
+                  desc: 'Enables platforms like Tirvona and Political ERP to verify citizen identities, vehicle registrations, and institutional licenses directly through the national DigiLocker repository with zero paperwork.',
+                  features: ['Consent-based document pull', 'Cryptographic signature check', 'Zero manual verification delay']
+                },
+                {
+                  title: 'UPI & Bharat BillPay (BBPS) Routing',
+                  rail: 'Real-Time Payments',
+                  desc: 'Multi-bank payment routing with sub-second QR generation, dynamic intent links, split settlement for marketplaces, and automated GST reconciliation for municipal & enterprise bills.',
+                  features: ['Dynamic QR & Intent links', 'Auto-reconciliation ledger', 'Automated GST credit validation']
+                },
+                {
+                  title: 'ONDC Open Commerce Network (Beckn)',
+                  rail: 'Open Commerce Discovery',
+                  desc: 'BharatBN and Pravixo communicate directly via Beckn protocol, allowing MSMEs and creators on our platforms to be discovered across any ONDC-enabled buyer app nationwide.',
+                  features: ['Beckn BAP/BPP gateway', 'Catalog schema harmonization', 'Real-time order state events']
+                },
+                {
+                  title: 'GSTN & Corporate Registry Sync',
+                  rail: 'Business Authentication',
+                  desc: 'Instant verification of business GSTIN, filing status, active director credentials, and MSME Udyam certificates, creating trusted enterprise commerce corridors across BharatBN.',
+                  features: ['Live GSTIN status pull', 'Udyam certificate validation', 'Automated invoice compliance']
+                }
+              ].map((rail) => (
+                <div
+                  key={rail.title}
+                  className="p-6 rounded-2xl border border-slate-200 bg-white shadow-xs hover:border-[#F27A24]/50 hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-bold text-[#F27A24]">{rail.rail}</span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[#0F294A]">{rail.title}</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">{rail.desc}</p>
+                  <ul className="mt-4 pt-4 border-t border-slate-100 space-y-1.5">
+                    {rail.features.map((f) => (
+                      <li key={f} className="text-xs font-semibold text-slate-700 flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#0D9488]" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* VIEW 4: DEVELOPER CONSOLE & LIVE API */}
+        {activeTab === 'developer' && (
+          <section id="developer-console" className="space-y-8">
+            <div className="max-w-3xl">
+              <span className="text-xs font-black uppercase tracking-widest text-[#2563EB]">
+                DEVELOPER CONSOLE • REAL CODE
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0F294A] tracking-tight mt-1.5">
+                How Platforms Connect to the NEP Backbone.
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 mt-2">
+                Inspect a real endpoint request showing how vertical applications dispatch workflows through NEP’s distributed execution engine with verified cryptographic headers.
+              </p>
+            </div>
+
+            {/* Interactive Terminal / Code Box */}
+            <div className="rounded-2xl border border-slate-800 bg-slate-950 text-slate-200 shadow-xl overflow-hidden font-mono">
+              {/* Terminal Title Bar */}
+              <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-rose-500 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
+                  <span className="text-xs text-slate-400 font-sans font-bold ml-2">
+                    POST /api/v1/nep/workflows/dispatch
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {['curl', 'typescript', 'python'].map((lang) => (
+                    <button
+                      key={lang}
+                      onClick={() => setCodeLang(lang)}
+                      className={`text-[11px] font-sans font-bold px-2.5 py-1 rounded-md transition-colors ${
+                        codeLang === lang ? 'bg-orange-500 text-white' : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      {lang.toUpperCase()}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={copyCode}
+                    className="p-1.5 rounded-md hover:bg-slate-800 text-slate-400 hover:text-white transition-colors ml-2"
+                    title="Copy code"
+                  >
+                    {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Code Editor Body */}
+              <div className="p-4 sm:p-6 overflow-x-auto text-xs sm:text-sm leading-relaxed text-slate-300">
+                <pre>{codeSnippets[codeLang]}</pre>
+              </div>
+
+              {/* Live Mock Response */}
+              <div className="border-t border-slate-800 p-4 bg-slate-900/80 font-sans">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="text-emerald-400 flex items-center gap-1.5 font-bold">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    HTTP 200 OK • Execution Time: 34ms
+                  </span>
+                  <span className="text-slate-400">Tenant: tirvona_production (Schema Isolated)</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      {/* ===================== CALL TO ACTION ===================== */}
+      <section className="border-t border-slate-200 bg-white py-14 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-3xl bg-[#0F294A] text-white p-8 sm:p-14 relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-xl">
+            <div className="max-w-2xl space-y-3">
+              <span className="text-xs font-black uppercase tracking-widest text-[#F27A24]">
+                ENTERPRISE PARTNERSHIP & INTEGRATION
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                Architect Your Enterprise on the NEP Foundation.
+              </h2>
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                Whether deploying a custom municipal portal, multi-state tourism platform, or sovereign business network, leverage the battle-tested architecture of the NKTech Enterprise Platform™.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
               <Link
                 to="/contact/?type=tech"
-                className="group inline-flex items-center justify-between gap-3 rounded-lg bg-[#F27A24] px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#DE6713] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-[#F27A24] hover:bg-[#DE6713] active:bg-[#C2550A] shadow-md transition-all text-center inline-flex items-center justify-center gap-2 group"
               >
-                Request Technical Whitepaper
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                <span>Discuss Technical Architecture</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/partners/"
-                className="group inline-flex items-center justify-between gap-3 rounded-lg border border-white/25 px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-white/10 hover:bg-white/15 border border-white/20 transition-colors text-center"
               >
                 Technology Partner Program
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
           </div>
-        </section>
-      </div>
-    </MotionConfig>
+        </div>
+      </section>
+    </div>
   );
 }

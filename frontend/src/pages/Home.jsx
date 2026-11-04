@@ -7,7 +7,6 @@ import { PLATFORMS_DATA } from '../data/platformsData';
 import { fadeUp, viewportConfig } from '../utils/motion';
 import {
   ArrowRight,
-  ArrowUpRight,
   ShieldCheck,
   Cpu,
   Layers,
@@ -178,60 +177,6 @@ export default function Home() {
   };
 
   /* ------------------------------- DATA ------------------------------- */
-
-  const triadPillars = [
-    {
-      id: 'portfolio',
-      ordinal: '01',
-      category: 'Strategic Framework',
-      title: 'One Portfolio',
-      subtitle: 'Mission FTC™ Strategy',
-      detail: '10-Year Masterplan · 12 Unified Platforms',
-      to: '/about-us/',
-      isHash: false,
-      icon: Compass,
-      iconBg: 'bg-blue-50 text-[#1E5086] border-blue-200/80 group-hover:bg-[#0F294A] group-hover:text-white group-hover:border-[#0F294A]',
-      dotBg: 'bg-[#1E5086]',
-      accentBar: 'bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500',
-      titleCls: 'text-[#0F294A] dark:text-white group-hover:text-[#1E5086]',
-      hoverBg: 'hover:bg-blue-50/40 dark:hover:bg-blue-950/20',
-      ctaText: 'Explore Blueprint'
-    },
-    {
-      id: 'platforms',
-      ordinal: '02',
-      category: 'Digital Ecosystem',
-      title: '12 Platforms',
-      subtitle: 'Specialized Digital Solutions',
-      detail: 'Gov · MSME · Tourism · CX · Creator',
-      to: '#platforms',
-      isHash: true,
-      icon: Layers,
-      iconBg: 'bg-orange-50 text-[#F27A24] border-orange-200/80 group-hover:bg-[#F27A24] group-hover:text-white group-hover:border-[#F27A24]',
-      dotBg: 'bg-[#F27A24]',
-      accentBar: 'bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500',
-      titleCls: 'text-[#F27A24] group-hover:text-[#DE6713]',
-      hoverBg: 'hover:bg-orange-50/40 dark:hover:bg-orange-950/20',
-      ctaText: 'Explore Platforms'
-    },
-    {
-      id: 'foundation',
-      ordinal: '03',
-      category: 'Core Architecture',
-      title: 'One Foundation',
-      subtitle: 'NKTech Enterprise Platform™',
-      detail: 'Unified Security · IAM · AI Workflows',
-      to: '/technology/',
-      isHash: false,
-      icon: Cpu,
-      iconBg: 'bg-teal-50 text-[#0D9488] border-teal-200/80 group-hover:bg-[#0D9488] group-hover:text-white group-hover:border-[#0D9488]',
-      dotBg: 'bg-[#0D9488]',
-      accentBar: 'bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500',
-      titleCls: 'text-[#0D9488] dark:text-teal-400 group-hover:text-[#0B7A70]',
-      hoverBg: 'hover:bg-teal-50/40 dark:hover:bg-teal-950/20',
-      ctaText: 'Explore Architecture'
-    }
-  ];
 
   const pods = [
     {
@@ -421,103 +366,98 @@ export default function Home() {
         <section className="relative z-10 w-full pt-0">
           <HeroSlider />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-6 sm:pb-8">
-            {/* ===================== CREATIVE EXECUTIVE TRIAD CONSOLE ===================== */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-2 sm:pb-3">
+            {/* Creative Architectural Capsule Ribbon: Ultra-Compact & Interactive */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
               viewport={viewportConfig}
-              className="relative rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-700/60 bg-white/95 dark:bg-[#0A1C33]/90 backdrop-blur-xl shadow-[0_8px_30px_rgba(15,41,74,0.06)] overflow-hidden"
+              className="rounded-2xl border border-slate-200/90 dark:border-slate-700/60 bg-white/95 dark:bg-[#0F294A]/90 backdrop-blur-md shadow-[0_4px_24px_rgba(15,41,74,0.06)] p-1.5 sm:p-2 grid grid-cols-3 divide-x divide-slate-100 dark:divide-slate-700/60"
             >
-              <div className="grid grid-cols-3 divide-x divide-slate-200 dark:divide-slate-700/60">
-                {triadPillars.map((p) => {
-                  const PIcon = p.icon;
-                  const cardInner = (
-                    <div className={`relative p-3 xs:p-3.5 sm:p-6 lg:p-7 flex flex-col justify-between h-full transition-all duration-300 ${p.hoverBg}`}>
-                      {/* Top Glowing Color Accent Bar */}
-                      <span className={`absolute top-0 left-0 h-[3px] w-full ${p.accentBar} opacity-80 group-hover:opacity-100 group-hover:h-[4px] transition-all duration-300`} />
+              {/* Segment 1: One Portfolio */}
+              <Link
+                to="/about-us/#mission-ftc"
+                className="group flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-2 sm:px-4 sm:py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-all"
+                title="Explore Mission FTC™ 10-Year Strategy"
+              >
+                <div className="hidden xs:flex w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#0F294A] dark:text-white items-center justify-center shrink-0 border border-slate-200/60 dark:border-slate-700">
+                  <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0F294A] dark:text-blue-400 group-hover:rotate-45 transition-transform" />
+                </div>
+                <div className="min-w-0 flex-1 text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5">
+                    <span className="text-xs xs:text-sm sm:text-base font-black tracking-tight text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors truncate">
+                      One Portfolio
+                    </span>
+                    <span className="hidden xl:inline-flex text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                      FTC™
+                    </span>
+                  </div>
+                  <p className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 truncate">
+                    Mission FTC™ Strategy
+                  </p>
+                </div>
+                <ArrowRight className="hidden md:block w-3.5 h-3.5 text-slate-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+              </Link>
 
-                      <div>
-                        {/* Top Metadata Row: Live Pulse Dot + Category Eyebrow + Themed Micro Icon */}
-                        <div className="flex items-center justify-between mb-2 sm:mb-4">
-                          <div className="flex items-center gap-1.5 sm:gap-2">
-                            <span className="relative flex h-2 w-2">
-                              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${p.dotBg} opacity-75`} />
-                              <span className={`relative inline-flex rounded-full h-2 w-2 ${p.dotBg}`} />
-                            </span>
-                            <span className="hidden sm:inline-block text-[10px] lg:text-[11px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                              {p.category}
-                            </span>
-                            <span className="sm:hidden text-[9px] font-black text-slate-400">
-                              {p.ordinal}
-                            </span>
-                          </div>
+              {/* Segment 2: 12 Platforms */}
+              <a
+                href="#platforms"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.querySelector('#platforms');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-2 sm:px-4 sm:py-2.5 rounded-xl hover:bg-orange-50/50 dark:hover:bg-white/[0.04] transition-all"
+                title="Browse all 12 specialized enterprise platforms"
+              >
+                <div className="hidden xs:flex w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-orange-500/10 text-[#F27A24] items-center justify-center shrink-0 border border-orange-500/20">
+                  <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F27A24] group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="min-w-0 flex-1 text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5">
+                    <span className="text-xs xs:text-sm sm:text-base font-black tracking-tight text-[#F27A24] truncate">
+                      12 Platforms
+                    </span>
+                    <span className="hidden xl:inline-flex text-[9px] font-bold px-1.5 py-0.5 rounded bg-orange-100 text-[#DE6713] dark:bg-orange-500/20 dark:text-orange-300">
+                      All Live
+                    </span>
+                  </div>
+                  <p className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 truncate">
+                    Specialized Digital Solutions
+                  </p>
+                </div>
+                <ArrowRight className="hidden md:block w-3.5 h-3.5 text-[#F27A24] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+              </a>
 
-                          {/* Dynamic Icon Squircle */}
-                          <div className={`w-6 h-6 sm:w-10 sm:h-10 rounded-lg sm:rounded-2xl border flex items-center justify-center shrink-0 transition-all duration-300 shadow-2xs ${p.iconBg}`}>
-                            <PIcon className="w-3 h-3 sm:w-5 sm:h-5 transition-transform group-hover:scale-110" />
-                          </div>
-                        </div>
-
-                        {/* Middle Typography: Main Brand Number/Title + Subtitle + Capability */}
-                        <div className="mt-0.5 sm:mt-1">
-                          <h3 className={`text-xs xs:text-sm sm:text-2xl lg:text-3xl font-extrabold tracking-tight transition-colors duration-200 ${p.titleCls}`}>
-                            {p.title}
-                          </h3>
-                          <p className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200 mt-0.5 sm:mt-1 line-clamp-1 sm:line-clamp-none">
-                            {p.subtitle}
-                          </p>
-                          <p className="hidden md:block text-[11px] lg:text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
-                            {p.detail}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Bottom Footer Action: Direct Routing CTA with Glide Arrow */}
-                      <div className="mt-2 sm:mt-5 pt-1.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-                        <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-[#F27A24] transition-colors flex items-center gap-1">
-                          <span className="hidden sm:inline">{p.ctaText}</span>
-                          <span className="sm:hidden">Explore</span>
-                          <ArrowUpRight className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-slate-400 group-hover:text-[#F27A24]" />
-                        </span>
-                        <span className="hidden lg:inline-block text-[10px] font-extrabold text-slate-300 dark:text-slate-600">
-                          {p.ordinal}
-                        </span>
-                      </div>
-                    </div>
-                  );
-
-                  return p.isHash ? (
-                    <a
-                      key={p.id}
-                      href={p.to}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const el = document.querySelector(p.to);
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F27A24]"
-                      title={`${p.title} - ${p.subtitle}`}
-                    >
-                      {cardInner}
-                    </a>
-                  ) : (
-                    <Link
-                      key={p.id}
-                      to={p.to}
-                      className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F27A24]"
-                      title={`${p.title} - ${p.subtitle}`}
-                    >
-                      {cardInner}
-                    </Link>
-                  );
-                })}
-              </div>
+              {/* Segment 3: One Foundation */}
+              <Link
+                to="/technology/"
+                className="group flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-2 sm:px-4 sm:py-2.5 rounded-xl hover:bg-teal-50/50 dark:hover:bg-white/[0.04] transition-all"
+                title="Explore the NKTech Enterprise Platform (NEP) shared architecture"
+              >
+                <div className="hidden xs:flex w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-teal-500/10 text-[#0D9488] items-center justify-center shrink-0 border border-teal-500/20">
+                  <Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0D9488] group-hover:rotate-90 transition-transform duration-300" />
+                </div>
+                <div className="min-w-0 flex-1 text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5">
+                    <span className="text-xs xs:text-sm sm:text-base font-black tracking-tight text-[#0D9488] dark:text-teal-400 group-hover:underline truncate">
+                      One Foundation
+                    </span>
+                    <span className="hidden xl:inline-flex text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-100 text-[#0D9488] dark:bg-teal-500/20 dark:text-teal-300">
+                      NEP Core
+                    </span>
+                  </div>
+                  <p className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 truncate">
+                    NKTech Enterprise Platform™
+                  </p>
+                </div>
+                <ArrowRight className="hidden md:block w-3.5 h-3.5 text-[#0D9488] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+              </Link>
             </motion.div>
 
             {/* Featured platforms: one ledger panel, three columns */}
-            <div className="mt-5 sm:mt-8 grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-slate-200/90 bg-white bg-card-surface overflow-hidden divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-700/60 shadow-xs">
+            <div className="mt-3.5 sm:mt-5 grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-slate-200/90 bg-white bg-card-surface overflow-hidden divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-700/60 shadow-xs">
               {pods.map((p) => {
                 const PIcon = p.icon;
                 return (
