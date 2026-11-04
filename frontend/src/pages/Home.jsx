@@ -100,6 +100,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [activeIndustry, setActiveIndustry] = useState(0);
+  const [mobileIndustryListOpen, setMobileIndustryListOpen] = useState(false);
   const [showAllNEP, setShowAllNEP] = useState(false);
   const carouselRef = useRef(null);
   const resumeTimerRef = useRef(null);
@@ -835,7 +836,8 @@ export default function Home() {
             intro="Purpose-built digital architectures engineered for high-stake sectors across the Indian economic landscape."
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14">
+          {/* ===================== DESKTOP LAYOUT (lg:grid) ===================== */}
+          <div className="hidden lg:grid lg:grid-cols-12 gap-8 lg:gap-14">
             <ul className="lg:col-span-7 border-b border-slate-300 dark:border-slate-700/60">
               {industries.map((it, i) => {
                 const active = i === activeIndustry;
@@ -892,6 +894,116 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* ===================== MOBILE LAYOUT (< lg) ===================== */}
+          {/* Whichever option is clicked: content opens immediately, other options hide! */}
+          <div className="lg:hidden space-y-3.5">
+            {/* 1-Tap Quick Pill Switcher */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4">
+              {industries.map((it, i) => {
+                const active = i === activeIndustry;
+                const ItIcon = it.icon;
+                return (
+                  <button
+                    key={it.title}
+                    type="button"
+                    onClick={() => {
+                      setActiveIndustry(i);
+                      setMobileIndustryListOpen(false);
+                    }}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 ${
+                      active
+                        ? 'bg-[#0D9488] text-white shadow-sm'
+                        : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                    }`}
+                  >
+                    <ItIcon className="w-3.5 h-3.5" />
+                    <span>{it.title.split('&')[0].trim()}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Toggle Full List Bar */}
+            <div className="flex items-center justify-between text-xs px-1">
+              <span className="font-semibold text-slate-500 dark:text-slate-400">
+                Industry {activeIndustry + 1} of {industries.length}
+              </span>
+              <button
+                type="button"
+                onClick={() => setMobileIndustryListOpen(!mobileIndustryListOpen)}
+                className="inline-flex items-center gap-1 font-bold text-[#0D9488] dark:text-teal-400 hover:underline"
+              >
+                <span>{mobileIndustryListOpen ? 'Hide Other Options ▲' : 'Browse All 8 Industries ▼'}</span>
+              </button>
+            </div>
+
+            {/* Expandable Options List (when clicked, option content opens & options hide) */}
+            <AnimatePresence>
+              {mobileIndustryListOpen && (
+                <motion.ul
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-900 divide-y divide-slate-100 dark:divide-slate-800 shadow-md"
+                >
+                  {industries.map((it, i) => {
+                    const active = i === activeIndustry;
+                    const ItIcon = it.icon;
+                    return (
+                      <li key={it.title}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveIndustry(i);
+                            setMobileIndustryListOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between p-3.5 text-left text-xs font-bold transition-colors ${
+                            active
+                              ? 'bg-teal-50 dark:bg-teal-950/40 text-[#0D9488] dark:text-teal-400'
+                              : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                          }`}
+                        >
+                          <span className="inline-flex items-center gap-2.5">
+                            <ItIcon className="w-4 h-4 shrink-0 text-[#0D9488]" />
+                            <span>{it.title}</span>
+                          </span>
+                          {active && (
+                            <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-[#0D9488] text-white">
+                              Active
+                            </span>
+                          )}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </motion.ul>
+              )}
+            </AnimatePresence>
+
+            {/* Active Content Card: instantly opens right here */}
+            <div className="rounded-2xl border border-teal-500/25 bg-gradient-to-br from-white to-teal-50/40 dark:from-slate-900 dark:to-teal-950/30 p-5 sm:p-6 relative overflow-hidden shadow-sm">
+              <IndIcon aria-hidden className="absolute -right-4 -top-4 w-32 h-32 text-[#0D9488]/10" strokeWidth={1} />
+              <div className="relative">
+                <div className="w-11 h-11 rounded-xl bg-[#0D9488] text-white flex items-center justify-center mb-3.5 shadow-sm">
+                  <IndIcon className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] dark:text-white leading-snug">
+                  {ind.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                  {ind.desc}
+                </p>
+                <Link
+                  to={ind.path}
+                  className="group mt-4 inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0D9488] dark:text-teal-400 border-b-2 border-current pb-0.5"
+                >
+                  <span>Explore Solutions</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ===================== SECTION 8: DIFFERENTIATORS ===================== */}
@@ -903,10 +1015,16 @@ export default function Home() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
-            {differentiators.map((diff) => (
+            {differentiators.map((diff, i) => (
               <div key={diff.title} className="group relative pt-5">
                 <span className="absolute top-0 left-0 right-0 h-px bg-slate-300 dark:bg-slate-700/60" />
-                <span className="absolute top-0 left-0 h-[3px] w-12 group-hover:w-full bg-[#F27A24] transition-all duration-500 ease-out" />
+                <motion.span
+                  initial={{ scaleX: 0.15 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: EASE }}
+                  className="absolute top-0 left-0 h-[3px] w-full origin-left bg-[#F27A24]"
+                />
                 <span className="text-xs font-bold text-[#F27A24]">{diff.badge}</span>
                 <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] text-navy-primary mt-2">{diff.title}</h3>
                 <p className="text-sm sm:text-base text-[#475569] text-slate-body mt-3 leading-relaxed">{diff.desc}</p>
@@ -979,7 +1097,7 @@ export default function Home() {
         </section>
 
         {/* ===================== SECTION 11: FINAL CTA ===================== */}
-        <section className={`${sectionCls} relative z-10`}>
+        <section className={`${sectionCls} !pb-0 relative z-10`}>
           <div className="relative overflow-hidden rounded-2xl bg-[#F27A24] text-[#0F294A] p-8 sm:p-14 lg:p-20">
             <div aria-hidden className="absolute -right-28 -bottom-28 w-[26rem] h-[26rem] rounded-full border-[44px] border-[#0F294A]/10" />
             <div aria-hidden className="absolute -right-4 -bottom-4 w-52 h-52 rounded-full border-[22px] border-[#0F294A]/10" />

@@ -410,7 +410,13 @@ export default function PlatformDetail({ overrideSlug }) {
             {platform.coreModules.map((module, idx) => (
               <div key={idx} className="group relative pt-5">
                 <span className="absolute top-0 left-0 right-0 h-px bg-slate-300 dark:bg-slate-700/60" />
-                <span className="absolute top-0 left-0 h-[3px] w-12 group-hover:w-full bg-[#F27A24] transition-all duration-500 ease-out" />
+                <motion.span
+                  initial={{ scaleX: 0.15 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.8, delay: idx * 0.08, ease: EASE }}
+                  className="absolute top-0 left-0 h-[3px] w-full origin-left bg-[#F27A24]"
+                />
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-xl font-extrabold tracking-tight text-[#0F294A] dark:text-white">{module.name}</h3>
                   <CheckCircle2 className="w-5 h-5 text-[#0D9488] shrink-0 mt-0.5" />

@@ -5,55 +5,43 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer id="site-footer" className="bg-white dark:bg-[#071322] text-slate-600 dark:text-slate-300 pt-8 pb-6 border-t border-slate-200 dark:border-slate-800 relative">
+    <footer id="site-footer" className="bg-white dark:bg-[#071322] text-slate-600 dark:text-slate-300 pt-6 pb-4 border-t border-slate-200 dark:border-slate-800 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Multi-Column Sitemap & Corporate Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 pb-6 border-b border-slate-200 dark:border-slate-800">
           {/* Col 1: Brand & Contact Info */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="lg:col-span-2 space-y-2.5">
             <BrandLogo variant="default" size="md" />
-            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
               Enterprise Technology, AI Solutions & Next-Gen Digital Infrastructure. Awakening Your Success through scalable, connected platforms.
             </p>
 
-            {/* Direct Contact: Phone, Email, Location */}
-            <div className="space-y-2 text-xs pt-1">
+            {/* Direct Contact: Compact Single Line */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] pt-0.5">
               <a
                 href="tel:+911204567890"
-                className="flex items-center gap-2 hover:text-[#F27A24] transition-colors group w-fit"
+                className="inline-flex items-center gap-1 hover:text-[#F27A24] transition-colors font-semibold text-slate-700 dark:text-slate-200"
               >
-                <span className="w-6 h-6 rounded-md bg-orange-500/10 text-[#F27A24] flex items-center justify-center shrink-0 border border-orange-500/20 group-hover:bg-[#F27A24] group-hover:text-white transition-all">
-                  <Phone className="w-3 h-3" />
-                </span>
-                <span className="font-semibold text-slate-700 dark:text-slate-200 group-hover:text-[#F27A24]">
-                  +91 (0) 120-BIZWOKE
-                </span>
+                <Phone className="w-3 h-3 text-[#F27A24]" />
+                +91 (0) 120-BIZWOKE
               </a>
-
+              <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">|</span>
               <a
                 href="mailto:contact@bizwoke.com"
-                className="flex items-center gap-2 hover:text-[#F27A24] transition-colors group w-fit"
+                className="inline-flex items-center gap-1 hover:text-[#F27A24] transition-colors font-semibold text-slate-700 dark:text-slate-200"
               >
-                <span className="w-6 h-6 rounded-md bg-blue-500/10 text-[#2563EB] dark:text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/20 group-hover:bg-[#2563EB] group-hover:text-white transition-all">
-                  <Mail className="w-3 h-3" />
-                </span>
-                <span className="font-semibold text-slate-700 dark:text-slate-200 group-hover:text-[#F27A24]">
-                  contact@bizwoke.com
-                </span>
+                <Mail className="w-3 h-3 text-[#2563EB] dark:text-blue-400" />
+                contact@bizwoke.com
               </a>
-
-              <div className="flex items-start gap-2">
-                <span className="w-6 h-6 rounded-md bg-teal-500/10 text-[#0D9488] dark:text-teal-400 flex items-center justify-center shrink-0 border border-teal-500/20 mt-0.5">
-                  <MapPin className="w-3 h-3" />
-                </span>
-                <span className="leading-snug text-slate-600 dark:text-slate-300 text-xs max-w-xs">
-                  Sector 62, Noida, Uttar Pradesh 201309, India
-                </span>
-              </div>
+              <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">|</span>
+              <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300">
+                <MapPin className="w-3 h-3 text-[#0D9488] shrink-0" />
+                Sector 62, Noida, UP 201309
+              </span>
             </div>
 
             {/* Real Branded Social Icons */}
-            <div className="pt-1 flex items-center gap-2">
+            <div className="pt-0.5 flex items-center gap-2">
               {/* LinkedIn */}
               <a
                 href="https://www.linkedin.com/company/bizwoke/"
@@ -126,83 +114,58 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Digital Platforms */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
-              Platforms
-            </h4>
-            <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-              <li>
-                <Link to="/platforms/tirvona/" className="hover:text-[#F27A24] transition-colors">Tirvona™</Link>
-              </li>
-              <li>
-                <Link to="/platforms/bharatbn/" className="hover:text-[#F27A24] transition-colors">BharatBN™</Link>
-              </li>
-              <li>
-                <Link to="/platforms/bizorm/" className="hover:text-[#F27A24] transition-colors">BizORM™</Link>
-              </li>
-              <li>
-                <Link to="/platforms/pravixo/" className="hover:text-[#F27A24] transition-colors">Pravixo™</Link>
-              </li>
-              <li>
-                <Link to="/platforms/political-management-erp/" className="hover:text-[#F27A24] transition-colors">Political Management ERP™</Link>
-              </li>
-              <li>
-                <Link to="/platforms/" className="font-semibold text-[#F27A24] hover:underline pt-0.5 inline-block">
-                  All 12 Platforms →
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Navigation Columns - 3-col grid even on mobile */}
+          <div className="lg:col-span-3 grid grid-cols-3 gap-4 lg:gap-6">
+            {/* Platforms */}
+            <div className="space-y-1.5">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#F27A24]">
+                Platforms
+              </h4>
+              <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                <li><Link to="/platforms/tirvona/" className="hover:text-[#F27A24] transition-colors">Tirvona™</Link></li>
+                <li><Link to="/platforms/bharatbn/" className="hover:text-[#F27A24] transition-colors">BharatBN™</Link></li>
+                <li><Link to="/platforms/bizorm/" className="hover:text-[#F27A24] transition-colors">BizORM™</Link></li>
+                <li><Link to="/platforms/pravixo/" className="hover:text-[#F27A24] transition-colors">Pravixo™</Link></li>
+                <li className="hidden sm:list-item"><Link to="/platforms/political-management-erp/" className="hover:text-[#F27A24] transition-colors">Political ERP™</Link></li>
+                <li>
+                  <Link to="/platforms/" className="font-semibold text-[#F27A24] hover:underline text-[10px]">
+                    All 12 →
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-          {/* Col 3: Core Capabilities */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
-              Capabilities
-            </h4>
-            <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-              <li>
-                <Link to="/services/enterprise-software-development/" className="hover:text-[#F27A24] transition-colors">Enterprise Software & ERP</Link>
-              </li>
-              <li>
-                <Link to="/services/ai-automation-services/" className="hover:text-[#F27A24] transition-colors">AI & Automation</Link>
-              </li>
-              <li>
-                <Link to="/services/mobile-app-development/" className="hover:text-[#F27A24] transition-colors">Mobile Engineering</Link>
-              </li>
-              <li>
-                <Link to="/technology/" className="hover:text-[#F27A24] transition-colors">NEP Architecture</Link>
-              </li>
-              <li>
-                <Link to="/services/" className="font-semibold text-[#F27A24] hover:underline pt-0.5 inline-block">
-                  All 14 Services →
-                </Link>
-              </li>
-            </ul>
-          </div>
+            {/* Capabilities */}
+            <div className="space-y-1.5">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#F27A24]">
+                Capabilities
+              </h4>
+              <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                <li><Link to="/services/enterprise-software-development/" className="hover:text-[#F27A24] transition-colors">Enterprise ERP</Link></li>
+                <li><Link to="/services/ai-automation-services/" className="hover:text-[#F27A24] transition-colors">AI & Automation</Link></li>
+                <li><Link to="/services/mobile-app-development/" className="hover:text-[#F27A24] transition-colors">Mobile Apps</Link></li>
+                <li><Link to="/technology/" className="hover:text-[#F27A24] transition-colors">NEP Stack</Link></li>
+                <li>
+                  <Link to="/services/" className="font-semibold text-[#F27A24] hover:underline text-[10px]">
+                    All 14 →
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-          {/* Col 4: Company */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#F27A24]">
-              Company
-            </h4>
-            <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-              <li>
-                <Link to="/about-us/" className="hover:text-[#F27A24] transition-colors">About Us</Link>
-              </li>
-              <li>
-                <Link to="/partners/" className="hover:text-[#F27A24] transition-colors">Strategic Partnerships</Link>
-              </li>
-              <li>
-                <Link to="/careers/" className="hover:text-[#F27A24] transition-colors">Careers</Link>
-              </li>
-              <li>
-                <Link to="/contact/" className="hover:text-[#F27A24] transition-colors">Contact</Link>
-              </li>
-              <li>
-                <Link to="/contact/?type=privacy" className="hover:text-[#F27A24] transition-colors">Privacy & Terms</Link>
-              </li>
-            </ul>
+            {/* Company */}
+            <div className="space-y-1.5">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#F27A24]">
+                Company
+              </h4>
+              <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                <li><Link to="/about-us/" className="hover:text-[#F27A24] transition-colors">About Us</Link></li>
+                <li><Link to="/partners/" className="hover:text-[#F27A24] transition-colors">Partnerships</Link></li>
+                <li><Link to="/careers/" className="hover:text-[#F27A24] transition-colors">Careers</Link></li>
+                <li><Link to="/contact/" className="hover:text-[#F27A24] transition-colors">Contact</Link></li>
+                <li><Link to="/contact/?type=privacy" className="hover:text-[#F27A24] transition-colors">Privacy</Link></li>
+              </ul>
+            </div>
           </div>
         </div>
 
