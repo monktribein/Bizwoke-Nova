@@ -50,6 +50,14 @@ body {
   -ms-overflow-style: none !important;
 }
 
+/* High-DPI Banner Crisp Rendering (No pixel blurring/upscaling artifacts) */
+.banner-hd-render {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 /* Focus indicators */
 *:focus-visible {
   outline: 2px solid #f27a24;

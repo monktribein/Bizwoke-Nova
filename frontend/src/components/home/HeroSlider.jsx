@@ -24,8 +24,8 @@ export default function HeroSlider() {
       id: 1,
       name: "Technology & AI Solutions",
       title: "Technology & AI Solutions for Business Growth — Formerly NKTech (Since 2012)",
-      image: "/assets/banners/banner-tech-ai-solutions.jpg",
-      webp: "/assets/banners/banner-tech-ai-solutions.webp",
+      image: "/assets/banners/banner-tech-ai-solutions-hd.jpg",
+      webp: "/assets/banners/banner-tech-ai-solutions-hd.webp",
       primaryLink: "/services/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - Technology & AI Solutions for Business Growth"
@@ -34,8 +34,8 @@ export default function HeroSlider() {
       id: 2,
       name: "AI & Agentic AI",
       title: "AI & Agentic AI Solutions for Real Business Impact",
-      image: "/assets/banners/banner-agentic-ai.jpg",
-      webp: "/assets/banners/banner-agentic-ai.webp",
+      image: "/assets/banners/banner-agentic-ai-hd.jpg",
+      webp: "/assets/banners/banner-agentic-ai-hd.webp",
       primaryLink: "/services/ai-automation-services/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - AI & Agentic AI Solutions for Real Business Impact"
@@ -44,8 +44,8 @@ export default function HeroSlider() {
       id: 3,
       name: "BharatBN™",
       title: "BharatBN™ — India's Local Business Search & SEO Platform",
-      image: "/assets/banners/banner-bharatbn.jpg",
-      webp: "/assets/banners/banner-bharatbn.webp",
+      image: "/assets/banners/banner-bharatbn-hd.jpg",
+      webp: "/assets/banners/banner-bharatbn-hd.webp",
       primaryLink: "/platforms/bharatbn/",
       isPrimaryHash: false,
       alt: "BharatBN - India's Local Business Search & SEO Platform"
@@ -54,8 +54,8 @@ export default function HeroSlider() {
       id: 4,
       name: "BizORM™",
       title: "BizORM™ — Smart Review & Reputation Management Platform",
-      image: "/assets/banners/banner-bizorm.jpg",
-      webp: "/assets/banners/banner-bizorm.webp",
+      image: "/assets/banners/banner-bizorm-hd.jpg",
+      webp: "/assets/banners/banner-bizorm-hd.webp",
       primaryLink: "/platforms/bizorm/",
       isPrimaryHash: false,
       alt: "BizORM - Smart Review & Reputation Management Platform"
@@ -64,8 +64,8 @@ export default function HeroSlider() {
       id: 5,
       name: "Digital Ecosystem",
       title: "A Complete Digital Ecosystem for a Connected India",
-      image: "/assets/banners/banner-digital-ecosystem.jpg",
-      webp: "/assets/banners/banner-digital-ecosystem.webp",
+      image: "/assets/banners/banner-digital-ecosystem-hd.jpg",
+      webp: "/assets/banners/banner-digital-ecosystem-hd.webp",
       primaryLink: "/platforms/",
       isPrimaryHash: false,
       alt: "Bizwoke Nova - A Complete Digital Ecosystem for a Connected India"
@@ -147,8 +147,8 @@ export default function HeroSlider() {
       role="region"
       aria-label="Bizwoke Nova Full-Page Enterprise Banner Slider"
     >
-      {/* Edge-to-Edge Responsive Hero Canvas: Optimal Height for Mobile, Natural 2.71:1 Ratio on Desktop */}
-      <div className="relative w-full h-[280px] xs:h-[320px] sm:h-[380px] md:h-[440px] lg:h-auto lg:aspect-[2560/945] max-h-[85vh] overflow-hidden">
+      {/* Edge-to-Edge Responsive Hero Canvas: Natural 2560/945 Ratio Across All Devices (0% Mobile Crop) */}
+      <div className="relative w-full aspect-[2560/945] max-h-[85vh] overflow-hidden bg-slate-900">
         <AnimatePresence initial={false}>
           <motion.div
             key={current.id}
@@ -165,7 +165,7 @@ export default function HeroSlider() {
               <img
                 src={current.image}
                 alt={current.alt}
-                className="w-full h-full object-cover object-[20%_center] sm:object-center select-none banner-hd-render"
+                className="w-full h-full object-cover object-center select-none banner-hd-render"
                 loading="eager"
                 draggable={false}
               />
@@ -198,8 +198,8 @@ export default function HeroSlider() {
         <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
       </motion.button>
 
-      {/* Bottom Center Indicator Dots (Responsive Scaled) */}
-      <div className="absolute bottom-2 sm:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-slate-200/90 shadow-lg text-[#0F294A] scale-75 sm:scale-90 md:scale-100 origin-bottom">
+      {/* Bottom Center Indicator Dots (Ultra-sleek on Mobile so Banner Content is 100% Legible) */}
+      <div className="absolute bottom-1 sm:bottom-3 md:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 sm:gap-2 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-4 sm:py-2 rounded-full border border-slate-200/90 shadow-md text-[#0F294A] scale-[0.62] sm:scale-90 md:scale-100 origin-bottom">
         <motion.button
           onClick={prevSlide}
           whileHover={{ scale: 1.15 }}
