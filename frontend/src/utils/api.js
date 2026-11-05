@@ -1,4 +1,4 @@
-// Base API URL configuration for local dev, Vercel, and Render deployments
+// Base API & Media URL configuration for local dev, Vercel, and Render deployments
 const isLocal = typeof window !== 'undefined' && (
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1' ||
@@ -6,11 +6,13 @@ const isLocal = typeof window !== 'undefined' && (
   window.location.hostname.startsWith('10.')
 );
 
+export const RENDER_BACKEND_URL = 'https://bizwoke-nova.onrender.com';
+
 // In local dev, leave API_BASE empty so Vite proxies /api and /uploads to local backend (http://localhost:5000)
-// In production (Vercel/bizwoke.com), use VITE_API_URL pointing to the hosted backend
+// In production (Vercel/bizwoke.com), use VITE_API_URL or fallback to RENDER_BACKEND_URL
 export const API_BASE = isLocal
   ? ''
-  : (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+  : (import.meta.env.VITE_API_URL || RENDER_BACKEND_URL).replace(/\/+$/, '');
 
 export const API_ENDPOINTS = {
   contact: `${API_BASE}/api/contact`,
@@ -31,7 +33,12 @@ export const API_ENDPOINTS = {
 };
 
 /**
- * Resolves media URL: handles local /assets, uploaded /uploads with API_BASE, and external URLs
+ * Resolves media URL:
+ * - External (http/https/data): returns as-is
+ * - /assets/...: public static asset bundled with frontend
+ * - /uploads/...:
+ *    - In local dev: relative path (proxied by Vite to localhost:5000)
+ *    - In production: direct absolute URL to Render backend (e.g. https://bizwoke-nova.onrender.com/uploads/...)
  */
 export function resolveMediaUrl(path) {
   if (!path) return '';
@@ -39,7 +46,7 @@ export function resolveMediaUrl(path) {
     return path;
   }
   if (path.startsWith('/uploads')) {
-    return API_BASE ? `${API_BASE}${path}` : path;
+    return isLocal ? path : `${RENDER_BACKEND_URL}${path}`;
   }
   return path;
 }
