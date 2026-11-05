@@ -487,13 +487,14 @@ export default function AdminDashboard() {
           {/* Actions: View Live, User info, Logout */}
           <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href="/"
+              href="https://bizwoke.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700"
+              className="hidden sm:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700"
+              title="Open bizwoke.com in new tab"
             >
               <ExternalLink className="w-3.5 h-3.5 text-[#F27A24]" />
-              <span>Live Website</span>
+              <span>bizwoke.com</span>
             </a>
 
             <button

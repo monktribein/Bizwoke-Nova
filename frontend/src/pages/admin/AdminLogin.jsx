@@ -141,10 +141,10 @@ export default function AdminLogin() {
         {/* Back to website link */}
         <div className="text-center mt-6">
           <a
-            href="/"
+            href="https://bizwoke.com"
             className="text-xs text-slate-400 hover:text-white transition-colors"
           >
-            ← Return to Public Website
+            ← Return to bizwoke.com
           </a>
         </div>
       </div>
