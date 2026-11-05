@@ -1,10 +1,71 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_ENDPOINTS, resolveMediaUrl } from '../../utils/api';
+
+const DEFAULT_SLIDES = [
+  {
+    id: "banner-1",
+    name: "Technology & AI Solutions",
+    title: "Technology & AI Solutions for Business Growth — Formerly NKTech (Since 2012)",
+    image: "/assets/banners/banner-tech-ai-solutions-hd.jpg",
+    webp: "/assets/banners/banner-tech-ai-solutions-hd.webp",
+    mobileImage: "/assets/banners/banner-tech-ai-solutions-hd.webp",
+    primaryLink: "/services/",
+    isPrimaryHash: false,
+    alt: "Bizwoke Nova - Technology & AI Solutions for Business Growth"
+  },
+  {
+    id: "banner-2",
+    name: "AI & Agentic AI",
+    title: "AI & Agentic AI Solutions for Real Business Impact",
+    image: "/assets/banners/banner-agentic-ai-hd.jpg",
+    webp: "/assets/banners/banner-agentic-ai-hd.webp",
+    mobileImage: "/assets/banners/banner-agentic-ai-hd.webp",
+    primaryLink: "/services/ai-automation-services/",
+    isPrimaryHash: false,
+    alt: "Bizwoke Nova - AI & Agentic AI Solutions for Real Business Impact"
+  },
+  {
+    id: "banner-3",
+    name: "BharatBN™",
+    title: "BharatBN™ — India's Local Business Search & SEO Platform",
+    image: "/assets/banners/banner-bharatbn-hd.jpg",
+    webp: "/assets/banners/banner-bharatbn-hd.webp",
+    mobileImage: "/assets/banners/banner-bharatbn-hd.webp",
+    primaryLink: "/platforms/bharatbn/",
+    isPrimaryHash: false,
+    alt: "BharatBN - India's Local Business Search & SEO Platform"
+  },
+  {
+    id: "banner-4",
+    name: "BizORM™",
+    title: "BizORM™ — Smart Review & Reputation Management Platform",
+    image: "/assets/banners/banner-bizorm-hd.jpg",
+    webp: "/assets/banners/banner-bizorm-hd.webp",
+    mobileImage: "/assets/banners/banner-bizorm-hd.webp",
+    primaryLink: "/platforms/bizorm/",
+    isPrimaryHash: false,
+    alt: "BizORM - Smart Review & Reputation Management Platform"
+  },
+  {
+    id: "banner-5",
+    name: "Digital Ecosystem",
+    title: "A Complete Digital Ecosystem for a Connected India",
+    image: "/assets/banners/banner-digital-ecosystem-hd.jpg",
+    webp: "/assets/banners/banner-digital-ecosystem-hd.webp",
+    mobileImage: "/assets/banners/banner-digital-ecosystem-hd.webp",
+    primaryLink: "/platforms/",
+    isPrimaryHash: false,
+    alt: "Bizwoke Nova - A Complete Digital Ecosystem for a Connected India"
+  }
+];
 
 export default function HeroSlider() {
   const navigate = useNavigate();
+  const [slides, setSlides] = useState(DEFAULT_SLIDES);
+
   const [currentSlide, setCurrentSlide] = useState(() => {
     if (typeof window !== 'undefined') {
       const param = new URLSearchParams(window.location.search).get('slide');
@@ -19,62 +80,32 @@ export default function HeroSlider() {
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  const slides = [
-    {
-      id: 1,
-      name: "Technology & AI Solutions",
-      title: "Technology & AI Solutions for Business Growth — Formerly NKTech (Since 2012)",
-      image: "/assets/banners/banner-tech-ai-solutions-hd.jpg",
-      webp: "/assets/banners/banner-tech-ai-solutions-hd.webp",
-      primaryLink: "/services/",
-      isPrimaryHash: false,
-      alt: "Bizwoke Nova - Technology & AI Solutions for Business Growth"
-    },
-    {
-      id: 2,
-      name: "AI & Agentic AI",
-      title: "AI & Agentic AI Solutions for Real Business Impact",
-      image: "/assets/banners/banner-agentic-ai-hd.jpg",
-      webp: "/assets/banners/banner-agentic-ai-hd.webp",
-      primaryLink: "/services/ai-automation-services/",
-      isPrimaryHash: false,
-      alt: "Bizwoke Nova - AI & Agentic AI Solutions for Real Business Impact"
-    },
-    {
-      id: 3,
-      name: "BharatBN™",
-      title: "BharatBN™ — India's Local Business Search & SEO Platform",
-      image: "/assets/banners/banner-bharatbn-hd.jpg",
-      webp: "/assets/banners/banner-bharatbn-hd.webp",
-      primaryLink: "/platforms/bharatbn/",
-      isPrimaryHash: false,
-      alt: "BharatBN - India's Local Business Search & SEO Platform"
-    },
-    {
-      id: 4,
-      name: "BizORM™",
-      title: "BizORM™ — Smart Review & Reputation Management Platform",
-      image: "/assets/banners/banner-bizorm-hd.jpg",
-      webp: "/assets/banners/banner-bizorm-hd.webp",
-      primaryLink: "/platforms/bizorm/",
-      isPrimaryHash: false,
-      alt: "BizORM - Smart Review & Reputation Management Platform"
-    },
-    {
-      id: 5,
-      name: "Digital Ecosystem",
-      title: "A Complete Digital Ecosystem for a Connected India",
-      image: "/assets/banners/banner-digital-ecosystem-hd.jpg",
-      webp: "/assets/banners/banner-digital-ecosystem-hd.webp",
-      primaryLink: "/platforms/",
-      isPrimaryHash: false,
-      alt: "Bizwoke Nova - A Complete Digital Ecosystem for a Connected India"
+  // Fetch live banners from backend CMS
+  useEffect(() => {
+    let isMounted = true;
+    async function loadBanners() {
+      try {
+        const res = await fetch(API_ENDPOINTS.banners);
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && Array.isArray(data.banners)) {
+            setSlides(data.banners);
+          }
+        }
+      } catch (err) {
+        console.warn('HeroSlider using local default slides:', err);
+      }
     }
-  ];
+
+    loadBanners();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Auto-scroll every 3.5 seconds, paused when hovering
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length <= 1) return;
 
     timerRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -122,19 +153,26 @@ export default function HeroSlider() {
   };
 
   const handleBannerClick = (slide) => {
-    if (slide.isPrimaryHash) {
+    if (!slide) return;
+    if (slide.isPrimaryHash || (slide.primaryLink && slide.primaryLink.startsWith('#'))) {
       const el = document.querySelector(slide.primaryLink);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       } else {
         window.location.hash = slide.primaryLink;
       }
-    } else {
+    } else if (slide.primaryLink) {
       navigate(slide.primaryLink);
     }
   };
 
-  const current = slides[currentSlide];
+  if (!slides || slides.length === 0) {
+    return null;
+  }
+
+  const safeIndex = currentSlide >= slides.length ? 0 : currentSlide;
+  const current = slides[safeIndex];
+  if (!current) return null;
 
   return (
     <div
@@ -151,7 +189,7 @@ export default function HeroSlider() {
       <div className="relative w-full aspect-[2560/945] max-h-[85vh] overflow-hidden bg-slate-900">
         <AnimatePresence initial={false}>
           <motion.div
-            key={current.id}
+            key={current.id || safeIndex}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -161,10 +199,16 @@ export default function HeroSlider() {
             title={`Click to explore: ${current.title}`}
           >
             <picture className="w-full h-full block">
-              <source srcSet={current.webp} type="image/webp" />
+              {current.mobileWebp && (
+                <source media="(max-width: 640px)" srcSet={resolveMediaUrl(current.mobileWebp)} type="image/webp" />
+              )}
+              {current.mobileImage && (
+                <source media="(max-width: 640px)" srcSet={resolveMediaUrl(current.mobileImage)} />
+              )}
+              <source srcSet={resolveMediaUrl(current.webp || current.image)} type="image/webp" />
               <img
-                src={current.image}
-                alt={current.alt}
+                src={resolveMediaUrl(current.image)}
+                alt={current.alt || current.title}
                 className="w-full h-full object-cover object-center select-none banner-hd-render"
                 loading="eager"
                 draggable={false}
@@ -199,54 +243,56 @@ export default function HeroSlider() {
       </motion.button>
 
       {/* Bottom Center Indicator Dots (Ultra-sleek on Mobile so Banner Content is 100% Legible) */}
-      <div className="absolute bottom-1 sm:bottom-3 md:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 sm:gap-2 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-4 sm:py-2 rounded-full border border-slate-200/90 shadow-md text-[#0F294A] scale-[0.62] sm:scale-90 md:scale-100 origin-bottom">
-        <motion.button
-          onClick={prevSlide}
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.9 }}
-          className="text-slate-500 hover:text-[#0F294A] transition-colors p-0.5"
-          title="Previous Slide"
-          aria-label="Previous Slide"
-        >
-          <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </motion.button>
+      {slides.length > 1 && (
+        <div className="absolute bottom-1 sm:bottom-3 md:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 sm:gap-2 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-4 sm:py-2 rounded-full border border-slate-200/90 shadow-md text-[#0F294A] scale-[0.62] sm:scale-90 md:scale-100 origin-bottom">
+          <motion.button
+            onClick={prevSlide}
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
+            className="text-slate-500 hover:text-[#0F294A] transition-colors p-0.5"
+            title="Previous Slide"
+            aria-label="Previous Slide"
+          >
+            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </motion.button>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 px-1">
-          {slides.map((slide, idx) => (
-            <button
-              key={slide.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                goToSlide(idx);
-              }}
-              className="relative p-0.5 sm:p-1 focus:outline-none"
-              aria-label={`Jump to slide ${idx + 1}: ${slide.name}`}
-              title={`Slide ${idx + 1}: ${slide.name}`}
-            >
-              {currentSlide === idx ? (
-                <motion.div
-                  layoutId="heroActivePill"
-                  className="w-5 sm:w-7 h-2 sm:h-2.5 rounded-full bg-[#F27A24] shadow-xs"
-                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                />
-              ) : (
-                <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-colors" />
-              )}
-            </button>
-          ))}
+          <div className="flex items-center gap-1.5 sm:gap-2 px-1">
+            {slides.map((slide, idx) => (
+              <button
+                key={slide.id || idx}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToSlide(idx);
+                }}
+                className="relative p-0.5 sm:p-1 focus:outline-none"
+                aria-label={`Jump to slide ${idx + 1}: ${slide.name || slide.title}`}
+                title={`Slide ${idx + 1}: ${slide.name || slide.title}`}
+              >
+                {safeIndex === idx ? (
+                  <motion.div
+                    layoutId="heroActivePill"
+                    className="w-5 sm:w-7 h-2 sm:h-2.5 rounded-full bg-[#F27A24] shadow-xs"
+                    transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                  />
+                ) : (
+                  <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-colors" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <motion.button
+            onClick={nextSlide}
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
+            className="text-slate-500 hover:text-[#0F294A] transition-colors p-0.5"
+            title="Next Slide"
+            aria-label="Next Slide"
+          >
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </motion.button>
         </div>
-
-        <motion.button
-          onClick={nextSlide}
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.9 }}
-          className="text-slate-500 hover:text-[#0F294A] transition-colors p-0.5"
-          title="Next Slide"
-          aria-label="Next Slide"
-        >
-          <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </motion.button>
-      </div>
+      )}
     </div>
   );
 }

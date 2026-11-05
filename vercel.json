@@ -7,6 +7,10 @@
       "destination": "https://bizwoke-nova.onrender.com/api/:path*"
     },
     {
+      "source": "/uploads/:path*",
+      "destination": "https://bizwoke-nova.onrender.com/uploads/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

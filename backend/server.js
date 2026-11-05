@@ -18,11 +18,22 @@ const PORT = process.env.PORT || 5000;
 // Security & Parsing Middleware
 app.use(cors({
   origin: '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Ensure uploads directory exists and is served statically
+const uploadsPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsPath)) {
+  fs.mkdirSync(uploadsPath, { recursive: true });
+}
+const bannersUploadsPath = path.join(uploadsPath, 'banners');
+if (!fs.existsSync(bannersUploadsPath)) {
+  fs.mkdirSync(bannersUploadsPath, { recursive: true });
+}
+app.use('/uploads', express.static(uploadsPath));
 
 // Request logging in development
 app.use((req, res, next) => {

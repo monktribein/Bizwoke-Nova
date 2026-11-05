@@ -7,6 +7,7 @@ import ScrollToTopButton from '../common/ScrollToTopButton';
 
 export default function Layout({ children }) {
   const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   useEffect(() => {
     if (!location.hash) {
@@ -16,6 +17,10 @@ export default function Layout({ children }) {
       if (el) el.scrollIntoView({ behavior: 'auto' });
     }
   }, [location.pathname, location.hash]);
+
+  if (isAdminRoute) {
+    return <div className="min-h-screen bg-[#F8FAFC]">{children}</div>;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F294A] selection:bg-[#F27A24]/20 selection:text-[#0F294A] w-full max-w-full overflow-x-hidden">
