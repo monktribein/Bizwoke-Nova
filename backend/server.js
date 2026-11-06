@@ -64,11 +64,20 @@ app.use((req, res, next) => {
   res.status(200).send('Bizwoke Nova Enterprise API Server Active. Run `npm run build` to generate frontend bundle.');
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`====================================================`);
   console.log(`🚀 Bizwoke Nova Enterprise Backend Server Active`);
   console.log(`📡 URL: http://localhost:${PORT}`);
   console.log(`🩺 Health check: http://localhost:${PORT}/api/health`);
   console.log(`📋 Leads audit: http://localhost:${PORT}/api/leads`);
   console.log(`====================================================`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ Error: Port ${PORT} is already occupied by another running instance.`);
+    console.error(`👉 Run in PowerShell to clear it: Get-Process -Name node | Stop-Process -Force\n`);
+  } else {
+    console.error('Server error:', err);
+  }
 });
