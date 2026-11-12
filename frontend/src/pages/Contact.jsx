@@ -10,7 +10,10 @@ import {
   Phone,
   CheckCircle2,
   Clock,
-  Send
+  Send,
+  ChevronDown,
+  ArrowDown,
+  ShieldCheck
 } from 'lucide-react';
 
 /* Shared pieces (same system as Home / PlatformDetail) */
@@ -68,13 +71,69 @@ export default function Contact() {
   }, [initialType]);
 
   const channels = [
-    { id: 'general', label: 'General Corporate', desc: 'General questions & corporate communications' },
-    { id: 'custom', label: 'Custom Enterprise Software', desc: 'Bespoke ERP, AI & app engineering projects' },
-    { id: 'demo', label: 'Product Demonstration', desc: 'Walkthrough of our 12 portfolio platforms' },
-    { id: 'government', label: 'Government / ULB Solutions', desc: 'Smart cities, municipal ERP & public schemes' },
-    { id: 'partnership', label: 'Strategic Partnership', desc: 'Distribution, SI, or technology alliances' },
-    { id: 'support', label: 'Client Support', desc: 'Technical assistance for active deployments' },
-    { id: 'careers', label: 'Careers & Hiring', desc: 'Job applications & talent inquiries' }
+    {
+      id: 'general',
+      label: 'General Corporate',
+      desc: 'General questions & corporate communications',
+      extendedDesc: 'Direct communication with corporate affairs, executive leadership, media relations, and general organizational enquiries. Routed directly to our central corporate desk.',
+      routing: 'Corporate Affairs & Leadership Office',
+      sla: '< 24 Business Hours',
+      email: 'contact@bizwoke.com'
+    },
+    {
+      id: 'custom',
+      label: 'Custom Enterprise Software',
+      desc: 'Bespoke ERP, AI & app engineering projects',
+      extendedDesc: 'Direct routing to Principal Solutions Architects and Engineering Leads for bespoke ERP architecture, AI workflow automation, distributed cloud platforms, and mission-critical enterprise software.',
+      routing: 'Principal Solutions Architects & Engineering Leads',
+      sla: '< 12 Business Hours',
+      email: 'enterprise@bizwoke.com'
+    },
+    {
+      id: 'demo',
+      label: 'Product Demonstration',
+      desc: 'Walkthrough of our 12 portfolio platforms',
+      extendedDesc: 'Live, interactive walkthroughs of our proprietary software products (Tirvona, BharatBN, BizORM, Political ERP, etc.) customized for your organizational workflows and technology stack.',
+      routing: 'Platform Product & Solutions Architecture Team',
+      sla: '< 24 Business Hours',
+      email: 'demo@bizwoke.com'
+    },
+    {
+      id: 'government',
+      label: 'Government / ULB Solutions',
+      desc: 'Smart cities, municipal ERP & public schemes',
+      extendedDesc: 'Priority advisory and deployment channel for Smart Cities SPVs, Urban Local Bodies, municipal corporations, and state government departments seeking digital governance and citizen service delivery platforms.',
+      routing: 'Public Sector & GovTech Practice Leads',
+      sla: '< 12 Business Hours (Priority)',
+      email: 'gov@bizwoke.com'
+    },
+    {
+      id: 'partnership',
+      label: 'Strategic Partnership',
+      desc: 'Distribution, SI, or technology alliances',
+      extendedDesc: 'Alliance discussions for System Integrators (SIs), cloud hyperscalers, channel distribution networks, technology vendors, and reseller partners seeking ecosystem co-development.',
+      routing: 'Strategic Alliances & Ecosystem Development Leads',
+      sla: '< 24 Business Hours',
+      email: 'partners@bizwoke.com'
+    },
+    {
+      id: 'support',
+      label: 'Client Support',
+      desc: 'Technical assistance for active deployments',
+      extendedDesc: 'Direct ticket dispatch to Tier-1/Tier-2 enterprise support engineers, system administrators, and infrastructure managers for clients with active SLAs and live production instances.',
+      routing: 'Enterprise SLA Technical Support Desk',
+      sla: '< 4 Hours (SLA Backed)',
+      email: 'support@bizwoke.com'
+    },
+    {
+      id: 'careers',
+      label: 'Careers & Hiring',
+      desc: 'Job applications & talent inquiries',
+      extendedDesc: 'Direct submission to Technical Talent Acquisition and Engineering Practice Hiring Managers for software engineers, solution architects, AI researchers, and business development professionals.',
+      routing: 'Technical Talent Acquisition & People Operations',
+      sla: '< 48 Business Hours',
+      email: 'careers@bizwoke.com'
+    }
   ];
 
   const trustMetrics = [
@@ -194,45 +253,123 @@ export default function Contact() {
                 {channels.map((ch) => {
                   const isSelected = enquiryType === ch.id;
                   return (
-                    <button
-                      key={ch.id}
-                      type="button"
-                      role="radio"
-                      aria-checked={isSelected}
-                      onClick={() => setEnquiryType(ch.id)}
-                      className="group relative w-full flex items-center gap-4 py-4 text-left border-t border-slate-300 dark:border-slate-700/60 cursor-pointer"
-                    >
-                      {isSelected && (
-                        <motion.span layoutId="channel-bar" className="absolute left-0 inset-y-0 w-[3px] bg-[#F27A24]" />
-                      )}
-                      <span
-                        className={`ml-4 w-[18px] h-[18px] shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
-                          isSelected ? 'border-[#F27A24]' : 'border-slate-400 dark:border-slate-500 group-hover:border-[#F27A24]'
+                    <div key={ch.id} className="border-t border-slate-300 dark:border-slate-700/60">
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        onClick={() => setEnquiryType(ch.id)}
+                        className={`group relative w-full flex items-center justify-between gap-3 py-4 px-2 sm:px-3 text-left cursor-pointer transition-colors ${
+                          isSelected
+                            ? 'bg-orange-500/[0.04] dark:bg-orange-500/[0.08]'
+                            : 'hover:bg-slate-50 dark:hover:bg-slate-800/40'
                         }`}
                       >
-                        {isSelected && <span className="w-2 h-2 rounded-full bg-[#F27A24]" />}
-                      </span>
-                      <span className="flex-1 min-w-0">
-                        <span className={`block text-lg font-extrabold tracking-tight transition-colors ${isSelected ? 'text-[#0F294A] dark:text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-[#0F294A] dark:group-hover:text-white'}`}>
-                          {ch.label}
-                        </span>
-                        <span className="block text-sm text-slate-500 dark:text-slate-400 mt-0.5">{ch.desc}</span>
-                      </span>
-                    </button>
+                        {isSelected && (
+                          <motion.span layoutId="channel-bar" className="absolute left-0 inset-y-0 w-[3px] bg-[#F27A24]" />
+                        )}
+                        <div className="flex items-center gap-3.5 min-w-0">
+                          <span
+                            className={`w-[18px] h-[18px] shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
+                              isSelected ? 'border-[#F27A24]' : 'border-slate-400 dark:border-slate-500 group-hover:border-[#F27A24]'
+                            }`}
+                          >
+                            {isSelected && <span className="w-2 h-2 rounded-full bg-[#F27A24]" />}
+                          </span>
+                          <div className="min-w-0">
+                            <span className={`block text-base sm:text-lg font-extrabold tracking-tight transition-colors ${isSelected ? 'text-[#0F294A] dark:text-white' : 'text-slate-600 dark:text-slate-400 group-hover:text-[#0F294A] dark:group-hover:text-white'}`}>
+                              {ch.label}
+                            </span>
+                            <span className="block text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                              {ch.desc}
+                            </span>
+                          </div>
+                        </div>
+
+                        <ChevronDown
+                          className={`w-4 h-4 shrink-0 transition-transform duration-300 ml-2 ${
+                            isSelected ? 'rotate-180 text-[#F27A24]' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600'
+                          }`}
+                        />
+                      </button>
+
+                      {/* Accordion description directly underneath the selected channel */}
+                      <AnimatePresence>
+                        {isSelected && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="ml-8 sm:ml-10 mr-2 sm:mr-3 mb-4 p-4 sm:p-5 rounded-xl bg-gradient-to-br from-orange-500/[0.08] to-orange-500/[0.02] dark:from-orange-500/[0.12] dark:to-transparent border border-[#F27A24]/25 space-y-3 shadow-xs">
+                              <div className="flex items-center justify-between gap-2 flex-wrap">
+                                <div className="flex items-center gap-2">
+                                  <span className="w-2 h-2 rounded-full bg-[#F27A24] animate-pulse" />
+                                  <span className="text-[11px] font-bold text-[#F27A24] uppercase tracking-wider">
+                                    Direct Practice Dispatch • {ch.label}
+                                  </span>
+                                </div>
+                                <span className="text-[10px] font-bold text-[#0D9488] bg-teal-500/10 px-2 py-0.5 rounded-full border border-teal-500/20">
+                                  Active Channel
+                                </span>
+                              </div>
+
+                              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                                {ch.extendedDesc}
+                              </p>
+
+                              <div className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600 dark:text-slate-300 border-t border-[#F27A24]/15">
+                                <div className="flex items-center gap-1.5">
+                                  <ShieldCheck className="w-3.5 h-3.5 text-[#0D9488]" />
+                                  <span className="font-semibold text-slate-500 dark:text-slate-400">Routed to:</span>
+                                  <span className="font-bold text-[#0F294A] dark:text-white">{ch.routing}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Clock className="w-3.5 h-3.5 text-[#F27A24]" />
+                                  <span className="font-semibold text-slate-500 dark:text-slate-400">SLA:</span>
+                                  <span className="font-bold text-[#0F294A] dark:text-white">{ch.sla}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Mail className="w-3.5 h-3.5 text-[#0F294A] dark:text-slate-300" />
+                                  <a href={`mailto:${ch.email}`} className="font-bold text-[#F27A24] hover:underline">
+                                    {ch.email}
+                                  </a>
+                                </div>
+                              </div>
+
+                              <div className="pt-1">
+                                <a
+                                  href="#enquiry-form"
+                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#F27A24] hover:text-[#DE6713] transition-colors"
+                                >
+                                  <span>Proceed to Fill Enquiry Form Below</span>
+                                  <ArrowDown className="w-3.5 h-3.5" />
+                                </a>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
               </div>
 
               {/* Form */}
-              <div className="mt-16">
+              <div id="enquiry-form" className="mt-12 sm:mt-16 scroll-mt-24">
                 <Rule />
-                <div className="pt-6 space-y-3">
-                  <Label>Direct practice dispatch</Label>
-                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight text-[#0F294A] dark:text-white">
-                    {selectedLabel || 'Enterprise Enquiry'}
+                <div className="pt-6 space-y-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 text-xs font-bold text-[#F27A24] border border-[#F27A24]/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24]" />
+                    <span>Selected Pathway: {selectedLabel}</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-[#0F294A] dark:text-white">
+                    Submit {selectedLabel} Enquiry
                   </h2>
-                  <p className="text-base text-slate-600 dark:text-slate-300 max-w-xl">
-                    Direct communication with dedicated technical practice leads and solution architects.
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl">
+                    Fill out the form below. Your message will be routed directly to the designated practice lead.
                   </p>
                 </div>
 
