@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import SEOHead from '../components/common/SEOHead';
 import HeroSlider from '../components/home/HeroSlider';
 import { PLATFORMS_DATA } from '../data/platformsData';
@@ -90,6 +90,51 @@ function SectionHead({ label, title, intro, children, size = 'lg', dark = false,
         </div>
       </div>
     </div>
+  );
+}
+
+function AnimatedCounter({ value, prefix = "", suffix = "", duration = 1.6 }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const numericTarget = parseFloat(value);
+    if (isNaN(numericTarget)) {
+      setDisplayValue(value);
+      return;
+    }
+
+    const isDecimal = value.toString().includes('.');
+    const startTime = performance.now();
+    const durationMs = duration * 1000;
+
+    let animId;
+    const updateCounter = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      // easeOutExpo for smooth deceleration
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const currentVal = easeProgress * numericTarget;
+
+      setDisplayValue(isDecimal ? currentVal.toFixed(1) : Math.floor(currentVal));
+
+      if (progress < 1) {
+        animId = requestAnimationFrame(updateCounter);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    animId = requestAnimationFrame(updateCounter);
+    return () => cancelAnimationFrame(animId);
+  }, [isInView, value, duration]);
+
+  return (
+    <span ref={ref} className="tabular-nums font-black tracking-tight">
+      {prefix}{displayValue}{suffix}
+    </span>
   );
 }
 
@@ -594,6 +639,110 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== SECTION 2.5: IMPACT METRICS & SCALE STRIP ===================== */}
+        <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-4 pb-4 sm:pb-8">
+          <div className="relative rounded-3xl bg-gradient-to-br from-white via-slate-50/90 to-orange-50/20 border border-slate-200/90 dark:border-slate-700/60 shadow-[0_8px_30px_rgba(15,41,74,0.04)] p-6 sm:p-8 lg:p-10 overflow-hidden">
+            {/* Ambient subtle backdrops */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+
+            <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80 dark:divide-slate-700/60">
+              {/* Metric 1 */}
+              <a
+                href="#platforms"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.querySelector('#platforms');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group pt-3 sm:pt-0 sm:px-3 lg:px-4 flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200 cursor-pointer"
+              >
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 text-[#F27A24] text-[10px] sm:text-xs font-bold mb-2.5 sm:mb-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#F27A24] animate-pulse" />
+                    Proprietary Stack
+                  </div>
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F294A] dark:text-white group-hover:text-[#F27A24] transition-colors tracking-tight flex items-baseline">
+                    <AnimatedCounter value={12} suffix="+" />
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-extrabold text-[#0F294A] dark:text-slate-200 mt-1 sm:mt-1.5">
+                    Enterprise Platforms
+                  </h3>
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                  Engineered for tourism, ULBs, MSMEs, ORM & commerce operations.
+                </p>
+              </a>
+
+              {/* Metric 2 */}
+              <Link
+                to="/solutions/"
+                className="group pt-4 sm:pt-0 sm:px-3 lg:px-4 flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200 cursor-pointer"
+              >
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-500/10 text-[#0D9488] text-[10px] sm:text-xs font-bold mb-2.5 sm:mb-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0D9488]" />
+                    Mission FTC™
+                  </div>
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F294A] dark:text-white group-hover:text-[#0D9488] transition-colors tracking-tight flex items-baseline">
+                    <AnimatedCounter value={8} suffix="" />
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-extrabold text-[#0F294A] dark:text-slate-200 mt-1 sm:mt-1.5">
+                    National Industry Sectors
+                  </h3>
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                  Tailored architectures across pilgrimage, healthcare, manufacturing & civic bodies.
+                </p>
+              </Link>
+
+              {/* Metric 3 */}
+              <Link
+                to="/services/ai-automation-services/"
+                className="group pt-4 sm:pt-0 sm:px-3 lg:px-4 flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200 cursor-pointer"
+              >
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/10 text-[#1E5086] dark:text-blue-400 text-[10px] sm:text-xs font-bold mb-2.5 sm:mb-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1E5086] dark:bg-blue-400" />
+                    Proven ROI
+                  </div>
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F294A] dark:text-white group-hover:text-[#1E5086] dark:group-hover:text-blue-400 transition-colors tracking-tight flex items-baseline">
+                    <AnimatedCounter value={40} suffix="%+" />
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-extrabold text-[#0F294A] dark:text-slate-200 mt-1 sm:mt-1.5">
+                    Operational Efficiency
+                  </h3>
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                  Average cost reduction & workflow acceleration with autonomous AI agents.
+                </p>
+              </Link>
+
+              {/* Metric 4 */}
+              <Link
+                to="/technology/"
+                className="group pt-4 sm:pt-0 sm:px-3 lg:px-4 flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200 cursor-pointer"
+              >
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] sm:text-xs font-bold mb-2.5 sm:mb-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    High Reliability
+                  </div>
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F294A] dark:text-white group-hover:text-emerald-600 transition-colors tracking-tight flex items-baseline">
+                    <AnimatedCounter value={99.9} suffix="%" />
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-extrabold text-[#0F294A] dark:text-slate-200 mt-1 sm:mt-1.5">
+                    Architecture SLA Uptime
+                  </h3>
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                  Multi-region redundancy on NEP Core with zero single point of failure.
+                </p>
+              </Link>
             </div>
           </div>
         </section>

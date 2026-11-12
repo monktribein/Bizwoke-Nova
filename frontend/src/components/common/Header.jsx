@@ -23,7 +23,8 @@ import {
   ChevronDown,
   Info,
   Handshake,
-  Briefcase
+  Briefcase,
+  Search
 } from 'lucide-react';
 
 /**
@@ -87,7 +88,7 @@ function ActiveTabNotch({ icon: Icon, label }) {
   );
 }
 
-export default function Header() {
+export default function Header({ onOpenSearch }) {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRef = useRef(null);
@@ -464,8 +465,21 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Right Action: Contact CTA + Discuss Project Button */}
+            {/* Right Action: Global Search + Contact CTA + Discuss Project Button */}
             <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={onOpenSearch}
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs text-slate-500 hover:text-[#0F294A] bg-slate-100/80 hover:bg-slate-200/70 rounded-full transition-all border border-slate-200/80 group"
+                title="Search platforms, services & solutions (Ctrl + K)"
+                aria-label="Open Command Palette"
+              >
+                <Search className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#F27A24] transition-colors" />
+                <span className="font-medium">Search</span>
+                <kbd className="text-[10px] font-semibold bg-white px-1.5 py-0.5 rounded border border-slate-200 text-slate-400">
+                  ⌘K
+                </kbd>
+              </button>
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/contact/"
@@ -487,6 +501,14 @@ export default function Header() {
 
             {/* Mobile Header Menu Trigger */}
             <div className="flex items-center lg:hidden gap-1 sm:gap-1.5 shrink-0">
+              <button
+                type="button"
+                onClick={onOpenSearch}
+                className="p-1.5 sm:p-2 rounded-full text-slate-700 hover:text-[#0F294A] hover:bg-slate-100 transition-colors"
+                aria-label="Search site"
+              >
+                <Search className="w-4 h-4" />
+              </button>
               <Link
                 to="/contact/?type=project"
                 className="text-[11px] font-bold text-white bg-[#F27A24] px-2.5 sm:px-3 py-1.5 rounded-full shadow-xs whitespace-nowrap"
@@ -519,6 +541,24 @@ export default function Header() {
                 <div className="font-extrabold text-xs uppercase tracking-wider text-[#F27A24] mb-2 flex items-center justify-between">
                   <span>Enterprise Navigation</span>
                 </div>
+
+                {/* Mobile Search Quick Trigger */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileDrawerOpen(false);
+                    if (onOpenSearch) onOpenSearch();
+                  }}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-600 text-xs font-medium transition-colors border border-slate-200/70"
+                >
+                  <span className="flex items-center gap-2">
+                    <Search className="w-4 h-4 text-[#F27A24]" />
+                    <span>Search 12 platforms, services...</span>
+                  </span>
+                  <kbd className="text-[10px] bg-white px-1.5 py-0.5 rounded border border-slate-200 text-slate-400 font-semibold">
+                    ⌘K
+                  </kbd>
+                </button>
                 <Link to="/" className="block py-2 text-sm font-bold border-b border-slate-100">
                   Home
                 </Link>

@@ -169,13 +169,24 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Compliance */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
-          <p>© {new Date().getFullYear()} Bizwoke Nova™. All rights reserved.</p>
-          <div className="flex items-center gap-3 text-[11px]">
-            <span className="text-[#0D9488] font-semibold">Mission FTC™</span>
+        {/* Bottom Bar: Live System Status, Copyright & Compliance */}
+        <div className="pt-4 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-3 border-t border-slate-100 dark:border-slate-800/80">
+          <div className="flex flex-wrap items-center gap-3">
+            <p>© {new Date().getFullYear()} Bizwoke Nova™. All rights reserved.</p>
+            <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+            {/* Live Operational Status Indicator */}
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 text-[11px] font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>All 12 Platforms Operational</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px]">
+            <span className="text-[#0D9488] font-bold">Mission FTC™</span>
             <span>•</span>
-            <span className="text-[#2563EB] font-semibold">NEP Enterprise Stack</span>
+            <span className="text-[#2563EB] font-bold">NEP Enterprise Stack</span>
+            <span>•</span>
+            <span className="text-slate-400 dark:text-slate-500 font-medium">ISO 27001 Ready</span>
           </div>
         </div>
       </div>

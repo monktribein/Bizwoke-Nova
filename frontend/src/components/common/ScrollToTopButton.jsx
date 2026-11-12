@@ -54,7 +54,7 @@ export default function ScrollToTopButton() {
           whileHover={{ scale: 1.12, y: -3 }}
           whileTap={{ scale: 0.92 }}
           transition={{ duration: 0.22, ease: 'easeOut' }}
-          className="fixed bottom-20 right-4 sm:right-6 lg:bottom-8 lg:right-8 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-[#0F294A] text-[#0F294A] dark:text-white flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-lg hover:border-[#F27A24] dark:hover:border-[#F27A24] group cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#F27A24]"
+          className="fixed bottom-36 right-4 sm:right-6 lg:bottom-24 lg:right-8 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-[#0F294A] text-[#0F294A] dark:text-white flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-md hover:shadow-lg hover:border-[#F27A24] dark:hover:border-[#F27A24] group cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#F27A24]"
           aria-label="Scroll back to top"
           title="Scroll to top"
         >
